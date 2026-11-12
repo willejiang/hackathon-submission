@@ -170,6 +170,55 @@ function toolDefinitions(config) {
       },
       execute: async (args) => build("submit", args),
     },
+    {
+      name: "cad_facts_scaffold",
+      description:
+        "The structure of this case's facts.json with every measurement removed: keys, nesting and " +
+        "list lengths only, all numbers replaced by null. Use it to write measure_result.py. You " +
+        "cannot see the expected values, so every number your measurer emits has to come from the " +
+        "geometry -- that is the point of the redaction, not an inconvenience to work around.",
+      parameters: {},
+      output: {
+        schema: { type: "object", additionalProperties: true },
+        render: (_a, v) =>
+          text(
+            v?.ok
+              ? ["Structure (numbers redacted):", JSON.stringify(v.structure, null, 1), "", "Rules:",
+                 ...(v.rules || []).map((rule) => `- ${rule}`)].join("\n")
+              : `FAILED: ${v?.error}`,
+          ),
+      },
+      execute: async () => build("facts_scaffold", {}),
+    },
+    {
+      name: "cad_measure_result",
+      description:
+        "Run your measure_result.py against the STEP you submitted, check the produced document has " +
+        "facts.json's shape, and compare them entry by entry. Writes facts_from_result.json in your " +
+        "workspace. Use this to prove the part is right rather than merely plausible: every family " +
+        "in the brief gets its own row, including the ones cad_verify does not model.",
+      parameters: {
+        path: { type: "string", required: true, description: "File holding the measurer, e.g. measure_result.py" },
+        step: { type: "string", required: false, description: "STEP to measure; defaults to this case's submitted file" },
+      },
+      output: {
+        schema: { type: "object", additionalProperties: true },
+        render: (_a, v) => {
+          if (!v?.ok && v?.stage) return text(`MEASURE FAILED in ${v.stage}\n${v.report || v.error || ""}`);
+          const lines = [v.table];
+          if (v.structure_problems?.length) {
+            lines.push("", "STRUCTURE PROBLEMS (document does not match facts.json's shape):");
+            lines.push(...v.structure_problems.map((problem) => `- ${problem}`));
+          }
+          lines.push("", v.gating_failures?.length
+            ? `GATING FAILURES: ${v.gating_failures.join(", ")}`
+            : "All gating entries agree.");
+          if (v.facts_from_result) lines.push("", `written: ${v.facts_from_result}`);
+          return text(lines.join("\n"));
+        },
+      },
+      execute: async (args) => build("measure_result", args),
+    },
   ];
 }
 

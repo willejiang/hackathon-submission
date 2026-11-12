@@ -40,9 +40,55 @@ evidence, not specification.
 4. `write` a module to `solution.py`.
 5. `cad_build` — does it build, and what is it? Fix provenance or build errors here.
 6. `cad_verify` — do the numbers match the facts? Rows marked `*` are gating.
-7. `cad_render` — do the silhouettes match the pictures? Only meaningful once the
+7. `cad_submit` — export the STEP as soon as the gating rows agree.
+8. **`cad_facts_scaffold` then `write` `measure_result.py` then `cad_measure_result`** —
+   measure the submitted file into the brief's own structure and compare it against
+   the brief, entry by entry. This is the step that catches what `cad_verify` does
+   not model. See below.
+9. `cad_render` — do the silhouettes match the pictures? Only meaningful once the
    numbers are close.
-8. `cad_submit` — once the gating facts pass.
+10. Fix what the comparison names, and go back to 4.
+
+## Measuring your own output
+
+`facts.json` is not one schema. The families differ between parts: an extra
+`more_not_listed` field here, a different set of surface species there, dictionaries
+of radii and angles keyed by whatever this part happens to have. A fixed measurer
+written by the harness would silently drop what it did not anticipate, which is how
+a family stops being checked without anyone noticing.
+
+So **you** write the measurer, from the structure you are given:
+
+1. `cad_facts_scaffold` returns this case's `facts.json` with every number replaced
+   by `null`. You get the keys, the nesting and the list lengths. You do not get a
+   single measurement.
+2. Write `measure_result.py` defining:
+
+   ```python
+   def measure(shape):
+       """shape: a build123d solid, already imported. Return a dict."""
+       return {...}   # exactly the structure the scaffold showed
+   ```
+
+3. `cad_measure_result` imports the STEP *you submitted*, calls your `measure`,
+   checks the document has the brief's shape, and compares every entry. It writes
+   `facts_from_result.json` next to your workspace.
+
+Rules the harness enforces before your measurer runs — it is refused, not
+warned — because a measurer that could read the case directory could copy the
+expected answers instead of measuring:
+
+- no `open`, no `eval`/`exec`, no `os`, `sys`, `json`, `pathlib`, `io`, `subprocess`
+- imports limited to `build123d`, `OCP`, `math`, `itertools`, `numpy`, `typing`
+- it must define `measure(shape)`
+
+Conventions, so the two documents line up: axis labels are `X`/`Y`/`Z` or a
+`[x, y, z]` direction; surface type names are `face.geom_type.name`; angles in
+degrees; lengths in millimetres.
+
+This step is not paperwork. On the practice set it is what turns "the part looks
+right" into "the part has 25 of the 25 declared rounds, its bank bores are 156.14 mm
+and not 25.4 mm, and its genus is 6 and not 18".
 
 ## Trust ranking for evidence
 

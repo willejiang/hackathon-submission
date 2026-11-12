@@ -290,7 +290,8 @@ def test_wrong_envelope_fails_the_gating_check(case3):
     wrong = Box(case3.bbox[0] * 1.2, case3.bbox[1], case3.bbox[2])
     comparison = factsgen.compare(case3, factsgen.measure(wrong))
     assert not comparison.ok
-    names = {check.name for check in comparison.gating_failures}
+    # The comparator walks the input document, so a dict family reports per key.
+    names = {check.name.split("[")[0] for check in comparison.gating_failures}
     assert "bounding_box_mm" in names
 
 
@@ -407,3 +408,94 @@ def test_blind_hole_modelled_as_through_fails_the_depth_and_genus_checks():
     assert through_group["axial_extent"] == pytest.approx(10.0, abs=0.05)
     assert blind_facts["through_holes_genus"] == 0
     assert through_facts["through_holes_genus"] == 1
+
+
+# --------------------------------------------------------------------------- #
+# The model-written measurement adapter. facts.json is not one schema, so the
+# measurer is generated per case from a redacted scaffold; these tests pin the two
+# properties that make that safe -- the scaffold leaks no values, and a measurer
+# cannot reach the case directory.
+# --------------------------------------------------------------------------- #
+
+
+def test_scaffold_redacts_every_number():
+    from agentic_cad import measuredoc
+
+    reference = {
+        "volume_mm3": 177662.6,
+        "bounding_box_mm": {"x": 21.59, "y": 132.08, "z": 132.08},
+        "face_types": {"CYLINDER": 6, "PLANE": 3},
+        "cylindrical_holes_and_bores": [
+            {"diameter": 76.2, "axis": "X", "count": 1, "lengths": [21.59]}
+        ],
+        "_note": "prose that must not survive",
+    }
+    scaffold = measuredoc.scaffold(reference)
+
+    assert measuredoc._walk_numbers(scaffold) == [], "no number may survive redaction"
+    # Structure survives: keys, nesting, list lengths too.
+    assert set(scaffold["bounding_box_mm"]) == {"x", "y", "z"}
+    assert set(scaffold["face_types"]) == {"CYLINDER", "PLANE"}
+    assert len(scaffold["cylindrical_holes_and_bores"]) == 1
+    # Identifiers survive, prose does not.
+    assert scaffold["cylindrical_holes_and_bores"][0]["axis"] == "X"
+    assert "_note" not in scaffold
+
+
+def test_measurer_cannot_read_the_case_directory():
+    from agentic_cad import measuredoc
+
+    # (source, should_be_refused, why)
+    cases = [
+        ('import json\ndef measure(shape):\n    return json.load(open("facts.json"))\n',
+         True, "reads facts.json directly and could copy the answers"),
+        ("import os\ndef measure(shape):\n    return {}\n", True, "os is a filesystem escape"),
+        ("from pathlib import Path\ndef measure(shape):\n    return Path('f').read_text()\n",
+         True, "pathlib is a filesystem escape"),
+        ('def measure(shape):\n    return eval("{}")\n', True, "eval is dynamic execution"),
+        ("def other(shape):\n    return {}\n", True, "no measure() function"),
+        ("import math\ndef measure(shape):\n    return {'volume_mm3': shape.volume}\n",
+         False, "a clean measurer"),
+        ("from OCP.BRepAdaptor import BRepAdaptor_Surface\ndef measure(shape):\n    return {}\n",
+         False, "OCP is allowed"),
+    ]
+    for source, should_refuse, why in cases:
+        violations = measuredoc.audit_measurer(source)
+        if should_refuse:
+            assert violations, f"accepted a measurer that {why}"
+        else:
+            assert not violations, f"refused a clean measurer ({why}): {violations}"
+
+
+def test_structure_check_catches_a_dropped_family():
+    from agentic_cad import measuredoc
+
+    reference = {"volume_mm3": 1.0, "face_types": {"CYLINDER": 2},
+                 "fillets_from_tori_minor_radii": {"15.25": 1}}
+    complete = {"volume_mm3": 1.0, "face_types": {"CYLINDER": 2},
+                "fillets_from_tori_minor_radii": {"15.25": 1}}
+    dropped = {"volume_mm3": 1.0, "face_types": {"CYLINDER": 2},
+               "fillets_from_tori_minor_radii": {}}
+
+    assert measuredoc.check_structure(reference, complete) == []
+    problems = measuredoc.check_structure(reference, dropped)
+    assert any("fillets_from_tori_minor_radii" in p for p in problems), problems
+
+
+def test_measure_result_round_trip_on_the_reference_part():
+    """The shipped test_case_3 STEP, measured by a generated measurer, must agree."""
+    from agentic_cad import measuredoc
+
+    source = REPO_ROOT / "tests/specs/test_case_3_measure.py"
+    step = REPO_ROOT / "artifacts/outputs/test_case_3.stp"
+    if not step.is_file():
+        pytest.skip("no STEP to measure")
+
+    shape = cad.reopen_step(step)
+    gt = load_case(CASE3)
+    document, error = measuredoc.run_measurer(source.read_text(encoding="utf-8"), shape, REPO_ROOT / ".runs/measuretest")
+    assert document is not None, error
+    assert measuredoc.check_structure(gt.facts, document) == []
+    from agentic_cad import factscompare
+    comparison = factscompare.compare_facts(gt.facts, document)
+    assert comparison.ok, [c.name for c in comparison.gating_failures]

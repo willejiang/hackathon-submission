@@ -229,7 +229,7 @@ def measure(shape: Any) -> dict[str, Any]:
     groups = cylinder_groups(cylinders)
     partial = [g for g in groups if not g["full"]]
 
-    return {
+    measured = {
         "bounding_box_mm": {
             "x": round(box.size.X, 4),
             "y": round(box.size.Y, 4),
@@ -253,6 +253,15 @@ def measure(shape: Any) -> dict[str, Any]:
         "tori": len([f for f in faces if f.geom_type.name == "TORUS"]),
         "_note": "independently measured from the produced B-rep, not copied from the inputs",
     }
+
+    # The same measurement expressed in facts.json's own schema, which is what the
+    # schema-driven comparator walks and what gets written next to the STEP file.
+    from . import factscompare
+
+    as_facts, as_facts_unmeasured = factscompare.measure_as_facts(shape)
+    measured["as_facts"] = as_facts
+    measured["_unmeasured"] = as_facts_unmeasured
+    return measured
 
 
 def _rel(actual: float, expected: float) -> float:
@@ -377,7 +386,26 @@ def _compare_holes(gt: GroundTruth, measured_groups: list[dict[str, Any]]) -> li
 
 
 def compare(gt: GroundTruth, measured: dict[str, Any]) -> Comparison:
-    """Compare measured geometry with the authoritative facts."""
+    """Compare measured geometry with the authoritative facts.
+
+    Delegates to the schema-driven comparator, which walks the input facts.json and
+    reports on every entry it finds. The hand-written sequence this replaced checked
+    nine families and silently skipped the rest, which is how the partial-cylinder,
+    fillet and shaft inventories went unverified while the gate said PASS.
+    """
+    from . import factscompare
+
+    as_facts = measured.get("as_facts")
+    if as_facts is None:
+        return Comparison(measured=measured, checks=[
+            Check("facts", "measurable", "measure() produced no as_facts document",
+                  "unverified", note="call factsgen.measure(shape) first")
+        ])
+    return factscompare.compare_facts(gt.facts, as_facts, measured.get("_unmeasured") or [])
+
+
+def _legacy_compare(gt: GroundTruth, measured: dict[str, Any]) -> Comparison:
+    """Superseded: kept only as a record of what the old gate checked."""
     result = Comparison(measured=measured)
 
     expected_box = gt.bbox
@@ -490,4 +518,4 @@ def compare(gt: GroundTruth, measured: dict[str, Any]) -> Comparison:
         )
 
     result.checks.extend(_compare_holes(gt, measured.get("cylinder_groups", [])))
-    return result
+    return result  # noqa: dead code retained for reference

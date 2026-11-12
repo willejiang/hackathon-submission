@@ -117,12 +117,32 @@ def _normalise(solid: Any) -> Any:
     return Pos(-offset.X, -offset.Y, -offset.Z) * solid
 
 
-def export_step(shape: Any, path: Path) -> None:
-    """Write the STEP file the submission is graded on."""
+def export_step(shape: Any, path: Path, measured: dict | None = None,
+                facts_path: Path | None = None) -> None:
+    """Write the STEP file the submission is graded on.
+
+    Also writes `facts_from_result.json` when asked: the produced solid measured in
+    facts.json's own schema, so the comparison can be audited entry by entry rather
+    than trusted as a verdict. It is deliberately NOT written beside the STEP in the
+    output directory -- the submission contract allows exactly one file per case --
+    so callers pass a path inside their working directory.
+    """
     from build123d import export_step as _export
 
     path.parent.mkdir(parents=True, exist_ok=True)
     _export(shape, str(path))
+
+    if facts_path is None:
+        return
+    import json
+
+    document = (measured or {}).get("as_facts")
+    if not document:
+        from .factscompare import measure_as_facts
+
+        document, _ = measure_as_facts(shape)
+    facts_path.parent.mkdir(parents=True, exist_ok=True)
+    facts_path.write_text(json.dumps(document, indent=1, ensure_ascii=False), encoding="utf-8")
 
 
 def reopen_step(path: Path) -> Any:
