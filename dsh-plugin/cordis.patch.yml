@@ -1,0 +1,17 @@
+# Deterministic CAD tools for the reconstruction agent.
+#
+# Host plane on purpose: the tools and the skill must reach whichever agent preset
+# a session picked, so nothing here depends on a preset being selected.
+#
+# The row is disabled by default. `scripts/run_agent.py` installs the package into
+# a dedicated profile and enables it there, so an ordinary session is unaffected.
+- insert:
+    - id: agentic-cad-tools
+      name: '@agentic-cad/dsh-tools'
+      disabled: true
+      config:
+        # Interpreter that can import `agentic_cad` and build123d.
+        python: !!js process.env.AGENTIC_CAD_PYTHON ?? 'python'
+        # Where the checked-out package lives, so the CLI is importable without an
+        # editable install.
+        source_dir: !!js process.env.AGENTIC_CAD_SRC ?? undefined

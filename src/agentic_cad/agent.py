@@ -133,6 +133,10 @@ def reconstruct(
     diagnostics = ""
     best_shape = None
     best_attempt: Attempt | None = None
+    # Where the wall clock goes. The 20 minute limit is per whole run over nine
+    # cases, so knowing whether the model, the CAD kernel or the rasteriser
+    # dominates is the difference between tuning and guessing.
+    timings: dict[str, float] = {"llm": 0.0, "build": 0.0, "measure": 0.0, "render": 0.0, "diagnose": 0.0}
 
     for index in range(1, attempts_allowed + 1):
         if time.time() >= deadline:
@@ -149,6 +153,7 @@ def reconstruct(
             result.notes.append("no LLM configured (OPENAI_BASE_URL/OPENAI_MODEL unset) and no spec dir")
             break
         else:
+            t_llm = time.time()
             try:
                 reply = client.chat(
                     system=SYSTEM_PROMPT,
@@ -158,11 +163,25 @@ def reconstruct(
             except Exception as error:  # noqa: BLE001 - a provider outage must not abort the case
                 result.notes.append(f"attempt {index}: LLM error: {error}")
                 break
+            timings["llm"] += time.time() - t_llm
+            # A reasoning model can spend the whole output budget thinking and
+            # emit no answer at all. Surface why it stopped and what it cost, or an
+            # empty reply looks like a formatting failure instead of a budget one.
+            result.notes.append(
+                f"attempt {index}: finish_reason={getattr(client, 'last_finish_reason', None)} "
+                f"usage={getattr(client, 'last_usage', None)}"
+            )
+            # Keep the raw reply: when a provider truncates or degenerates, the
+            # rendered module is the only way to tell a truncated reply from a
+            # badly formatted one.
+            (work_dir / f"attempt_{index}_raw.txt").write_text(reply, encoding="utf-8")
             source = extract_code(reply)
             notes = extract_prose(reply)
             if notes:
                 result.notes.append(f"attempt {index} notes: {notes[:400]}")
             if not source:
+                preview = reply.strip().replace("\n", "\\n")[:200]
+                result.notes.append(f"attempt {index}: no module in reply ({len(reply)} chars): {preview}")
                 diagnostics = "Your reply contained no Python module. Return exactly one ```python block."
                 continue
 
@@ -183,7 +202,9 @@ def reconstruct(
             continue
 
         # ---- 3. build -------------------------------------------------------
+        t_build = time.time()
         build = cad.run_module(gt, source)
+        timings['build'] += time.time() - t_build
         attempt.build_ok = build.ok
         if not build.ok:
             attempt.build_error = build.failure_text()
@@ -197,7 +218,9 @@ def reconstruct(
         (work_dir / f"attempt_{index}.py").write_text(source, encoding="utf-8")
 
         # ---- 4. measure -----------------------------------------------------
+        t_measure = time.time()
         measured = factsgen.measure(shape)
+        timings['measure'] += time.time() - t_measure
         attempt.measured = measured
         attempt.facts = factsgen.compare(gt, measured)
 
@@ -206,6 +229,7 @@ def reconstruct(
         rendered = raster.render_all(shape)
         attempt.images = imagecmp.compare_all(images_dir, rendered)
         render_s = time.time() - t0
+        timings['render'] += render_s
         if render_s > 20:
             result.notes.append(f"attempt {index}: rendering took {render_s:.1f}s")
 
@@ -260,6 +284,7 @@ def reconstruct(
         # ---- 6. classify and prepare the retry ------------------------------
         diag = diagnose.classify(gt, attempt.facts, attempt.images)
         deterministic = diag.render()
+        t_diag = time.time()
         if client is not None:
             try:
                 model_view = client.chat(
@@ -274,6 +299,7 @@ def reconstruct(
                 diagnostics = (
                     f"{model_view}\n\nDeterministic check of the same candidate:\n{deterministic}"
                 )
+                timings['diagnose'] += time.time() - t_diag
             except Exception:  # noqa: BLE001 - fall back to the deterministic diagnosis
                 diagnostics = deterministic
         else:
@@ -298,6 +324,7 @@ def reconstruct(
             "gating_failures": best_attempt.gating_failures,
             "mean_iou_ortho": round(best_attempt.images.mean_iou_ortho, 4) if best_attempt.images else None,
             "elapsed_s": round(result.elapsed_s, 1),
+            "timings_s": {k: round(v, 1) for k, v in timings.items()},
             "notes": result.notes,
         }
         (work_dir / "case_summary.json").write_text(json.dumps(summary, indent=1), encoding="utf-8")

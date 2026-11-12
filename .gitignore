@@ -11,3 +11,5 @@
 .work/
 pytest-of-*/
 .pytest_cache/
+.runs/
+.tmp/

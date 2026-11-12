@@ -33,7 +33,13 @@ class LlmConfig:
     api_key: str
     model: str
     temperature: float = 0.2
-    max_tokens: int = 8000
+    # Reasoning models bill their hidden reasoning against this budget. Measured on
+    # deepseek-flash with the eight views attached: completion_tokens ~7000 of
+    # which reasoning_tokens ~5900 for a nine-face part. At 8000 the reasoning can
+    # consume the whole allowance and the reply comes back as an empty string with
+    # finish_reason 'length', which looks like a formatting bug rather than a
+    # budget one. 32000 leaves room for a long derivation.
+    max_tokens: int = 32000
     timeout_s: float = 240.0
     attempts: int = 3
     image_max_side: int = DEFAULT_IMAGE_MAX_SIDE
@@ -50,7 +56,7 @@ class LlmConfig:
             api_key=api_key,
             model=model,
             temperature=float(os.environ.get("OPENAI_TEMPERATURE", "0.2") or 0.2),
-            max_tokens=int(os.environ.get("OPENAI_MAX_TOKENS", "8000") or 8000),
+            max_tokens=int(os.environ.get("OPENAI_MAX_TOKENS", "32000") or 32000),
             timeout_s=float(os.environ.get("OPENAI_TIMEOUT_S", "240") or 240),
             attempts=int(os.environ.get("OPENAI_RETRIES", "3") or 3),
             image_max_side=int(os.environ.get("OPENAI_IMAGE_MAX_SIDE", str(DEFAULT_IMAGE_MAX_SIDE))),
@@ -118,7 +124,13 @@ class LlmClient:
                     temperature=self.config.temperature,
                     max_tokens=self.config.max_tokens,
                 )
-                return (response.choices[0].message.content or "").strip()
+                choice = response.choices[0]
+                # Expose why the model stopped. A reply that ends on `length` is
+                # truncated, and a truncated module parses as a syntax error that
+                # looks like a badly formatted answer rather than a budget problem.
+                self.last_finish_reason = getattr(choice, "finish_reason", None)
+                self.last_usage = getattr(response, "usage", None)
+                return (choice.message.content or "").strip()
             except Exception as error:  # noqa: BLE001 - provider errors vary widely
                 last_error = error
                 if attempt >= self.config.attempts:
@@ -128,21 +140,25 @@ class LlmClient:
 
 
 def extract_code(text: str) -> str | None:
-    """Pull the first fenced Python block out of a reply.
+    """Pull the module out of a reply, tolerating a truncated final fence.
 
-    Models occasionally wrap the module in two blocks or add prose; taking the
-    longest block is the robust choice, since a real module is always the largest
-    thing in the reply.
+    A provider that stops mid-answer leaves ```` ```python ```` without its closing
+    fence. Treating that as "no module" hides the real problem (the token budget),
+    so the unterminated case takes everything after the opening fence.
     """
     blocks = CODE_BLOCK_RE.findall(text)
-    if not blocks:
-        # Some providers return raw code without fences.
-        stripped = text.strip()
-        return stripped if "def build" in stripped else None
-    return max(blocks, key=len).strip()
+    if blocks:
+        return max(blocks, key=len).strip()
+
+    opener = re.search(r"```(?:python)?[ \t]*\r?\n", text)
+    if opener:
+        tail = text[opener.end():]
+        return tail.strip() or None
+
+    stripped = text.strip()
+    return stripped if "def build" in stripped else None
 
 
 def extract_prose(text: str) -> str:
     """Everything that is not a code block, for notes and diagnoses."""
-    without = CODE_BLOCK_RE.sub("", text)
-    return without.strip()
+    return CODE_BLOCK_RE.sub("", text).strip()
