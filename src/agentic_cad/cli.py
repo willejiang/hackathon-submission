@@ -135,13 +135,20 @@ def _snapshot(shape, measured: dict) -> None:
 
 
 def tool_snapshot(args: dict) -> dict:
-    """Build a module WITHOUT the provenance check and record it as a snapshot.
+    """Build a module with safety checks and record it as a snapshot.
 
-    Only the runner calls this, after the agent has stopped: provenance is a
-    discipline for the agent while it works, not a reason to ship a box when a
-    module builds a real solid.
+    Only the runner calls this after the agent has stopped. Estimated dimensions
+    may bypass the provenance rule, but unsafe imports and I/O must stay blocked.
     """
+    from . import provenance
+
     source = read_source(args)
+    report = provenance.check(load_gt(), source)
+    blocked = [violation for violation in report.violations if violation.rule != "provenance"]
+    if blocked:
+        report.violations = blocked
+        return {"ok": False, "stage": "provenance", "report": report.render()}
+
     _gt, built, measured, _comparison = _build(source)
     if not built.ok:
         return {"ok": False, "stage": built.stage, "error": built.error}
