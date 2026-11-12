@@ -88,6 +88,12 @@ def child_env(home: Path, case: Path | None, out: Path) -> dict[str, str]:
     )
     if case is not None:
         env["AGENTIC_CAD_CASE_DIR"] = str(case)
+    # The package is not pip-installed in a development checkout, so every child that
+    # runs `python -m agentic_cad.cli` needs src on the import path.
+    existing = env.get("PYTHONPATH", "")
+    env["PYTHONPATH"] = (
+        f"{src}{os.pathsep}{existing}" if existing else str(src)
+    )
     # The sandbox on this machine leaves no usable OS temp dir for children.
     tmp = REPO_ROOT / ".tmp"
     tmp.mkdir(parents=True, exist_ok=True)
@@ -196,14 +202,72 @@ def run_case(case: str, home: Path, out: Path, timeout: float, model: str | None
     elapsed = time.time() - started
 
     step = out / f"{case}.stp"
+    forced = None
+    # A missing STEP scores zero, so never let a case end without one. If the agent
+    # ran out of time -- or crashed -- before calling cad_submit, export whatever
+    # solution.py it had reached. On test_case_6 the run hit the timeout and
+    # submitted nothing, which is the worst possible outcome for a case whose
+    # geometry was at least partly there.
+    if not step.is_file():
+        candidate = None
+        for name in ("solution.py", "solution_full.py", "sol_best.py"):
+            path = workspace / name
+            if path.is_file() and path.stat().st_size > 0:
+                candidate = path
+                break
+        if candidate is None:
+            others = sorted(workspace.glob("*.py"), key=lambda p: p.stat().st_size, reverse=True)
+            candidate = others[0] if others else None
+        if candidate is not None:
+            forced = export_candidate(case, candidate, home, out)
+
     return {
         "case": case,
         "elapsed_s": elapsed,
         "rc": rc,
         "timed_out": timed_out,
         "bytes": step.stat().st_size if step.is_file() else 0,
+        "forced_submit": forced,
         "log": log_path,
         "workspace": workspace,
+    }
+
+
+def export_candidate(case: str, candidate: Path, home: Path, out: Path) -> dict:
+    """Build and export a candidate module after the agent has stopped.
+
+    Deliberately a separate python -m invocation rather than a retry inside the
+    session: the session is gone by this point, and the module only has to build and
+    be one solid for the file to be worth submitting.
+    """
+    env = child_env(home, INPUTS / case, out)
+    try:
+        proc = subprocess.run(
+            [sys.executable, "-m", "agentic_cad.cli", "submit", json.dumps({"path": str(candidate)})],
+            cwd=str(candidate.parent),
+            env=env,
+            capture_output=True,
+            text=True,
+            timeout=300,
+        )
+    except subprocess.TimeoutExpired:
+        return {"ok": False, "from": candidate.name, "error": "export timed out"}
+    payload = {}
+    for line in (proc.stdout or "").splitlines():
+        line = line.strip()
+        if line.startswith("{"):
+            try:
+                payload = json.loads(line)
+            except json.JSONDecodeError:
+                pass
+    error = payload.get("error") or payload.get("report")
+    if not payload and (proc.stderr or "").strip():
+        error = (proc.stderr or "").strip()[-800:]
+    return {
+        "ok": bool(payload.get("ok")),
+        "from": candidate.name,
+        "error": error,
+        "bytes": payload.get("bytes", 0),
     }
 
 

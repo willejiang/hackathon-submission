@@ -24,6 +24,9 @@ from agentic_cad.gt import load_case  # noqa: E402
 INPUTS = REPO_ROOT / "artifacts/inputs"
 
 
+IOU_GATE = 0.93
+
+
 def score(path: Path, case_dir: Path) -> dict:
     gt = load_case(case_dir)
     shape = cad.reopen_step(path)
@@ -31,11 +34,18 @@ def score(path: Path, case_dir: Path) -> dict:
     comparison = factsgen.compare(gt, measured)
     rendered = raster.render_all(shape)
     images = imagecmp.compare_all(case_dir / "images", rendered)
+    # The pipeline accepts on facts AND projection. Report both, or a part the
+    # harness would reject shows up green here: test_case_7 matches its volume to
+    # 0.00004% yet scores 0.853 on the orthographic views.
+    projection_ok = images.mean_iou_ortho >= IOU_GATE
+    gating_failures = [c.name for c in comparison.gating_failures]
+    if not projection_ok:
+        gating_failures = gating_failures + [f"projection(ortho {images.mean_iou_ortho:.3f})"]
     return {
         "case": gt.name,
         "bytes": path.stat().st_size,
-        "gating_ok": comparison.ok,
-        "gating_failures": [c.name for c in comparison.gating_failures],
+        "gating_ok": comparison.ok and projection_ok,
+        "gating_failures": gating_failures,
         "volume_ratio": (
             measured["volume_mm3"] / gt.volume if gt.volume else None
         ),

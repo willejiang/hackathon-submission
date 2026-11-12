@@ -16,9 +16,15 @@ evidence, not specification.
 ## Ground truth
 
 - Never modify, round away, or reinterpret `facts.json` or `description.md`.
-- A conflict between a picture and the brief is your misreading of the picture.
 - Positions in the brief are millimetres from the bounding-box minimum corner, in
   the frame of the eight views.
+- **When the prose contradicts the numbers, the numbers win.** A picture is evidence
+  and the brief is evidence, but `facts.json` is measurement. On the practice set the
+  bracket's brief places a recess at `Y = 7.0`; built there, the volume comes out
+  about a third low. The renders show the recess breaking through the front face, the
+  measured volume agrees with them, and that reading matches the target to 0.17 mm3.
+  So do not assume every conflict is your own misreading -- but do not overrule the
+  numbers either. Resolve conflicts with arithmetic, and say so in `NOTES`.
 
 ## The loop
 
@@ -99,39 +105,68 @@ d["boss_x"] = [d["centre"] * s for s in (-1, 1)]
 
 ## Reading the feedback
 
-`cad_verify` gives you expected vs measured per fact. Diagnose before editing:
+`cad_verify` gives you expected vs measured per fact. Rows marked `*` are gating.
+Diagnose before editing:
 
 | symptom | likely cause |
 |---|---|
 | volume and area both low | a described feature was never cut |
 | volume and area both high | material the brief does not describe |
 | volume off, area close | a feature has the right footprint at the wrong depth, or is in the wrong place |
-| genus wrong | a blind pocket modelled as a through cut, or the reverse |
-| declared bore missing | a feature from facts.json was skipped, or is on the wrong axis |
-| a face type absent (`CONE`, `TORUS`, `SPHERE`, `BSPLINE`) | the chamfer / fillet / ball end is missing |
+| **genus too high** | **a blind hole or pocket was cut all the way through** |
+| genus too low | a blind hole was missed, or a through bore was plugged |
+| **`hole_depths` fails** | **blind and through are not interchangeable; the declared depth is the whole difference** |
+| **area 5%+ low while volume is close** | **an entire feature family is missing — recesses, fillets, chamfers. The volume barely notices, the surface does. Read the face-type row.** |
+| `face_types` names a species at 0 | that family is absent entirely: `TORUS` rounds, `BSPLINE` free-form fillets, `CONE` chamfers, `SPHERE` ball ends |
+| a bore reported missing but you built it | check the axis: facts writes angled bores as a direction vector, and a bore on the wrong axis is a different bore |
 | a face type present that facts lacks | a feature you invented; remove it, do not resize it |
-| face count off, species right | too many distinct features, or one feature split in two |
 
 `cad_render` gives IoU plus `overfill` and `underfill` per view. `overfill`
 high means material where the reference is empty; `underfill` high means material
 missing. Both high at once, with a wrong aspect ratio, means you put a feature in
 the wrong place rather than sizing it wrong.
 
-Face and edge counts are advisory only: the reference models may have been built by
+**The silhouette has a blind spot, and you have to cover it yourself.** A pocket cut
+into a face does not change that face's outline. Measured: a 40 x 40 x 10 pocket
+removes 3.2% of a block and changes *zero pixels* in all eight silhouettes. So IoU
+can look excellent while every recess is missing — that is what happened on the
+cylinder head, which scored 0.985 with its top-face pockets absent. What catches it
+is `surface_area_mm2`, `through_holes_genus`, the face-type row, and the shading
+*inside* the outline when you look at the picture. When the brief names a pocket,
+confirm it by volume arithmetic and by the faces it adds, not by the silhouette.
+
+Face and edge *counts* are advisory: the reference models may have been built by
 fusing several bodies, so the same solid can have a different topology and still be
-correct. Do not chase them at the expense of volume and bounding box.
+correct. Do not chase counts at the expense of the gating rows. But a face-type
+species sitting at 0 is not a counting difference — it means you never built that
+kind of feature at all.
 
 ## Never
 
 - change a stated dimension to make a picture match
 - tune a literal until a check turns green — write the formula instead
-- submit before the gating facts pass, unless you have exhausted your budget, in
-  which case submit your best attempt: a missing file scores zero
+- leave a case without a file: submit something, always
+
+## Submit early, then improve
+
+A missing file scores zero; a mediocre file scores something. So:
+
+1. Get a module that builds and whose gating facts pass — even if it has none of the
+   recesses or fillets yet.
+2. **`cad_submit` it.**
+3. Keep improving, and call `cad_submit` again after each real improvement.
+
+This is not a concession to a deadline, it is the correct order. On the practice
+set one case ran out of time while still iterating and submitted nothing, wasting a
+part whose gross geometry was already right. Submitting costs one tool call and can
+only help.
 
 ## Budget
 
 The whole run over nine parts has 20 minutes wall clock. Be economical: read the
-views once, reason, write the module once, measure, and fix what the numbers say.
-Re-reading images you already interpreted buys nothing. If a case is going badly,
-submit the best candidate you have and move on — one good part and eight zeroes
-loses to nine mediocre ones.
+views once, reason, write the module, measure, fix what the numbers say. Re-reading
+images you already interpreted buys nothing. The practice set showed the split
+clearly — the simple parts finish in about two minutes, and the ones with hundreds
+of faces never converge in the time available, so for those spend your effort on
+the gross geometry and the gating rows, submit, and move on. One perfect part and
+eight zeroes loses to nine decent ones.

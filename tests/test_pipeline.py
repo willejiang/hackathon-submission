@@ -333,3 +333,77 @@ def test_step_round_trip_preserves_the_solid(case3, case3_shape, tmp_path):
     assert path.is_file() and path.stat().st_size > 0
     reopened = cad.reopen_step(path)
     assert reopened.volume == pytest.approx(case3_shape.volume, rel=1e-6)
+
+
+# --------------------------------------------------------------------------- #
+# The verification blind spots found on the practice set.
+#
+# Each of these started as a real failure: a part that passed every gate while
+# being wrong. They are regression tests for the fixes, and they double as
+# documentation of what the harness can and cannot see.
+# --------------------------------------------------------------------------- #
+
+
+def test_pocket_is_invisible_to_silhouette_but_visible_to_area():
+    """A recess does not change any outline, so IoU alone cannot police it.
+
+    Measured fact that motivates the gating on surface area and genus: a pocket
+    cut into a face leaves all eight silhouettes bit-identical.
+    """
+    from build123d import Box, Pos
+
+    def masks(shape):
+        vertices, triangles = raster.mesh_of(shape)
+        return {
+            view.stem: raster.silhouette(vertices, triangles, view, size=384, fit_px=180)
+            for view in raster.VIEWS
+        }
+
+    plain = Pos(50, 50, 25) * Box(100, 100, 50)
+    pocketed = plain - Pos(50, 50, 45) * Box(40, 40, 10)
+
+    assert pocketed.volume < plain.volume * 0.99  # the pocket really removes material
+    assert pocketed.area > plain.area             # and really adds surface
+
+    before, after = masks(plain), masks(pocketed)
+    for stem in before:
+        assert (before[stem] != after[stem]).sum() == 0, (
+            f"{stem}: a pocket must not change the silhouette -- if it does, this test "
+            f"is wrong, not the pixel difference"
+        )
+
+
+def test_oblique_bore_axis_matches_a_direction_vector():
+    """facts.json writes angled bores as a vector; a letter can never match one.
+
+    The V6 block declares 8x d9.52 along (0, 0.71, 0.71). Comparing that against the
+    measured "X"/"Y"/"Z" label reported correctly-modelled bores as missing.
+    """
+    matches = factsgen._axis_matches
+    assert matches((0.0, 0.7071, 0.7071), (0.0, 0.71, 0.71))
+    assert matches((0.0, -0.7071, -0.7071), (0.0, 0.71, 0.71)), "sign must not matter"
+    assert not matches((0.0, 1.0, 0.0), (0.0, 0.71, 0.71))
+    assert not matches((0.0, 1.0, 0.0), (0.0, 0.0, 1.0))
+    # A letter in facts still works.
+    assert matches((0.0, 0.0, 1.0), "Z")
+    assert not matches((0.0, 1.0, 0.0), "Z")
+
+
+def test_blind_hole_modelled_as_through_fails_the_depth_and_genus_checks():
+    """Diameter and axis are identical; only depth and genus tell them apart."""
+    from build123d import Box, Cylinder, Pos, Rot
+
+    plate = Pos(0, 0, 5) * Box(40, 40, 10)
+    blind = plate - (Pos(0, 0, 10 - 4 / 2) * Cylinder(3, 4))          # 4 mm deep
+    through = plate - (Pos(0, 0, 5) * Rot(0, 0, 0) * Cylinder(3, 12))  # all the way
+
+    blind_facts = factsgen.measure(blind)
+    through_facts = factsgen.measure(through)
+
+    blind_group = next(g for g in blind_facts["cylinder_groups"] if g["kind"] == "bore")
+    through_group = next(g for g in through_facts["cylinder_groups"] if g["kind"] == "bore")
+
+    assert blind_group["axial_extent"] == pytest.approx(4.0, abs=0.05)
+    assert through_group["axial_extent"] == pytest.approx(10.0, abs=0.05)
+    assert blind_facts["through_holes_genus"] == 0
+    assert through_facts["through_holes_genus"] == 1
