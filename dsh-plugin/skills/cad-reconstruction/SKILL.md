@@ -23,27 +23,6 @@ bounding-box minimum corner.
 - Never take a dimension from a render. Never invent a hidden cavity from a
   silhouette.
 
-## Complexity decides the plan
-
-Count the feature families before you model anything. `cad_case_info` gives you the
-totals; a part with hundreds of declared faces and dozens of rounded families cannot
-be reproduced feature by feature in the time available, and trying is how a run ends
-with nothing submitted.
-
-**Coarse mode** — switch to it when the part declares more than roughly 300 faces, or
-its families of arcs, rounds, tori and cones exceed about 40 in total:
-
-1. Get the **gross geometry** right and stop: outer envelope, main bores and pockets,
-   the primary cutouts that move volume. Bounding box, volume, solid count, genus.
-2. **Deliberately skip** the fillet and round inventories and any small detail under a
-   few millimetres. On the practice set, 65 tori plus 222 free-form fillets were about
-   3% of surface area — while a bank bore cut at a sixth of its depth cost 30%.
-3. Submit, then run the measurement step, then fix only rows that move a gating
-   number.
-
-The score is geometric similarity: the right envelope, volume and main passages beat
-an attempt at every blend that never finishes. Report what you skipped in `NOTES`.
-
 ## The loop
 
 1. `cad_case_info` — facts, brief, view paths, cameras.
