@@ -1,218 +1,162 @@
 ---
 name: cad-reconstruction
-description: Reconstruct one mechanical part as STEP from facts.json, a design brief and eight rendered views, using the deterministic cad_* tools. Load this before any CAD work in this workspace.
+description: Reconstruct one mechanical part as STEP from facts.json, a brief and eight views, with the deterministic cad_* tools. Load before any CAD work here.
 whenToUse: whenever the task is to build the cad model for a test_case, or to fix one that does not match its facts.
 ---
 
 # CAD reconstruction
 
-You are reconstructing ONE mechanical part. It is graded by geometric similarity to
-a hidden target, so **size and handedness matter, position and orientation do not**.
+One mechanical part, graded by geometric similarity: **size and handedness matter,
+position and orientation do not.**
 
-`facts.json` and `description.md` are measurements and prose about the real part.
-They are authoritative. The eight PNGs are renders of the same part. They are
-evidence, not specification.
+`facts.json` is measurement, the brief is prose about the same part, the eight PNGs
+are renders of it. Never modify `facts.json` or the brief. Positions are mm from the
+bounding-box minimum corner.
 
 ## Ground truth
 
-- Never modify, round away, or reinterpret `facts.json` or `description.md`.
-- Positions in the brief are millimetres from the bounding-box minimum corner, in
-  the frame of the eight views.
-- **When the prose contradicts the numbers, the numbers win.** A picture is evidence
-  and the brief is evidence, but `facts.json` is measurement. On the practice set the
-  bracket's brief places a recess at `Y = 7.0`; built there, the volume comes out
-  about a third low. The renders show the recess breaking through the front face, the
-  measured volume agrees with them, and that reading matches the target to 0.17 mm3.
-  So do not assume every conflict is your own misreading -- but do not overrule the
-  numbers either. Resolve conflicts with arithmetic, and say so in `NOTES`.
+- A picture is evidence, the brief is evidence, `facts.json` is measurement.
+- **When the prose contradicts the numbers, the numbers win.** On the practice set a
+  bracket brief puts a recess at `Y = 7.0`; built there the volume comes out a third
+  low, and the renders plus the measured volume both disagree with it. Resolve
+  conflicts with arithmetic, and say so in `NOTES`.
+- Never take a dimension from a render. Never invent a hidden cavity from a
+  silhouette.
+
+## Complexity decides the plan
+
+Count the feature families before you model anything. `cad_case_info` gives you the
+totals; a part with hundreds of declared faces and dozens of rounded families cannot
+be reproduced feature by feature in the time available, and trying is how a run ends
+with nothing submitted.
+
+**Coarse mode** — switch to it when the part declares more than roughly 300 faces, or
+its families of arcs, rounds, tori and cones exceed about 40 in total:
+
+1. Get the **gross geometry** right and stop: outer envelope, main bores and pockets,
+   the primary cutouts that move volume. Bounding box, volume, solid count, genus.
+2. **Deliberately skip** the fillet and round inventories and any small detail under a
+   few millimetres. On the practice set, 65 tori plus 222 free-form fillets were about
+   3% of surface area — while a bank bore cut at a sixth of its depth cost 30%.
+3. Submit, then run the measurement step, then fix only rows that move a gating
+   number.
+
+The score is geometric similarity: the right envelope, volume and main passages beat
+an attempt at every blend that never finishes. Report what you skipped in `NOTES`.
 
 ## The loop
 
-1. `cad_case_info` — facts, brief, view paths, camera conventions. Read it fully.
-2. `read_image` each view. **Silhouette first**: describe the 2D outline (extents,
-   straight runs, arcs, where a hole or slot interrupts it) before anything else.
-   Then extract constraints the view can actually establish: a feature is centred,
-   two edges are collinear, a step is symmetric, a hole sits on a centreline.
-   Do not read millimetres off a render; the brief has the millimetres.
-3. Decide the structure from **function** first — what the part mounts to, what
-   passes through it, what it seals, what it is machined from — then let the brief
-   confirm or veto each feature. Function proposes; the specification disposes.
-4. `write` a module to `solution.py`.
-5. `cad_build` — does it build, and what is it? Fix provenance or build errors here.
-6. `cad_verify` — do the numbers match the facts? Rows marked `*` are gating.
-7. `cad_submit` — export the STEP as soon as the gating rows agree.
-8. **`cad_facts_scaffold` then `write` `measure_result.py` then `cad_measure_result`** —
-   measure the submitted file into the brief's own structure and compare it against
-   the brief, entry by entry. This is the step that catches what `cad_verify` does
-   not model. See below.
-9. `cad_render` — do the silhouettes match the pictures? Only meaningful once the
-   numbers are close.
-10. Fix what the comparison names, and go back to 4.
+1. `cad_case_info` — facts, brief, view paths, cameras.
+2. `read_image` the views. **Silhouette first**: the outline, then the constraints it
+   establishes (centred, collinear, symmetric, on a centreline).
+3. Decide structure from **function**: what it mounts to, what passes through it, what
+   it seals, what it is machined from. Function proposes, the specification disposes.
+4. `write solution.py`.
+5. `cad_build` — does it build, and what is it?
+6. `cad_verify` — numbers against facts. Rows marked `*` are gating.
+7. `cad_submit` — as soon as the gating rows agree. Then keep improving.
+8. `cad_facts_scaffold` → `write measure_result.py` → `cad_measure_result` — measure
+   the submitted file into the brief's own structure and compare every entry.
+9. `cad_render` — silhouettes against pictures, once the numbers are close.
+10. Fix what the comparison names, back to 4.
 
-## Measuring your own output
+## Trust ranking
 
-`facts.json` is not one schema. The families differ between parts: an extra
-`more_not_listed` field here, a different set of surface species there, dictionaries
-of radii and angles keyed by whatever this part happens to have. A fixed measurer
-written by the harness would silently drop what it did not anticipate, which is how
-a family stops being checked without anyone noticing.
+1. `facts.json` and the brief
+2. the six orthographic views
+3. the two isometric views — sanity only
 
-So **you** write the measurer, from the structure you are given:
+You are weak at images: shading and highlights will attract your attention. A blind
+pocket and a through hole look identical in one view — `genus` counts the through
+ones, the brief says which is which. If the brief says "no fillets" and a render looks
+rounded, that is shading.
 
-1. `cad_facts_scaffold` returns this case's `facts.json` with every number replaced
-   by `null`. You get the keys, the nesting and the list lengths. You do not get a
-   single measurement.
-2. Write `measure_result.py` defining:
+## The module
 
-   ```python
-   def measure(shape):
-       """shape: a build123d solid, already imported. Return a dict."""
-       return {...}   # exactly the structure the scaffold showed
-   ```
-
-3. `cad_measure_result` imports the STEP *you submitted*, calls your `measure`,
-   checks the document has the brief's shape, and compares every entry. It writes
-   `facts_from_result.json` next to your workspace.
-
-Rules the harness enforces before your measurer runs — it is refused, not
-warned — because a measurer that could read the case directory could copy the
-expected answers instead of measuring:
-
-- no `open`, no `eval`/`exec`, no `os`, `sys`, `json`, `pathlib`, `io`, `subprocess`
-- imports limited to `build123d`, `OCP`, `math`, `itertools`, `numpy`, `typing`
-- it must define `measure(shape)`
-
-Conventions, so the two documents line up: axis labels are `X`/`Y`/`Z` or a
-`[x, y, z]` direction; surface type names are `face.geom_type.name`; angles in
-degrees; lengths in millimetres.
-
-This step is not paperwork. On the practice set it is what turns "the part looks
-right" into "the part has 25 of the 25 declared rounds, its bank bores are 156.14 mm
-and not 25.4 mm, and its genus is 6 and not 18".
-
-## Trust ranking for evidence
-
-1. `facts.json` and `description.md` — authoritative
-2. the six orthographic views — geometric evidence
-3. the two isometric views — spatial sanity only
-
-You are weak at images. Your attention may latch onto shading, a specular highlight,
-or a boundary that is not a CAD edge. Compensate:
-
-- a blind pocket and a through-hole look identical in one view; `through_holes_genus`
-  in facts counts the through ones, and the brief says which is which
-- if the brief says "no fillets" and the render looks rounded, that is shading
-- never invent a hidden cavity from a silhouette
-- never take a dimension from the isometric views
-
-## The module contract
-
-`solution.py` must define exactly:
+`solution.py` defines exactly two functions:
 
 ```python
-def derive(facts):
-    """facts: the parsed facts.json dict. Return a dict of parameters."""
+def derive(facts):          # parsed facts.json -> dict of parameters
     d = {}
     d["length"] = facts["bounding_box_mm"]["x"]   # grounded
-    d["wall"] = 14.0                              # grounded (brief: 14.0 mm thick)
+    d["wall"] = 14.0                              # grounded (brief: 14.0 mm)
     d["bore_r"] = d["bore_d"] / 2                 # derived
     return d
 
-def build(p):
-    """p: the dict from derive(). Return one build123d Solid/Part."""
+def build(p):               # the dict from derive() -> one build123d solid
     ...
 ```
 
-Rules that `cad_build` enforces before it builds anything:
+Enforced by `cad_build` before it builds:
 
-- `derive()` may contain a numeric literal **only** when that value appears in
-  facts.json or the brief, or is structural: `0 1 2 3 -1 90 180 270`.
-- `build()` may contain **only** those structural literals. Every dimension passes
-  through `p`. Writing `Box(19, 14, 50.8)` fails; writing `Box(p["x"], p["y"], p["z"])`
-  passes.
-- No `open`, no `eval`, no `export_step`, no imports beyond `build123d`, `math`,
-  `itertools`, `numpy`.
+- `derive()` may contain a literal **only** if that value is in facts.json or the
+  brief, or is structural: `0 1 2 3 -1 90 180 270`.
+- `build()` may contain **only** structural literals. `Box(19, 14, 50.8)` fails;
+  `Box(p["x"], p["y"], p["z"])` passes.
+- No `open`, `eval`, `export_step`; imports limited to `build123d`, `math`,
+  `itertools`, `numpy`, `typing`.
 
-Also:
-
-- millimetres, no scaling
-- one connected solid — fuse multi-piece constructions
-- put the bounding-box minimum corner at the origin
-- `Cylinder`/`Cone` are Z-up; a hole along Y is `Rot(90, 0, 0) * Cylinder(...)`, along
-  X is `Rot(0, 90, 0) * Cylinder(...)`
-- a fillet the brief does not mention is a defect, not a flourish
+Millimetres, no scaling; one connected solid (fuse what you build in pieces);
+bbox minimum at the origin; `Cylinder`/`Cone` are Z-up, so a bore along Y is
+`Rot(90, 0, 0) * Cylinder(...)`, along X `Rot(0, 90, 0) * Cylinder(...)`.
 
 Express relationships, do not restate numbers:
+`d["centre"] = d["module"] * (d["z1"] + d["z2"]) / 2`.
 
-```python
-d["centre"] = d["module"] * (d["z1"] + d["z2"]) / 2
-d["boss_x"] = [d["centre"] * s for s in (-1, 1)]
-```
+## Measuring your own output
+
+`facts.json` is not one schema: an extra field here, a different species set there,
+radius dictionaries keyed by whatever this part has. A fixed measurer drops what it
+did not anticipate, so **you** write one from the structure given:
+
+1. `cad_facts_scaffold` — this case's facts.json with every number replaced by `null`;
+   keys, nesting and list lengths only. You never see the expected values.
+2. `write measure_result.py` defining `def measure(shape)` returning that structure.
+   Aggregate each family once, by the fields facts uses to identify it, summing
+   `faces`; one entry per axis leaves duplicate identities.
+3. `cad_measure_result` — imports your submitted STEP, runs your measurer, checks the
+   document's shape, compares every entry, writes `facts_from_result.json`. The harness
+   also measures the solid with its own measurer and the gate takes the worse verdict,
+   so a permissive measurer cannot hide a defect.
+
+Refused before it runs, since one that could read the case directory could copy the
+answers: no `open`/`eval`/`exec`, no `os`/`sys`/`json`/`pathlib`/`io`/`subprocess`;
+imports limited to `build123d`/`OCP`/`math`/`itertools`/`numpy`/`typing`.
+
+Conventions: axis labels `X`/`Y`/`Z` or `[x, y, z]`; surface names are
+`face.geom_type.name`; degrees; millimetres.
 
 ## Reading the feedback
-
-`cad_verify` gives you expected vs measured per fact. Rows marked `*` are gating.
-Diagnose before editing:
 
 | symptom | likely cause |
 |---|---|
 | volume and area both low | a described feature was never cut |
 | volume and area both high | material the brief does not describe |
-| volume off, area close | a feature has the right footprint at the wrong depth, or is in the wrong place |
-| **genus too high** | **a blind hole or pocket was cut all the way through** |
-| genus too low | a blind hole was missed, or a through bore was plugged |
-| **`hole_depths` fails** | **blind and through are not interchangeable; the declared depth is the whole difference** |
-| **area 5%+ low while volume is close** | **an entire feature family is missing — recesses, fillets, chamfers. The volume barely notices, the surface does. Read the face-type row.** |
-| `face_types` names a species at 0 | that family is absent entirely: `TORUS` rounds, `BSPLINE` free-form fillets, `CONE` chamfers, `SPHERE` ball ends |
-| a bore reported missing but you built it | check the axis: facts writes angled bores as a direction vector, and a bore on the wrong axis is a different bore |
-| a face type present that facts lacks | a feature you invented; remove it, do not resize it |
+| volume off, area close | right footprint, wrong depth or wrong place |
+| **genus too high** | **a blind hole or pocket was cut through** |
+| genus too low | a blind hole missed, or a through bore plugged |
+| **`hole_depths` fails** | **blind and through are not interchangeable** |
+| **area 5%+ low, volume close** | **a whole feature family is missing** — read the face-type row |
+| a species at 0 | that family is absent: `TORUS` rounds, `BSPLINE` fillets, `CONE` chamfers, `SPHERE` ball ends |
+| a bore reported missing but you built it | check the axis: angled bores are direction vectors, and the wrong axis is a different bore |
 
-`cad_render` gives IoU plus `overfill` and `underfill` per view. `overfill`
-high means material where the reference is empty; `underfill` high means material
-missing. Both high at once, with a wrong aspect ratio, means you put a feature in
-the wrong place rather than sizing it wrong.
+`cad_render` gives IoU plus `overfill` and `underfill` per view. Both high with a bad
+aspect ratio means a feature is in the wrong place, not the wrong size.
 
-**The silhouette has a blind spot, and you have to cover it yourself.** A pocket cut
-into a face does not change that face's outline. Measured: a 40 x 40 x 10 pocket
-removes 3.2% of a block and changes *zero pixels* in all eight silhouettes. So IoU
-can look excellent while every recess is missing — that is what happened on the
-cylinder head, which scored 0.985 with its top-face pockets absent. What catches it
-is `surface_area_mm2`, `through_holes_genus`, the face-type row, and the shading
-*inside* the outline when you look at the picture. When the brief names a pocket,
-confirm it by volume arithmetic and by the faces it adds, not by the silhouette.
+**Silhouettes cannot see a recess.** Measured: a 40 x 40 x 10 pocket removes 3.2% of
+a block and changes zero pixels in all eight views. A part can score 0.985 with every
+top-face pocket missing — that happened. `surface_area`, `genus` and the face-type row
+are what catch it, plus the shading inside the outline when you look.
 
-Face and edge *counts* are advisory: the reference models may have been built by
-fusing several bodies, so the same solid can have a different topology and still be
-correct. Do not chase counts at the expense of the gating rows. But a face-type
-species sitting at 0 is not a counting difference — it means you never built that
-kind of feature at all.
+Counts are advisory: the references were built by fusing bodies, so the same solid can
+have a different topology. A species at 0 is different — you never built that feature.
 
-## Never
+## Submit first, then improve
 
-- change a stated dimension to make a picture match
-- tune a literal until a check turns green — write the formula instead
-- leave a case without a file: submit something, always
+A missing file scores zero. Get a module that builds with the gating rows agreeing,
+`cad_submit` it, then keep going and submit again after each real gain. One practice
+run iterated to the deadline and submitted nothing; another submitted early and
+finished with 15 of 16 bore families.
 
-## Submit early, then improve
-
-A missing file scores zero; a mediocre file scores something. So:
-
-1. Get a module that builds and whose gating facts pass — even if it has none of the
-   recesses or fillets yet.
-2. **`cad_submit` it.**
-3. Keep improving, and call `cad_submit` again after each real improvement.
-
-This is not a concession to a deadline, it is the correct order. On the practice
-set one case ran out of time while still iterating and submitted nothing, wasting a
-part whose gross geometry was already right. Submitting costs one tool call and can
-only help.
-
-## Budget
-
-The whole run over nine parts has 20 minutes wall clock. Be economical: read the
-views once, reason, write the module, measure, fix what the numbers say. Re-reading
-images you already interpreted buys nothing. The practice set showed the split
-clearly — the simple parts finish in about two minutes, and the ones with hundreds
-of faces never converge in the time available, so for those spend your effort on
-the gross geometry and the gating rows, submit, and move on. One perfect part and
+Nine parts share the clock. Simple ones take about two minutes. One perfect part and
 eight zeroes loses to nine decent ones.
