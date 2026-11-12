@@ -103,6 +103,24 @@ before running, so a stale artifact cannot be counted as a success.
 
 Subagents are forbidden in the task text: one agent, one part.
 
+### Credentials
+
+The agent runs on **DeepSeek Harness** with **`deepseek-flash`**, which is a
+reasoning model *and* multimodal — it reads the eight PNG views through the
+`read_image` tool. That is the configuration the results below were produced with.
+
+The API key is read from `DEEPSEEK_API_KEY` in the environment, or — for local
+development only — from `~/.dsh/.credentials.yaml`, the harness's own credential
+store that already existed before this pipeline. It is **never written to disk by
+this repository**: it is passed to child processes through the environment and
+nothing here serialises it. Verified by scanning every file in the working tree,
+including the untracked scratch directories, for the key value.
+
+In the submission image the key comes from the handed-over `<team>.env`, as the
+challenge intends. Do not commit it, and do not put it in the Dockerfile.
+
+## Results so far
+
 ## Scoring, so the two paths are comparable
 
 `score_outputs.py` re-imports each produced STEP, measures the B-rep from scratch,
@@ -115,12 +133,29 @@ Baseline for `test_case_3`, all three approaches:
 |---|---|---|---|---|
 | hand-written reference spec | 1.0000 | 0.989 | 0.993 | 2.5 s |
 | code harness (`main.py`) | 1.0000 | 0.989 | 0.993 | ~41 s |
-| agent (`dsh` + tools) | 1.0000 | 0.989 | 0.993 | ~126 s |
+| agent (`dsh` + `deepseek-flash`) | 1.0000 | 0.989 | 0.993 | ~126 s |
 
 All three converge on the same solid. That is the expected result for a part whose
 brief is unambiguous: the brief is a complete parametric specification, so the
 interesting question is not whether the easy case works but how the two
 architectures behave as the brief gets thinner and the geometry gets harder.
+
+`test_case_1` is where they separate. Its brief is wrong: the front recess is
+described as a cylinder centred at `Y = 7.0`, and taken literally the volume comes
+out roughly a third low. The text-only path could not reconcile it. The agent read
+the left and right silhouettes, placed the recess axis on the front face instead,
+fitted the back-view arcs to `r = 12.5` centred on the bolt holes, and predicted the
+total volume to 0.17 mm³:
+
+| case | volume / expected | surface area | genus | gating | mean IoU |
+|---|---|---|---|---|---|
+| `test_case_1` (agent) | 1.0000 (9195.9 vs 9195.9) | 4538.53 vs 4538.5 | 2 | PASS | 0.9945 |
+| `test_case_3` (agent) | 1.0000 | 32104.99 vs 32105.0 | 1 | PASS | 0.9896 |
+
+That is the case for paying for vision — and also a warning: the skill says a
+conflict between a picture and the brief is your misreading of the picture. Here it
+was not. The rule should be "the numbers in facts.json win, and a brief that
+contradicts them is a defect worth recording", not "the brief is always right".
 
 ## Where the twenty minutes go
 
