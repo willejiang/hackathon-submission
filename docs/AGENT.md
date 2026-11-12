@@ -150,7 +150,15 @@ total volume to 0.17 mm³:
 | case | volume / expected | surface area | genus | gating | mean IoU |
 |---|---|---|---|---|---|
 | `test_case_1` (agent) | 1.0000 (9195.9 vs 9195.9) | 4538.53 vs 4538.5 | 2 | PASS | 0.9945 |
-| `test_case_3` (agent) | 1.0000 | 32104.99 vs 32105.0 | 1 | PASS | 0.9896 |
+| `test_case_2` (agent) | 1.0001 | — | — | PASS | 0.9891 |
+| `test_case_3` (agent) | 1.0000 (177663 vs 177663) | 32104.99 vs 32105.0 | 1 | PASS | 0.9897 |
+
+Mean IoU over the three: 0.9911. `test_case_2` is the poppet valve — four cones, two
+tori and a stem/head junction — and the agent got there by fitting the torus radii
+and the rim chamfer against the volume and surface area together.
+
+These three are what the committed `artifacts/outputs/*.stp` contain; the remaining
+six cases need another run, which is a matter of machine time, not code.
 
 That is the case for paying for vision — and also a warning: the skill says a
 conflict between a picture and the brief is your misreading of the picture. Here it
