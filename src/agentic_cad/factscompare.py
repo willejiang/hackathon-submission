@@ -201,14 +201,22 @@ def measure_as_facts(shape: Any) -> tuple[dict[str, Any], list[str]]:
              "count": g["faces"], "lengths": [round(g["axial_extent"], 3)]}
             for g in full if g["kind"] == "shaft"
         ],
+        # facts.json names these families by curvature, not by whether the material is
+        # inside or outside the surface -- "concave"/"convex" for arcs, "convex round"
+        # and "concave fillet" for rounds. Emitting the internal bore/shaft vocabulary
+        # here made every arc disagree with the model's measurer on a label alone,
+        # which buried the disagreements that were real.
         "partial_cylinders_arcs": [
-            {"diameter": g["diameter"], "type": g["kind"], "faces": g["faces"],
-             "span_fraction": g["span_fraction"]}
+            {"diameter": g["diameter"],
+             "type": "convex" if g["kind"] == "shaft" else "concave",
+             "faces": g["faces"]}
             for g in partial
         ],
         "fillets_rounds_from_cylinders": [
-            {"radius": round(g["diameter"] / 2.0, 4), "type": "convex round", "faces": g["faces"]}
-            for g in partial if g["kind"] == "shaft"
+            {"radius": round(g["diameter"] / 2.0, 4),
+             "type": "convex round" if g["kind"] == "shaft" else "concave fillet",
+             "faces": g["faces"]}
+            for g in partial
         ],
         "fillets_from_tori_minor_radii": {f"{k:g}": v for k, v in sorted(tori.items())},
         "cones_half_angle_deg": {f"{k:g}": v for k, v in sorted(cones.items())},
@@ -443,3 +451,82 @@ def compare_facts(reference: dict[str, Any], measured: dict[str, Any],
         result.checks.append(Check(key, "measurable", "not measured", "unverified",
                                    note="the measurement layer could not compute this family"))
     return result
+
+
+# --------------------------------------------------------------------------- #
+# cross-checking the model's measurer against the harness's own
+# --------------------------------------------------------------------------- #
+
+
+def cross_check(model_comparison: Comparison, reference_comparison: Comparison) -> tuple[Comparison, list[dict]]:
+    """Merge two comparisons of the same solid, and report where they disagree.
+
+    The measurer is model-written so it can adapt to a schema that varies per case.
+    The cost of that is that it can also be *lax*: grouping families that facts keeps
+    separate makes them match when they should not, and the structure check cannot
+    see it because the document still has every family.
+
+    Measured instance: scoring the same bracket STEP, the built-in measurer reported
+    three missing bore families and a model-written one reported a single one.
+
+    So both run, and the gate is the union -- a family either measurer calls wrong is
+    wrong. Divergence is reported separately, because it is evidence about the
+    measurer rather than about the part.
+    """
+    merged = Comparison(measured=model_comparison.measured)
+    by_name = {check.name: check for check in model_comparison.checks}
+    reference_by_name = {check.name: check for check in reference_comparison.checks}
+
+    divergences: list[dict] = []
+    for name, check in reference_by_name.items():
+        mine = by_name.get(name)
+        if mine is None:
+            merged.checks.append(
+                Check(name, check.expected, check.actual, check.verdict, gating=check.gating,
+                      note="; ".join(filter(None, [
+                          check.note,
+                          "reported by the harness's own measurer; your document does not "
+                          "contain this row",
+                      ])))
+            )
+            if check.verdict in ("fail", "unverified"):
+                divergences.append({"row": name, "your_measurer": "no such row",
+                                    "harness": check.verdict,
+                                    "harness_says": f"expected {check.expected}, measured {check.actual}"})
+            continue
+
+        # The union of the two verdicts, and the stricter evidence text.
+        verdict = mine.verdict if mine.verdict == "fail" or check.verdict != "fail" else check.verdict
+        if check.verdict == "fail":
+            verdict = "fail"
+        gating = mine.gating or check.gating
+        note = mine.note
+        if mine.verdict != check.verdict:
+            divergences.append({"row": name, "your_measurer": mine.verdict,
+                                "harness": check.verdict,
+                                "harness_says": f"expected {check.expected}, measured {check.actual}"})
+            note = "; ".join(filter(None, [note, "the two measurers disagree on this row"]))
+            if check.verdict == "fail":
+                note = "; ".join(filter(None, [check.note, "harness measurement disagrees"]))
+        merged.checks.append(Check(name, mine.expected, mine.actual, verdict, gating=gating, note=note))
+
+    seen = set(reference_by_name)
+    for name, check in by_name.items():
+        if name not in seen:
+            merged.checks.append(check)
+            if check.verdict in ("fail", "unverified"):
+                divergences.append({"row": name, "your_measurer": check.verdict,
+                                    "harness": "no such row",
+                                    "harness_says": "the harness's measurer did not report this row"})
+
+    merged.checks.append(
+        Check("cross_measurement",
+              "the two measurers agree",
+              f"{len(divergences)} row(s) disagree",
+              "pass" if not divergences else "fail",
+              gating=False,
+              note="" if not divergences else
+                   "your measurer is more permissive than the harness's; the gate uses the "
+                   "union, so fixing these rows is the way to a green gate")
+    )
+    return merged, divergences

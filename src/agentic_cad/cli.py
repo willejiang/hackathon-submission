@@ -255,11 +255,20 @@ def tool_measure_result(args: dict) -> dict:
     facts_file = work_dir / "facts_from_result.json"
     measuredoc.write_document(document, facts_file)
 
-    comparison = factscompare.compare_facts(gt.facts, document)
+    # The measurer is model-written so it can adapt to the schema. That also lets it
+    # be lax, and a lax measurer is invisible: the document still has every family, so
+    # the structure check passes. So the harness measures the same solid with its own
+    # adapter and the gate is the union of the two.
+    builtin, builtin_unmeasured = factscompare.measure_as_facts(shape)
+    mine = factscompare.compare_facts(gt.facts, document)
+    reference = factscompare.compare_facts(gt.facts, builtin, builtin_unmeasured)
+    comparison, divergences = factscompare.cross_check(mine, reference)
+
     return {
         "ok": comparison.ok and not shape_problems,
         "gating_failures": [c.name for c in comparison.gating_failures],
         "structure_problems": shape_problems,
+        "divergences": divergences,
         "facts_from_result": str(facts_file),
         "table": comparison.render(),
         "advise": comparison.advise(),

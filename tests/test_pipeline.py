@@ -522,3 +522,44 @@ def test_measure_result_round_trip_on_the_reference_part():
     from agentic_cad import factscompare
     comparison = factscompare.compare_facts(gt.facts, document)
     assert comparison.ok, [c.name for c in comparison.gating_failures]
+
+
+def test_cross_check_takes_the_union_and_flags_divergence():
+    """A lax measurer must not be able to hide a defect.
+
+    Measured on the bracket: scoring the same STEP, the built-in measurer reported
+    three missing bore families and a model-written one reported a single one,
+    because the model's grouping merged families that facts keeps apart. The gate is
+    the union, and the disagreement is reported as evidence about the measurer.
+    """
+    from agentic_cad.factscompare import cross_check
+    from agentic_cad.factsgen import Check, Comparison
+
+    lax = Comparison(checks=[
+        Check("bore d8.5", "2", "2", "pass", gating=True),
+        Check("bore d9", "1", "1", "pass", gating=True),
+        Check("area", "96750", "99225", "pass", gating=True),
+    ])
+    strict = Comparison(checks=[
+        Check("bore d8.5", "2", "1", "fail", gating=True),
+        Check("bore d9", "1", "2", "fail", gating=True),
+        Check("area", "96750", "99225", "pass", gating=True),
+        Check("bore d20", "1", "0", "fail", gating=True),
+    ])
+
+    merged, divergences = cross_check(lax, strict)
+    failures = {check.name for check in merged.gating_failures}
+    assert {"bore d8.5", "bore d9", "bore d20"} <= failures, failures
+    assert "area" not in failures, "agreement must not become a failure"
+    assert {d["row"] for d in divergences} == {"bore d8.5", "bore d9", "bore d20"}
+    assert any(check.name == "cross_measurement" for check in merged.checks)
+
+
+def test_cross_check_passes_when_both_agree():
+    from agentic_cad.factscompare import cross_check
+    from agentic_cad.factsgen import Check, Comparison
+
+    same = Comparison(checks=[Check("volume_mm3", "1", "1", "pass", gating=True)])
+    merged, divergences = cross_check(same, same)
+    assert divergences == []
+    assert merged.ok

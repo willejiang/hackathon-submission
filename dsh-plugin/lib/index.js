@@ -213,6 +213,20 @@ function toolDefinitions(config) {
           lines.push("", v.gating_failures?.length
             ? `GATING FAILURES: ${v.gating_failures.join(", ")}`
             : "All gating entries agree.");
+          if (v.divergences?.length) {
+            // The gate already took the union, so this is evidence about the measurer,
+            // not about the part. Show the shape of it, not 35 rows of it.
+            const shown = v.divergences.slice(0, 8);
+            lines.push(
+              "",
+              `CROSS-CHECK: your measurer and the harness's agree on most rows but differ on ${v.divergences.length}.`,
+              "The gate uses whichever verdict is worse, so a permissive measurer cannot hide a defect.",
+              ...shown.map((d) => `  - ${d.row}: yours=${d.your_measurer}, harness=${d.harness} (${d.harness_says})`),
+            );
+            if (v.divergences.length > shown.length) {
+              lines.push(`  ... ${v.divergences.length - shown.length} more; fix the gating rows first.`);
+            }
+          }
           if (v.facts_from_result) lines.push("", `written: ${v.facts_from_result}`);
           return text(lines.join("\n"));
         },
