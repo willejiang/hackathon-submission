@@ -19,9 +19,11 @@ COPY --from=node:24-bookworm-slim /usr/local/bin/node /usr/local/bin/node
 COPY --from=node:24-bookworm-slim /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx \
+    && npm install -g pnpm@10 \
     && npm install -g @deepseek-ai/dsh@0.2.2-rc.1 \
+        --allow-scripts=@deepseek-ai/dsh-subprocess-local,koffi,node-pty,@google/genai,protobufjs \
     && npm cache clean --force \
-    && dsh --version
+    && dsh --version && pnpm --version
 
 # Dependencies first (cached layer, rebuilt only when the lockfile changes).
 #
