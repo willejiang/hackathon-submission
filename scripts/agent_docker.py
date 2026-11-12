@@ -95,6 +95,14 @@ def prepare_home(name: str) -> Path:
     home.parent.mkdir(parents=True, exist_ok=True)
     if TEMPLATE_HOME.is_dir():
         shutil.copytree(TEMPLATE_HOME, home, symlinks=True)
+        # pnpm links the plugin with a RELATIVE symlink, which breaks when the home
+        # is copied to a different depth: dsh then skips the bundle and the agent
+        # runs without any cad_* tool. Re-point it at the absolute plugin directory.
+        link = home / "profiles" / PROFILE / "node_modules" / "@agentic-cad" / "dsh-tools"
+        if link.is_symlink() or link.exists():
+            link.unlink()
+        link.parent.mkdir(parents=True, exist_ok=True)
+        link.symlink_to(REPO_ROOT / "dsh-plugin")
     else:  # local run without the image: install now
         home.mkdir(parents=True)
         run_agent.setup(home, SCRATCH / "setup-out")
@@ -162,7 +170,8 @@ def run_case(case_dir: Path, out: Path, deadline: float, reserve: float) -> dict
         log_path.parent.mkdir(parents=True, exist_ok=True)
         with log_path.open("w") as handle:
             proc = subprocess.Popen(
-                ["dsh", "--profile", PROFILE, run_agent.task_prompt(name)],
+                # --add-dir: let the session's sandbox write the output directory too
+                ["dsh", "--profile", PROFILE, "--add-dir", str(out), run_agent.task_prompt(name)],
                 cwd=str(workspace), env=child_env(home, case_dir, out),
                 stdout=handle, stderr=subprocess.STDOUT, start_new_session=True,
             )
@@ -184,6 +193,9 @@ def run_case(case_dir: Path, out: Path, deadline: float, reserve: float) -> dict
         if remaining > 15:
             export = export_workspace(case_dir, workspace, home, out, remaining)
             submitted = _signature(target) != box_sig
+    log_file = SCRATCH / "logs" / f"{name}.log"
+    if log_file.is_file() and "skipping profile bundle" in log_file.read_text(errors="ignore")[:4000]:
+        status += " (WARNING: cad tools plugin did not load)"
     source = "agent" if submitted else ("box" if box_written else "none")
     detail = export or ("agent submitted" if submitted else "nothing submitted")
     log(f"[{name}] {status}; {detail}; output={source} "
