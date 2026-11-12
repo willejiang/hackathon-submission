@@ -1,0 +1,810 @@
+{
+  "case": "test_case_6",
+  "started_at": "2026-11-12T14:42:15.762015+00:00",
+  "elapsed_s": 1200.401,
+  "returncode": 0,
+  "timed_out": true,
+  "workspace": "/Users/apple/Desktop/microsoft/research_space/cad-agent-work/test_case_6_20261112T141321Z",
+  "model": "deepseek-flash",
+  "round_count": 31,
+  "incomplete_round_count": 0,
+  "rounds": [
+    {
+      "step": 1,
+      "started_at": "2026-11-12T14:42:18.700Z",
+      "ended_at": "2026-11-12T14:42:20.174Z",
+      "model_elapsed_s": 1.371,
+      "elapsed_s": 1.473,
+      "usage": {
+        "inputTokens": 833,
+        "outputTokens": 65,
+        "cacheReadTokens": 5760,
+        "cacheWriteTokens": 0,
+        "totalTokens": 6658
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 2,
+      "started_at": "2026-11-12T14:42:20.182Z",
+      "ended_at": "2026-11-12T14:42:21.947Z",
+      "model_elapsed_s": 1.574,
+      "elapsed_s": 1.765,
+      "usage": {
+        "inputTokens": 3561,
+        "outputTokens": 151,
+        "cacheReadTokens": 6656,
+        "cacheWriteTokens": 0,
+        "totalTokens": 10368
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 3,
+      "started_at": "2026-11-12T14:42:21.954Z",
+      "ended_at": "2026-11-12T14:42:24.514Z",
+      "model_elapsed_s": 2.504,
+      "elapsed_s": 2.56,
+      "usage": {
+        "inputTokens": 1820,
+        "outputTokens": 147,
+        "cacheReadTokens": 10368,
+        "cacheWriteTokens": 0,
+        "totalTokens": 12335
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 4,
+      "started_at": "2026-11-12T14:42:24.525Z",
+      "ended_at": "2026-11-12T14:42:38.830Z",
+      "model_elapsed_s": 13.838,
+      "elapsed_s": 14.305,
+      "usage": {
+        "inputTokens": 1889,
+        "outputTokens": 2057,
+        "cacheReadTokens": 12288,
+        "cacheWriteTokens": 0,
+        "totalTokens": 16234
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 5,
+      "started_at": "2026-11-12T14:42:38.839Z",
+      "ended_at": "2026-11-12T14:42:43.508Z",
+      "model_elapsed_s": 4.487,
+      "elapsed_s": 4.669,
+      "usage": {
+        "inputTokens": 160,
+        "outputTokens": 717,
+        "cacheReadTokens": 16128,
+        "cacheWriteTokens": 0,
+        "totalTokens": 17005
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 6,
+      "started_at": "2026-11-12T14:42:43.517Z",
+      "ended_at": "2026-11-12T14:42:48.315Z",
+      "model_elapsed_s": 4.263,
+      "elapsed_s": 4.798,
+      "usage": {
+        "inputTokens": 240,
+        "outputTokens": 676,
+        "cacheReadTokens": 16896,
+        "cacheWriteTokens": 0,
+        "totalTokens": 17812
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 7,
+      "started_at": "2026-11-12T14:42:48.324Z",
+      "ended_at": "2026-11-12T14:42:52.711Z",
+      "model_elapsed_s": 4.217,
+      "elapsed_s": 4.387,
+      "usage": {
+        "inputTokens": 323,
+        "outputTokens": 787,
+        "cacheReadTokens": 17792,
+        "cacheWriteTokens": 0,
+        "totalTokens": 18902
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 8,
+      "started_at": "2026-11-12T14:42:52.718Z",
+      "ended_at": "2026-11-12T14:42:57.998Z",
+      "model_elapsed_s": 5.051,
+      "elapsed_s": 5.28,
+      "usage": {
+        "inputTokens": 475,
+        "outputTokens": 936,
+        "cacheReadTokens": 18816,
+        "cacheWriteTokens": 0,
+        "totalTokens": 20227
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 9,
+      "started_at": "2026-11-12T14:42:58.005Z",
+      "ended_at": "2026-11-12T14:42:59.281Z",
+      "model_elapsed_s": 1.232,
+      "elapsed_s": 1.276,
+      "usage": {
+        "inputTokens": 155,
+        "outputTokens": 69,
+        "cacheReadTokens": 20096,
+        "cacheWriteTokens": 0,
+        "totalTokens": 20320
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 10,
+      "started_at": "2026-11-12T14:42:59.294Z",
+      "ended_at": "2026-11-12T14:43:11.067Z",
+      "model_elapsed_s": 11.477,
+      "elapsed_s": 11.773,
+      "usage": {
+        "inputTokens": 1022,
+        "outputTokens": 1897,
+        "cacheReadTokens": 20224,
+        "cacheWriteTokens": 0,
+        "totalTokens": 23143
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 11,
+      "started_at": "2026-11-12T14:43:11.075Z",
+      "ended_at": "2026-11-12T14:43:53.456Z",
+      "model_elapsed_s": 42.097,
+      "elapsed_s": 42.381,
+      "usage": {
+        "inputTokens": 313,
+        "outputTokens": 6907,
+        "cacheReadTokens": 23040,
+        "cacheWriteTokens": 0,
+        "totalTokens": 30260
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 12,
+      "started_at": "2026-11-12T14:43:53.462Z",
+      "ended_at": "2026-11-12T14:44:00.788Z",
+      "model_elapsed_s": 6.895,
+      "elapsed_s": 7.326,
+      "usage": {
+        "inputTokens": 336,
+        "outputTokens": 1030,
+        "cacheReadTokens": 30208,
+        "cacheWriteTokens": 0,
+        "totalTokens": 31574
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 13,
+      "started_at": "2026-11-12T14:44:00.797Z",
+      "ended_at": "2026-11-12T14:44:02.576Z",
+      "model_elapsed_s": 1.668,
+      "elapsed_s": 1.779,
+      "usage": {
+        "inputTokens": 228,
+        "outputTokens": 132,
+        "cacheReadTokens": 31360,
+        "cacheWriteTokens": 0,
+        "totalTokens": 31720
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 14,
+      "started_at": "2026-11-12T14:44:02.589Z",
+      "ended_at": "2026-11-12T14:45:50.046Z",
+      "model_elapsed_s": 106.877,
+      "elapsed_s": 107.468,
+      "usage": {
+        "inputTokens": 1497,
+        "outputTokens": 17765,
+        "cacheReadTokens": 31616,
+        "cacheWriteTokens": 0,
+        "totalTokens": 50878
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 15,
+      "started_at": "2026-11-12T14:45:50.053Z",
+      "ended_at": "2026-11-12T14:46:43.422Z",
+      "model_elapsed_s": 53.147,
+      "elapsed_s": 53.369,
+      "usage": {
+        "inputTokens": 780,
+        "outputTokens": 9614,
+        "cacheReadTokens": 50816,
+        "cacheWriteTokens": 0,
+        "totalTokens": 61210
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 16,
+      "started_at": "2026-11-12T14:46:43.430Z",
+      "ended_at": "2026-11-12T14:46:45.161Z",
+      "model_elapsed_s": 1.678,
+      "elapsed_s": 1.732,
+      "usage": {
+        "inputTokens": 168,
+        "outputTokens": 132,
+        "cacheReadTokens": 61056,
+        "cacheWriteTokens": 0,
+        "totalTokens": 61356
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 17,
+      "started_at": "2026-11-12T14:46:45.171Z",
+      "ended_at": "2026-11-12T14:47:05.410Z",
+      "model_elapsed_s": 20.193,
+      "elapsed_s": 20.24,
+      "usage": {
+        "inputTokens": 1048,
+        "outputTokens": 3152,
+        "cacheReadTokens": 61312,
+        "cacheWriteTokens": 0,
+        "totalTokens": 65512
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 18,
+      "started_at": "2026-11-12T14:47:05.421Z",
+      "ended_at": "2026-11-12T14:48:31.099Z",
+      "model_elapsed_s": 85.254,
+      "elapsed_s": 85.678,
+      "usage": {
+        "inputTokens": 1927,
+        "outputTokens": 13778,
+        "cacheReadTokens": 65408,
+        "cacheWriteTokens": 0,
+        "totalTokens": 81113
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 19,
+      "started_at": "2026-11-12T14:48:31.122Z",
+      "ended_at": "2026-11-12T14:48:53.160Z",
+      "model_elapsed_s": 21.854,
+      "elapsed_s": 22.038,
+      "usage": {
+        "inputTokens": 445,
+        "outputTokens": 4065,
+        "cacheReadTokens": 81024,
+        "cacheWriteTokens": 0,
+        "totalTokens": 85534
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 20,
+      "started_at": "2026-11-12T14:48:53.169Z",
+      "ended_at": "2026-11-12T14:48:54.863Z",
+      "model_elapsed_s": 1.648,
+      "elapsed_s": 1.694,
+      "usage": {
+        "inputTokens": 213,
+        "outputTokens": 169,
+        "cacheReadTokens": 85376,
+        "cacheWriteTokens": 0,
+        "totalTokens": 85758
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 21,
+      "started_at": "2026-11-12T14:48:54.872Z",
+      "ended_at": "2026-11-12T14:48:57.313Z",
+      "model_elapsed_s": 1.934,
+      "elapsed_s": 2.442,
+      "usage": {
+        "inputTokens": 354,
+        "outputTokens": 131,
+        "cacheReadTokens": 85632,
+        "cacheWriteTokens": 0,
+        "totalTokens": 86117
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 22,
+      "started_at": "2026-11-12T14:48:57.323Z",
+      "ended_at": "2026-11-12T14:50:22.367Z",
+      "model_elapsed_s": 84.996,
+      "elapsed_s": 85.044,
+      "usage": {
+        "inputTokens": 318,
+        "outputTokens": 14763,
+        "cacheReadTokens": 86016,
+        "cacheWriteTokens": 0,
+        "totalTokens": 101097
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 23,
+      "started_at": "2026-11-12T14:50:22.380Z",
+      "ended_at": "2026-11-12T14:51:00.666Z",
+      "model_elapsed_s": 38.253,
+      "elapsed_s": 38.286,
+      "usage": {
+        "inputTokens": 166,
+        "outputTokens": 7360,
+        "cacheReadTokens": 100992,
+        "cacheWriteTokens": 0,
+        "totalTokens": 108518
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 24,
+      "started_at": "2026-11-12T14:51:00.675Z",
+      "ended_at": "2026-11-12T14:51:08.539Z",
+      "model_elapsed_s": 1.464,
+      "elapsed_s": 7.865,
+      "usage": {
+        "inputTokens": 163,
+        "outputTokens": 40,
+        "cacheReadTokens": 108416,
+        "cacheWriteTokens": 0,
+        "totalTokens": 108619
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 25,
+      "started_at": "2026-11-12T14:51:08.565Z",
+      "ended_at": "2026-11-12T14:51:12.800Z",
+      "model_elapsed_s": 4.201,
+      "elapsed_s": 4.235,
+      "usage": {
+        "inputTokens": 381,
+        "outputTokens": 649,
+        "cacheReadTokens": 108544,
+        "cacheWriteTokens": 0,
+        "totalTokens": 109574
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 26,
+      "started_at": "2026-11-12T14:51:12.828Z",
+      "ended_at": "2026-11-12T14:52:12.300Z",
+      "model_elapsed_s": 1.31,
+      "elapsed_s": 59.471,
+      "usage": {
+        "inputTokens": 181,
+        "outputTokens": 40,
+        "cacheReadTokens": 109440,
+        "cacheWriteTokens": 0,
+        "totalTokens": 109661
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 27,
+      "started_at": "2026-11-12T14:52:12.315Z",
+      "ended_at": "2026-11-12T14:52:14.798Z",
+      "model_elapsed_s": 2.284,
+      "elapsed_s": 2.483,
+      "usage": {
+        "inputTokens": 427,
+        "outputTokens": 264,
+        "cacheReadTokens": 109568,
+        "cacheWriteTokens": 0,
+        "totalTokens": 110259
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 28,
+      "started_at": "2026-11-12T14:52:14.805Z",
+      "ended_at": "2026-11-12T14:52:29.538Z",
+      "model_elapsed_s": 1.812,
+      "elapsed_s": 14.733,
+      "usage": {
+        "inputTokens": 194,
+        "outputTokens": 40,
+        "cacheReadTokens": 110080,
+        "cacheWriteTokens": 0,
+        "totalTokens": 110314
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 29,
+      "started_at": "2026-11-12T14:52:29.555Z",
+      "ended_at": "2026-11-12T14:52:52.198Z",
+      "model_elapsed_s": 8.831,
+      "elapsed_s": 22.643,
+      "usage": {
+        "inputTokens": 245,
+        "outputTokens": 1257,
+        "cacheReadTokens": 110208,
+        "cacheWriteTokens": 0,
+        "totalTokens": 111710
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 30,
+      "started_at": "2026-11-12T14:52:52.215Z",
+      "ended_at": "2026-11-12T14:53:16.868Z",
+      "model_elapsed_s": 24.551,
+      "elapsed_s": 24.653,
+      "usage": {
+        "inputTokens": 439,
+        "outputTokens": 3964,
+        "cacheReadTokens": 111616,
+        "cacheWriteTokens": 0,
+        "totalTokens": 116019
+      },
+      "tool_error_count": 0
+    },
+    {
+      "step": 31,
+      "started_at": "2026-11-12T14:53:16.898Z",
+      "ended_at": "2026-11-12T15:02:16.049Z",
+      "model_elapsed_s": 1.636,
+      "elapsed_s": 539.115,
+      "usage": {
+        "inputTokens": 193,
+        "outputTokens": 41,
+        "cacheReadTokens": 115840,
+        "cacheWriteTokens": 0,
+        "totalTokens": 116074
+      },
+      "tool_error_count": 1,
+      "usage_source": "raw_session_trace",
+      "status": "aborted"
+    }
+  ],
+  "provider_retry_attempt_events": 0,
+  "tool_calls": {
+    "cad_case_info": 1,
+    "skill": 1,
+    "read_image": 11,
+    "bash": 16,
+    "write": 2,
+    "cad_build": 4,
+    "edit": 1,
+    "cad_verify": 1
+  },
+  "reported_usage": {
+    "inputTokens": 20494,
+    "outputTokens": 92795,
+    "cacheReadTokens": 1822592,
+    "cacheWriteTokens": 0,
+    "totalTokens": 1935881
+  },
+  "usage_complete": true,
+  "usage_note": "Harness-reported agent step usage including retries. For this provider cacheReadTokens are separate from inputTokens; use totalTokens for the total. Reasoning tokens, when reported, are included in output. Auxiliary background requests may not be included; missing usage is unknown, not zero.",
+  "output_bytes": 0,
+  "round_started_count": 31,
+  "incomplete_rounds": [],
+  "reconstruction_build_calls": 4,
+  "tool_timings": [
+    {
+      "tool": "cad_case_info",
+      "call_id": "call_00_ET_VN5K8xEjndyfZXZkJJAN1838",
+      "step": 1,
+      "is_error": false,
+      "elapsed_s": 0.092
+    },
+    {
+      "tool": "skill",
+      "call_id": "call_01_ET_H5sP8WxmWtYJ8NpbLC330501",
+      "step": 1,
+      "is_error": false,
+      "elapsed_s": 0.006
+    },
+    {
+      "tool": "read_image",
+      "call_id": "call_00_yZOQTnwoaSf6U47asFT04747",
+      "step": 2,
+      "is_error": false,
+      "elapsed_s": 0.184
+    },
+    {
+      "tool": "read_image",
+      "call_id": "call_01_WnzNaqiGkRtnHYDMgX5D0991",
+      "step": 2,
+      "is_error": false,
+      "elapsed_s": 0.186
+    },
+    {
+      "tool": "read_image",
+      "call_id": "call_00_pyJIe2p68D3gc9PSctcw3226",
+      "step": 3,
+      "is_error": false,
+      "elapsed_s": 0.051
+    },
+    {
+      "tool": "read_image",
+      "call_id": "call_01_KVsGcPO2R3CefrwL3ygl9332",
+      "step": 3,
+      "is_error": false,
+      "elapsed_s": 0.05
+    },
+    {
+      "tool": "bash",
+      "call_id": "call_00_16O9xm6gUEGvdgVscK814281",
+      "step": 4,
+      "is_error": false,
+      "elapsed_s": 0.46
+    },
+    {
+      "tool": "bash",
+      "call_id": "call_00_Kv5c7giefdFjIC0u964n8555",
+      "step": 5,
+      "is_error": false,
+      "elapsed_s": 0.178
+    },
+    {
+      "tool": "bash",
+      "call_id": "call_00_1WkwPW352fiVdZuAryIA0766",
+      "step": 6,
+      "is_error": false,
+      "elapsed_s": 0.529
+    },
+    {
+      "tool": "bash",
+      "call_id": "call_00_cIz34zNUOWteRZ4Fw7cm5161",
+      "step": 7,
+      "is_error": false,
+      "elapsed_s": 0.166
+    },
+    {
+      "tool": "bash",
+      "call_id": "call_00_rBmmNlAkTHboa2fh3Dvb8219",
+      "step": 8,
+      "is_error": false,
+      "elapsed_s": 0.226
+    },
+    {
+      "tool": "read_image",
+      "call_id": "call_00_ET_HHSuPav4WCRWSDo6Eaec5636",
+      "step": 9,
+      "is_error": false,
+      "elapsed_s": 0.042
+    },
+    {
+      "tool": "bash",
+      "call_id": "call_00_0d3kqFYqUOLoWsRciFC89047",
+      "step": 10,
+      "is_error": false,
+      "elapsed_s": 0.258
+    },
+    {
+      "tool": "bash",
+      "call_id": "call_00_aUgaKc4jsCrTNKpqealH6086",
+      "step": 11,
+      "is_error": false,
+      "elapsed_s": 0.28
+    },
+    {
+      "tool": "bash",
+      "call_id": "call_00_5pNXGsZRNbuS0Wg7vCGE9994",
+      "step": 12,
+      "is_error": false,
+      "elapsed_s": 0.427
+    },
+    {
+      "tool": "read_image",
+      "call_id": "call_00_ET_k4GL4iTiEzeH12KbvPSi4063",
+      "step": 13,
+      "is_error": false,
+      "elapsed_s": 0.108
+    },
+    {
+      "tool": "read_image",
+      "call_id": "call_01_ET_zBYgIhLj6fghygpOLGgW4415",
+      "step": 13,
+      "is_error": false,
+      "elapsed_s": 0.108
+    },
+    {
+      "tool": "bash",
+      "call_id": "call_00_GBVPGgIA0f4YI1M5df491275",
+      "step": 14,
+      "is_error": false,
+      "elapsed_s": 0.579
+    },
+    {
+      "tool": "bash",
+      "call_id": "call_00_4NBkZju0nehkzeYPEKEu6832",
+      "step": 15,
+      "is_error": false,
+      "elapsed_s": 0.212
+    },
+    {
+      "tool": "read_image",
+      "call_id": "call_00_ET_r4WLVeCikFvRFzD5cnzq4417",
+      "step": 16,
+      "is_error": false,
+      "elapsed_s": 0.047
+    },
+    {
+      "tool": "read_image",
+      "call_id": "call_01_ET_F1sUJjusEqzvByiL8gE54029",
+      "step": 16,
+      "is_error": false,
+      "elapsed_s": 0.049
+    },
+    {
+      "tool": "read_image",
+      "call_id": "call_00_Aieknv5LEpl1aAoR5nmv1673",
+      "step": 17,
+      "is_error": false,
+      "elapsed_s": 0.041
+    },
+    {
+      "tool": "read_image",
+      "call_id": "call_01_IRGSZyJSFqTWCVXuGoJW1565",
+      "step": 17,
+      "is_error": false,
+      "elapsed_s": 0.04
+    },
+    {
+      "tool": "bash",
+      "call_id": "call_00_heqwWb3aj0A9cPaUf7w05628",
+      "step": 18,
+      "is_error": false,
+      "elapsed_s": 0.418
+    },
+    {
+      "tool": "bash",
+      "call_id": "call_00_SM0XyjG5j8NoR2H25CVo0090",
+      "step": 19,
+      "is_error": false,
+      "elapsed_s": 0.179
+    },
+    {
+      "tool": "bash",
+      "call_id": "call_00_iRMEjwIHQIA4pBSZ6lw61244",
+      "step": 20,
+      "is_error": false,
+      "elapsed_s": 0.045
+    },
+    {
+      "tool": "bash",
+      "call_id": "call_00_ET_ZuWVP3ojLCLAikiBotRh7866",
+      "step": 21,
+      "is_error": false,
+      "elapsed_s": 0.506
+    },
+    {
+      "tool": "write",
+      "call_id": "call_00_m6jcHgEcQsuPBIK3TIyH2532",
+      "step": 22,
+      "is_error": false,
+      "elapsed_s": 0.043
+    },
+    {
+      "tool": "write",
+      "call_id": "call_00_pIWILk5LD5S8q985nJuV2216",
+      "step": 23,
+      "is_error": false,
+      "elapsed_s": 0.027
+    },
+    {
+      "tool": "cad_build",
+      "call_id": "call_00_ET_8a2qJIx2EqFzYkWcmQzC3097",
+      "step": 24,
+      "is_error": false,
+      "elapsed_s": 6.399
+    },
+    {
+      "tool": "edit",
+      "call_id": "call_00_rrvsv5rDFbI1wTTIERxJ3583",
+      "step": 25,
+      "is_error": false,
+      "elapsed_s": 0.032
+    },
+    {
+      "tool": "cad_build",
+      "call_id": "call_00_ET_toxDio35MMCuid2Rjns06631",
+      "step": 26,
+      "is_error": false,
+      "elapsed_s": 58.158
+    },
+    {
+      "tool": "bash",
+      "call_id": "call_00_LxdvoK9rfvRV8rXDDcGf9291",
+      "step": 27,
+      "is_error": false,
+      "elapsed_s": 0.194
+    },
+    {
+      "tool": "cad_build",
+      "call_id": "call_00_ET_OTGrBl2ETLtXcEZ0f1Ap8651",
+      "step": 28,
+      "is_error": false,
+      "elapsed_s": 12.919
+    },
+    {
+      "tool": "cad_verify",
+      "call_id": "call_00_GXTVKld0tDHDxqpz7ICL7594",
+      "step": 29,
+      "is_error": false,
+      "elapsed_s": 13.807
+    },
+    {
+      "tool": "bash",
+      "call_id": "call_00_ENHeJWE4Rbs4af9Oe0Nw3154",
+      "step": 30,
+      "is_error": false,
+      "elapsed_s": 0.1
+    },
+    {
+      "tool": "cad_build",
+      "call_id": "call_00_ET_IixexaghVMljKnkEFUGZ9434",
+      "step": 31,
+      "is_error": true,
+      "elapsed_s": 537.473
+    }
+  ],
+  "observed_models": [
+    {
+      "provider": "deepseek-official",
+      "model": "deepseek-flash"
+    }
+  ],
+  "auxiliary_request_events": 1,
+  "last_turn_reason": {
+    "kind": "aborted",
+    "reason": {
+      "kind": "disposed"
+    }
+  },
+  "usage_recovered_from_raw_trace_steps": [
+    31
+  ],
+  "incomplete_tool_calls": [],
+  "ended_at": "2026-11-12T15:02:16.163015+00:00",
+  "agent_output_bytes": 0,
+  "agent_submitted": false,
+  "artifact_output_bytes": 6085735,
+  "artifact_output_path": "/Users/apple/Desktop/microsoft/research_space/hackathon-submission/artifacts/outputs/test_case_6.stp",
+  "status": "timed_out_with_supervisor_exported_candidate",
+  "score": {
+    "case": "test_case_6",
+    "bytes": 6085735,
+    "gating_ok": false,
+    "gating_failures": [
+      "volume_mm3"
+    ],
+    "volume_ratio": 2.562177824266675,
+    "iou_ortho": 0.9108,
+    "iou_iso": 0.9295,
+    "iou_all": 0.9155,
+    "worst_view": "view_2_left",
+    "worst_iou": 0.8623,
+    "table": "(* = gating)\n*PASS       bounding_box_mm            expected 140 x 140 x 136.5      actual 140 x 140 x 136.5\n*FAIL       volume_mm3                 expected 377916                 actual 968287   [156.2% off]\n FAIL       surface_area_mm2           expected 169754                 actual 64743.2   [61.9% off]\n*PASS       solids                     expected 1                      actual 1\n PASS       through_holes_genus        expected 0                      actual 0\n FAIL       faces                      expected 122                    actual 154   [32 off]\n FAIL       edges                      expected 278                    actual 341   [63 off]\n FAIL       face_types                 expected actual/expected        actual BSPLINE:72/72 CONE:1/0 CYLINDER:3/6 PLANE:22/40 TORUS:56/4   [L1=74]\n PASS       holes                      expected 1x d30 Z               actual 1 bore faces",
+    "views": "mean IoU all=0.916 ortho=0.911 iso=0.930\nview_0_front                     IoU=0.873 over=+0.000 under=+0.127 aspect 1.025/1.025 (-0.0%)\nview_1_back                      IoU=0.873 over=+0.000 under=+0.127 aspect 1.025/1.025 (-0.0%)\nview_2_left                      IoU=0.862 over=+0.000 under=+0.138 aspect 1.025/1.025 (-0.0%)\nview_3_right                     IoU=0.862 over=+0.000 under=+0.138 aspect 1.025/1.025 (-0.0%)\nview_4_top                       IoU=0.997 over=+0.000 under=+0.003 aspect 1.000/1.000 (+0.0%)\nview_5_bottom                    IoU=0.997 over=+0.000 under=+0.003 aspect 1.000/1.000 (+0.0%)\nview_6_iso_front_right_top       IoU=0.930 over=+0.001 under=+0.070 aspect 0.848/0.849 (-0.1%)\nview_7_iso_back_left_bottom      IoU=0.930 over=+0.001 under=+0.070 aspect 0.848/0.849 (-0.1%)",
+    "brep_valid": true,
+    "solid_count": 1,
+    "export_origin": "Supervisor export of the agent-written successful solution.py after agent timeout; not agent submission.",
+    "postprocess_elapsed_s": 19.152
+  },
+  "postprocess_elapsed_s": 19.152,
+  "export_origin": "Supervisor export of the agent-written successful solution.py after agent timeout; not agent submission."
+}
