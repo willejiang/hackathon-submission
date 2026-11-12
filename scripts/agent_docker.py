@@ -13,9 +13,9 @@ agent with the agentic-cad tools plugin -- under the re-run's constraints:
 
 Environment (handed over in <team>.env):
   DEEPSEEK_API_KEY            the key dsh uses; falls back to OPENAI_API_KEY
-  AGENTIC_CAD_BUDGET_S        whole-run budget, default 1080 (organisers kill at 1200)
+  AGENTIC_CAD_BUDGET_S        whole-run budget, default 1110 (organisers kill at 1200)
   AGENTIC_CAD_MAX_WORKERS     cases in parallel, default 9
-  AGENTIC_CAD_EXPORT_RESERVE  seconds kept back for the forced export, default 150
+  AGENTIC_CAD_EXPORT_RESERVE  seconds kept back for the forced export, default 120
 
 The plugin is installed at build time into /opt/dsh-home (`--setup-template`).
 """
@@ -87,10 +87,12 @@ def setup_template() -> None:
     run_agent.setup(TEMPLATE_HOME, SCRATCH / "setup-out")
 
 
-def prepare_home() -> Path:
-    home = SCRATCH / "dsh-home"
+def prepare_home(name: str) -> Path:
+    """One dsh home per case: parallel dsh processes must not share session state."""
+    home = SCRATCH / "dsh-home" / name
     if home.exists():
         shutil.rmtree(home)
+    home.parent.mkdir(parents=True, exist_ok=True)
     if TEMPLATE_HOME.is_dir():
         shutil.copytree(TEMPLATE_HOME, home, symlinks=True)
     else:  # local run without the image: install now
@@ -143,8 +145,9 @@ def export_workspace(case_dir: Path, workspace: Path, home: Path, out: Path, tim
     return "no solution.py to export"
 
 
-def run_case(case_dir: Path, home: Path, out: Path, deadline: float, reserve: float) -> dict:
+def run_case(case_dir: Path, out: Path, deadline: float, reserve: float) -> dict:
     name = case_dir.name
+    home = prepare_home(name)
     target = out / f"{name}.stp"
     workspace = SCRATCH / "work" / name
     workspace.mkdir(parents=True, exist_ok=True)
@@ -191,8 +194,8 @@ def run_case(case_dir: Path, home: Path, out: Path, deadline: float, reserve: fl
 
 def run(input_dir: Path, output_dir: Path) -> int:
     started = time.time()
-    budget = _env_float("AGENTIC_CAD_BUDGET_S", 1080.0)
-    reserve = _env_float("AGENTIC_CAD_EXPORT_RESERVE", 150.0)
+    budget = _env_float("AGENTIC_CAD_BUDGET_S", 1110.0)
+    reserve = _env_float("AGENTIC_CAD_EXPORT_RESERVE", 120.0)
     workers = int(_env_float("AGENTIC_CAD_MAX_WORKERS", 9))
     deadline = started + budget
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -208,9 +211,8 @@ def run(input_dir: Path, output_dir: Path) -> int:
             write_box(case_dir, output_dir / f"{case_dir.name}.stp")
         return 0
 
-    home = prepare_home()
     with ThreadPoolExecutor(max_workers=max(1, workers)) as pool:
-        results = list(pool.map(lambda c: run_case(c, home, output_dir, deadline, reserve), cases))
+        results = list(pool.map(lambda c: run_case(c, output_dir, deadline, reserve), cases))
 
     missing = [c.name for c in cases if not (output_dir / f"{c.name}.stp").is_file()]
     agent = sum(r["output"] == "agent" for r in results)
