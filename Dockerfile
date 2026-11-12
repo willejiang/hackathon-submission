@@ -19,9 +19,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # build until uv.lock is regenerated on a machine that has uv. Refresh it with
 # `uv lock` (see README) and commit the result; until then the build resolves from
 # pyproject.toml, which is slower but never blocks a submission.
+#
+# COPY, not --mount=type=bind: without --locked, uv rewrites uv.lock when it
+# resolves, and a bind-mounted lock is read-only inside the layer, so the build dies
+# with "failed to write to file /app/uv.lock: Read-only file system". Copying lets
+# uv do what it needs; only the package cache is mounted.
+COPY pyproject.toml uv.lock README.md ./
 RUN --mount=type=cache,target=/root/.cache/uv \
-    --mount=type=bind,source=uv.lock,target=uv.lock \
-    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
     uv sync --no-install-project --no-dev
 
 # Copy the project into the image
