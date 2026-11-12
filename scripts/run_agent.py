@@ -151,22 +151,8 @@ design brief, and the absolute paths of the eight rendered views; read those PNG
 with `read_image` and reason about their silhouettes.
 
 Write your module to `solution.py` in the current workspace, then use `cad_build`,
-`cad_verify` and `cad_render` to check it.
-
-**Submit early.** As soon as the gating facts agree, call `cad_submit` so the case
-cannot end with no file, then keep improving and submit again after each real gain.
-
-Then do the measurement step, which is the one that audits every family in the
-brief rather than a fixed subset:
-
-  1. `cad_facts_scaffold` — this case's facts.json with every number replaced by
-     null. You get the structure, never the expected values.
-  2. Write `measure_result.py` defining `def measure(shape)` that returns a dict
-     with exactly that structure, measuring the solid.
-  3. `cad_measure_result` — it runs your measurer on the STEP you submitted, checks
-     the document has the brief's shape, and compares every entry.
-
-Fix what `cad_measure_result` reports, then submit again.
+`cad_verify` and `cad_render` to check it, and `cad_submit` once the gating facts
+pass.
 
 Rules:
 - facts.json and the design brief are authoritative. Do not modify or reinterpret them.
@@ -179,8 +165,7 @@ Rules:
   in your own workspace. Do not search the repository for reference solutions,
   fixtures or examples: if you find one, do not use it.
 
-Stop when `cad_measure_result` reports no gating failures, or when you have
-submitted your best candidate and time is short.
+Stop after `cad_submit` succeeds, or after you have submitted your best candidate.
 """
 
 
