@@ -12,6 +12,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libgl1 libglx-mesa0 libxrender1 libxext6 libsm6 libxi6 libxfixes3 \
     && rm -rf /var/lib/apt/lists/*
 
+# Node 24 and DeepSeek Harness (dsh), the agent that produced the committed outputs.
+# @deepseek-ai/dsh is the official CLI (github.com/deepseek-ai/deepseek-harness) and
+# needs Node >= 24.9. Pinned so the re-run uses the same harness as the submission.
+COPY --from=node:24-bookworm-slim /usr/local/bin/node /usr/local/bin/node
+COPY --from=node:24-bookworm-slim /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+    && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx \
+    && npm install -g @deepseek-ai/dsh@0.2.2-rc.1 \
+    && npm cache clean --force \
+    && dsh --version
+
 # Dependencies first (cached layer, rebuilt only when the lockfile changes).
 #
 # Deliberately without --locked: this pipeline adds a CAD kernel and a vision
@@ -36,6 +47,18 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --no-dev
 
 ENV PATH="/app/.venv/bin:$PATH"
+
+# Install the agentic-cad tools plugin into a template dsh home at build time; each
+# run copies it to /tmp, because the container runs as a non-root user.
+ENV DSH_TEMPLATE_HOME=/opt/dsh-home
+RUN python scripts/agent_docker.py --setup-template \
+    && chmod -R a+rX /opt/dsh-home \
+    && rm -rf /tmp/agentic-cad /app/.tmp
+
+# Run the dsh agent for all cases in parallel (scripts/agent_docker.py). The key
+# comes from the handed-over <team>.env as DEEPSEEK_API_KEY. Set
+# AGENTIC_CAD_MODE=code to use the single-completion code harness instead.
+ENV AGENTIC_CAD_MODE=agent
 
 # Agent settings, frozen with your commit (README: Configuration). After code freeze, the values in
 # your handed-over <team>.env replace these.

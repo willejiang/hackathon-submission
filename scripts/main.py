@@ -88,6 +88,14 @@ def pick_work_root(explicit: Path | None) -> Path:
 
 
 def main(args: argparse.Namespace) -> int:
+    # The submission image sets AGENTIC_CAD_MODE=agent: run the dsh agent (the path
+    # that produced the committed outputs) in parallel, see scripts/agent_docker.py.
+    if os.environ.get("AGENTIC_CAD_MODE", "").strip().lower() == "agent":
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        import agent_docker
+
+        return agent_docker.run(args.input_dir, args.output_dir)
+
     started = time.time()
     budget = args.budget_s if args.budget_s is not None else float(
         os.environ.get("AGENTIC_CAD_BUDGET_S", "") or DEFAULT_BUDGET_S
