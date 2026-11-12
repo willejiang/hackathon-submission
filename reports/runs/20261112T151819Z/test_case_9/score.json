@@ -1,0 +1,14 @@
+{
+  "case": "test_case_9",
+  "bytes": 441626,
+  "gating_ok": true,
+  "gating_failures": [],
+  "volume_ratio": 0.9987534098830393,
+  "iou_ortho": 0.9868,
+  "iou_iso": 0.9125,
+  "iou_all": 0.9682,
+  "worst_view": "view_7_iso_back_left_bottom",
+  "worst_iou": 0.9123,
+  "table": "(* = gating)\n*PASS       bounding_box_mm            expected 508 x 255.94 x 511.87  actual 508 x 255.935 x 511.87\n*PASS       volume_mm3                 expected 1.47679e+07            actual 1.47495e+07   [0.1% off]\n FAIL       surface_area_mm2           expected 1.74584e+06            actual 1.2227e+06   [30.0% off]\n*PASS       solids                     expected 1                      actual 1\n FAIL       through_holes_genus        expected 6                      actual 18\n FAIL       faces                      expected 371                    actual 84   [287 off]\n FAIL       edges                      expected 912                    actual 264   [648 off]\n FAIL       face_types                 expected actual/expected        actual BSPLINE:0/12 CYLINDER:30/175 PLANE:54/180 TORUS:0/4   [L1=287]\n FAIL       holes                      expected 8x d9.52 (-0.00, 0.71, 0.71), 8x d9.52 (-0.00, 0.71, -0.71), 3x d127 (-0.00, 0.71, 0.71), 3x d127 (-0.00, 0.71, -0.71), 1x d127 X actual 27 bore faces; missing 8x d9.52 along (-0.00, 0.71, 0.71), 8x d9.52 along (-0.00, 0.71, -0.71), 3x d127 along (-0.00, 0.71, 0.71), 3x d127 along (-0.00, 0.71, -0.71)   [declared bores not found in the geometry]",
+  "views": "mean IoU all=0.968 ortho=0.987 iso=0.912\nview_0_front                     IoU=0.997 over=+0.001 under=+0.002 aspect 0.992/0.994 (-0.2%)\nview_1_back                      IoU=0.997 over=+0.001 under=+0.002 aspect 0.992/0.994 (-0.2%)\nview_2_left                      IoU=0.966 over=+0.000 under=+0.034 aspect 0.501/0.501 (-0.1%)\nview_3_right                     IoU=0.964 over=+0.000 under=+0.036 aspect 0.501/0.501 (-0.1%)\nview_4_top                       IoU=0.999 over=+0.001 under=+0.000 aspect 1.986/1.980 (+0.3%)\nview_5_bottom                    IoU=0.999 over=+0.001 under=+0.000 aspect 1.986/1.980 (+0.3%)\nview_6_iso_front_right_top       IoU=0.913 over=+0.008 under=+0.080 aspect 0.864/0.870 (-0.6%)\nview_7_iso_back_left_bottom      IoU=0.912 over=+0.008 under=+0.081 aspect 0.864/0.870 (-0.6%)"
+}

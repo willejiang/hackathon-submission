@@ -82,6 +82,8 @@ def child_env(home: Path, case: Path | None, out: Path) -> dict[str, str]:
             "AGENTIC_CAD_PYTHON": sys.executable,
             "AGENTIC_CAD_SRC": str(src),
             "AGENTIC_CAD_OUTPUT": str(out),
+            # Shell experiments must see the same CAD environment as cad_* tools.
+            "PATH": str(Path(sys.executable).parent) + os.pathsep + env.get("PATH", ""),
             "PYTHONUTF8": "1",
             "PYTHONIOENCODING": "utf-8",
         }

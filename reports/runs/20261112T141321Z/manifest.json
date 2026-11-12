@@ -1,0 +1,22 @@
+{
+  "architecture": "DeepSeek Harness headless + repository CAD tools",
+  "model": "deepseek-flash",
+  "provider": "deepseek-official",
+  "dsh_version": "0.2.2-rc.1",
+  "node_version": "v24.22.3",
+  "python_version": "3.12.10 (main, May 22 2025, 01:38:44) [Clang 20.1.4 ]",
+  "case_timeout_s": 1200,
+  "packages": {
+    "build123d": "0.13.0",
+    "numpy": "2.5.4",
+    "pillow": "13.0.0",
+    "scipy": "1.18.1",
+    "trimesh": "5.2.0"
+  },
+  "source_sha256": {
+    "dsh-plugin/lib/index.js": "5c9b0f0e60cc98b87b4facf603032bca1ea1e1dcc853d13f90e5bb4e69f533ed",
+    "scripts/run_recorded_agent.py": "840cd2ac0b5825ad87bbc0a2af781c2a5f47bed2bee50f2a7ccaaa89fb179e10",
+    "scripts/run_agent.py": "d27afca5ba2bde18d936cf6e939db1d962e7badfe0d52c4266db9d3de7a34802"
+  },
+  "usage_scope": "Agent model steps including retries, as reported by Harness. Background auxiliary requests may be absent from aggregate usage."
+}

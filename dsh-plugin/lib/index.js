@@ -13,7 +13,7 @@
 // compact human-readable rendering of the JSON, because a model reads a table
 // better than it reads serialised state.
 import { spawn } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { readFileSync, appendFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -174,6 +174,22 @@ function toolDefinitions(config) {
 }
 
 export function apply(ctx, config = {}) {
+  // Opt-in, lossless durable event trace. The CLI's --json projection truncates
+  // long messages, so it cannot be the sole research record.
+  if (process.env.AGENTIC_CAD_TRACE_FILE) {
+    const tracePath = process.env.AGENTIC_CAD_TRACE_FILE;
+    const secret = process.env.DEEPSEEK_API_KEY;
+    ctx.on("session/event", (session, event) => {
+      let line = JSON.stringify({
+        recorded_at: new Date().toISOString(),
+        monotonic_ms: performance.now(),
+        session_id: session.id,
+        event,
+      });
+      if (secret) line = line.split(secret).join("[REDACTED]");
+      appendFileSync(tracePath, line + "\n", "utf8");
+    });
+  }
   for (const definition of toolDefinitions(config)) {
     ctx.tools.register(definition);
   }

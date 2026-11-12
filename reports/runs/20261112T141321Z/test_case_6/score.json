@@ -1,0 +1,20 @@
+{
+  "case": "test_case_6",
+  "bytes": 6085735,
+  "gating_ok": false,
+  "gating_failures": [
+    "volume_mm3"
+  ],
+  "volume_ratio": 2.562177824266675,
+  "iou_ortho": 0.9108,
+  "iou_iso": 0.9295,
+  "iou_all": 0.9155,
+  "worst_view": "view_2_left",
+  "worst_iou": 0.8623,
+  "table": "(* = gating)\n*PASS       bounding_box_mm            expected 140 x 140 x 136.5      actual 140 x 140 x 136.5\n*FAIL       volume_mm3                 expected 377916                 actual 968287   [156.2% off]\n FAIL       surface_area_mm2           expected 169754                 actual 64743.2   [61.9% off]\n*PASS       solids                     expected 1                      actual 1\n PASS       through_holes_genus        expected 0                      actual 0\n FAIL       faces                      expected 122                    actual 154   [32 off]\n FAIL       edges                      expected 278                    actual 341   [63 off]\n FAIL       face_types                 expected actual/expected        actual BSPLINE:72/72 CONE:1/0 CYLINDER:3/6 PLANE:22/40 TORUS:56/4   [L1=74]\n PASS       holes                      expected 1x d30 Z               actual 1 bore faces",
+  "views": "mean IoU all=0.916 ortho=0.911 iso=0.930\nview_0_front                     IoU=0.873 over=+0.000 under=+0.127 aspect 1.025/1.025 (-0.0%)\nview_1_back                      IoU=0.873 over=+0.000 under=+0.127 aspect 1.025/1.025 (-0.0%)\nview_2_left                      IoU=0.862 over=+0.000 under=+0.138 aspect 1.025/1.025 (-0.0%)\nview_3_right                     IoU=0.862 over=+0.000 under=+0.138 aspect 1.025/1.025 (-0.0%)\nview_4_top                       IoU=0.997 over=+0.000 under=+0.003 aspect 1.000/1.000 (+0.0%)\nview_5_bottom                    IoU=0.997 over=+0.000 under=+0.003 aspect 1.000/1.000 (+0.0%)\nview_6_iso_front_right_top       IoU=0.930 over=+0.001 under=+0.070 aspect 0.848/0.849 (-0.1%)\nview_7_iso_back_left_bottom      IoU=0.930 over=+0.001 under=+0.070 aspect 0.848/0.849 (-0.1%)",
+  "brep_valid": true,
+  "solid_count": 1,
+  "export_origin": "Supervisor export of the agent-written successful solution.py after agent timeout; not agent submission.",
+  "postprocess_elapsed_s": 19.152
+}

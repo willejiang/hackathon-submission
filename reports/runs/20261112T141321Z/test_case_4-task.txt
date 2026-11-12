@@ -1,0 +1,23 @@
+Reconstruct the mechanical part for test case `test_case_4`.
+
+First call `cad_case_info` for this case, then load the `cad-reconstruction` skill
+and follow it exactly. `cad_case_info` returns the authoritative facts.json, the
+design brief, and the absolute paths of the eight rendered views; read those PNGs
+with `read_image` and reason about their silhouettes.
+
+Write your module to `solution.py` in the current workspace, then use `cad_build`,
+`cad_verify` and `cad_render` to check it, and `cad_submit` once the gating facts
+pass.
+
+Rules:
+- facts.json and the design brief are authoritative. Do not modify or reinterpret them.
+- every dimension must come from facts.json, the brief, or a formula over them.
+- exactly one connected solid, millimetres, bounding-box minimum at the origin.
+- do NOT use subagent, subagent_fork, workflow, send_message or list_agents.
+  Do the work yourself in this session.
+- do not create goals or todo lists; work directly.
+- read ONLY the case directory that `cad_case_info` reports, and the files you create
+  in your own workspace. Do not search the repository for reference solutions,
+  fixtures or examples: if you find one, do not use it.
+
+Stop after `cad_submit` succeeds, or after you have submitted your best candidate.
