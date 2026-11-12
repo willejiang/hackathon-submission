@@ -1,0 +1,13 @@
+# Order matters: gitattributes applies the LAST matching rule, so the catch-all
+# goes first and the specific overrides after it.
+* text=auto
+
+# STEP is a text format but it is a submission artifact: its bytes must survive a
+# checkout unchanged, so git must not normalise its line endings.
+*.stp -text
+*.step -text
+*.stl binary
+
+# Reference renders and anything the pipeline rasterises.
+*.png binary
+*.jpg binary

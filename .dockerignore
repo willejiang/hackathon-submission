@@ -4,3 +4,7 @@
 # Settings must come from the Dockerfile and the handed-over <team>.env, never a local file
 .env
 *.env
+# Pipeline scratch must never enter the image
+.agentic_cad_work
+.work
+tests/specs

@@ -5,3 +5,9 @@
 .env
 *.env
 !.env.example
+
+# Pipeline scratch: per-attempt modules, reports and probe images. Never submitted.
+.agentic_cad_work/
+.work/
+pytest-of-*/
+.pytest_cache/

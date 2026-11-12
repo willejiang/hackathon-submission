@@ -1,20 +1,28 @@
 [project]
 name = "agentic-cad"
-version = "0.1.0"
-description = "Add your description here"
+version = "0.2.0"
+description = "Constraint-guided CAD reconstruction from a design brief, facts and eight rendered views"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "requests>=2.34.2",
+    "build123d>=0.13.0",
+    "numpy>=1.26",
+    "pillow>=10.0",
+    "scipy>=1.11",
+    "trimesh>=4.0",
+    "openai>=1.40",
 ]
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.build.targets.wheel]
+packages = ["src/agentic_cad"]
+
 [dependency-groups]
 dev = [
-    "pytest>=9.2.0",
+    "pytest>=8.0",
 ]
 
 [tool.pytest.ini_options]

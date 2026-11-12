@@ -36,6 +36,46 @@ account).
 
 # Repo overview
 
+Our agent is a **constraint-guided reconstruction loop**, not a single prompt. For
+each part it asks a model for one small Python module (`derive(facts)` →
+`build(p)`), statically checks that every number in it traces back to `facts.json`
+or the design brief, builds it with build123d, measures the resulting B-rep
+independently, renders the eight views and compares silhouettes, and on
+disagreement classifies the failure and retries — bounded, inside a 20 minute
+budget for the whole run.
+
+```
+src/agentic_cad/            the pipeline (gt, prompts, llm, provenance, cad,
+                            factsgen, meshutil, raster, imagecmp, diagnose, agent)
+scripts/main.py             the entrypoint the organisers run
+tests/specs/                hand-authored reference spec (test_case_3)
+docs/PIPELINE.md            design, calibration evidence, and honest status
+```
+
+Two rules are enforced by code rather than by prose, because prose is what the
+previous generation relied on:
+
+- `facts.json` and `description.md` are authoritative and never modified. Every
+  parameter is `grounded`, `derived`, `estimated` or `assumed`, and
+  `provenance.py` rejects a numeric literal that cannot be traced to the inputs
+  before anything is built.
+- verification measures **what was produced**, never the parameters that were
+  meant to produce it. A parameter set cannot argue a 12 % volume error away.
+
+Read [docs/PIPELINE.md](docs/PIPELINE.md) for the stage-by-stage design, how the
+eight camera conventions were calibrated against the reference renders, and which
+parts of the pipeline are verified locally versus still untested.
+
+Run it:
+
+```sh
+python scripts/main.py --input_dir artifacts/inputs --output_dir artifacts/outputs
+```
+
+Dependencies are resolved from `pyproject.toml`. If you add or change one, run
+`uv lock` on a machine with uv and commit `uv.lock`; the Dockerfile builds either
+way, but a committed lock makes the submission image reproducible.
+
 # Submission format
 
 Your submission comprises of two parts: i) docker image containing your agent workflow, and ii) your output CAD .stp files. The docker image should be built from the root of the repo, and should contain all dependencies required to run your agent workflow. The output .stp files should be placed in the `artifacts/outputs` directory.

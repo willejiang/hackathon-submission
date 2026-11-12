@@ -6,18 +6,30 @@ WORKDIR /app
 ENV UV_COMPILE_BYTECODE=1
 ENV UV_LINK_MODE=copy
 
-# Install dependencies (cached layer, only rebuilt when the lockfile changes)
+# System libraries the CAD kernel needs. build123d pulls cadquery-ocp, which links
+# against the usual X/GL runtime even for headless STEP work.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libgl1 libglx-mesa0 libxrender1 libxext6 libsm6 libxi6 libxfixes3 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Dependencies first (cached layer, rebuilt only when the lockfile changes).
+#
+# Deliberately without --locked: this pipeline adds a CAD kernel and a vision
+# client to a template that shipped neither, and `uv sync --locked` refuses to
+# build until uv.lock is regenerated on a machine that has uv. Refresh it with
+# `uv lock` (see README) and commit the result; until then the build resolves from
+# pyproject.toml, which is slower but never blocks a submission.
 RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=uv.lock,target=uv.lock \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv sync --locked --no-install-project --no-dev
+    uv sync --no-install-project --no-dev
 
 # Copy the project into the image
 COPY . /app
 
 # Install the project itself
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --locked --no-dev
+    uv sync --no-dev
 
 ENV PATH="/app/.venv/bin:$PATH"
 
@@ -27,4 +39,5 @@ ENV PATH="/app/.venv/bin:$PATH"
 #     OPENAI_API_KEY=<your vLLM --api-key> \
 #     OPENAI_MODEL=<model>
 
+# The pipeline writes only to --output_dir and its scratch directory.
 CMD ["python", "scripts/main.py"]
