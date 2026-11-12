@@ -120,7 +120,70 @@ advisory on purpose: reproducing 628 faces and 65 distinct tori is not a realist
 goal in the budget, and gating on it would just make every hard case red. What is
 gating is the consequence — area and genus — and what is loud is the named species.
 
-## What this says about the model versus the harness
+## Case 7 before and after the measurement step
+
+The bracket is the hardest case: 628 declared faces, 16 bore families, 17
+partial-arc families, 25 round families, 10 torus radii. Both runs used
+`deepseek-flash` through the harness; the second had the model-written measurer and
+the two plumbing fixes below.
+
+| | architected run (old harness) | with the measurement step |
+|---|---|---|
+| wall clock | — | 1434 s (24 min) |
+| volume / expected | 1.0000 | 1.0140 |
+| mean ortho IoU | 0.8531 | **0.8718** |
+| mean IoU, all views | 0.8619 | **0.8777** |
+| genus (declared 10) | 14 | **10** |
+| bore families matched | 6 of 16 | **15 of 16** |
+| faces (declared 628) | 88 | **131** |
+| surface area (declared 96750.8) | 93747, -3.1% | **99225, +2.6%** |
+| gating failures | 10 bore families + projection | **1 bore family** + projection |
+| comparison rows | 9, from the old hand-written list | **121**, every family in the brief |
+
+The trade is visible: volume got slightly worse (1.4% high) and everything else got
+better, because the loop finally told the agent which *features* were missing instead
+of only that the total was close. Fifteen of sixteen bore families matched, and the
+one still missing is the oblique `d4.5` on `(-0.29, -0.66, 0.70)`.
+
+That is the argument for the measurement step in one line: a verifier that reports
+totals teaches a model to chase totals.
+
+## Two plumbing bugs the run exposed
+
+Both had the same shape -- the harness knew something useful and delivered it as a
+crash.
+
+**`ProvenanceReport.render()` raised `TypeError`.** It did
+`"\n".join(self.violations)` over a list of `Violation` objects. So *every* rejected
+module came back to the model as a Python traceback instead of a rule. The bracket run
+responded exactly as you would expect from a system that only says "something was
+wrong": it wrote eight probe scripts (`p1.py` … `p8.py`, `probe.py`, `probe2.py`) to
+discover the rule by experiment, and its reasoning shows it guessing. Fixed: violations
+render with their source line, and a `build()` violation now says which numbers are
+structural and that dimensions must pass through the parameter dict.
+
+**Non-finite floats broke the tool channel.** A degenerate boolean leaves volume or
+area as `NaN`, Python's `json` writes the bare token `NaN`, which is not JSON, and the
+plugin's `JSON.parse` threw -- so the model saw `cli returned non-JSON` rather than
+`your solid is degenerate`. Fixed with a recursive sanitiser. The agent had guessed
+this one correctly on its own ("the error is on the tool result serialization"), which
+is a good sign about the model and a bad sign about the harness.
+
+## A risk this opened, not yet closed
+
+The model-written measurer and the harness's built-in one **disagree**: scoring the
+same STEP file, the built-in measurer reports three missing bore families, the model's
+reports one. The model's grouping is more permissive -- it merges families that facts
+keeps separate.
+
+That is the cost of letting the model write the adapter. The structure check proves
+the document has the right *families*; nothing proves it measured them *strictly*. A
+measurer that merges everything into one family would pass the structure check and
+report almost nothing.
+
+The fix is to run both measurers where both can run and flag divergence, treating the
+built-in one as the reference. Not implemented.
+
 
 Of the three findings, only one is about model capability: on parts with hundreds
 of features the model simplifies, drops fillets and stops early. That is real and

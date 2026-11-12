@@ -328,8 +328,25 @@ def main(argv: list[str]) -> int:
 
         result = {"ok": False, "error": f"{type(error).__name__}: {error}",
                   "traceback": traceback.format_exc()[-1500:]}
-    print(json.dumps(result, ensure_ascii=False))
+    # A degenerate boolean can leave volume or area as NaN or Inf. Python's json
+    # module happily writes the bare tokens NaN/Infinity, which are not JSON, and the
+    # plugin's JSON.parse then throws -- so the model sees "cli returned non-JSON"
+    # instead of "your solid is degenerate". Sanitise before serialising.
+    print(json.dumps(_finite(result), ensure_ascii=False))
     return 0 if result.get("ok") else 1
+
+
+def _finite(value):
+    """Replace non-finite floats with None, recursively, and note that we did."""
+    import math
+
+    if isinstance(value, float):
+        return value if math.isfinite(value) else None
+    if isinstance(value, dict):
+        return {key: _finite(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_finite(item) for item in value]
+    return value
 
 
 if __name__ == "__main__":

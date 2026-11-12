@@ -76,13 +76,33 @@ class ProvenanceReport:
     has_build: bool = False
     has_notes: bool = False
 
+    source: str = ""
+
     def render(self) -> str:
         if self.ok:
             extra = ""
             if self.estimated or self.assumed:
                 extra = f" ({len(self.estimated)} estimated, {len(self.assumed)} assumed)"
             return f"provenance: ok{extra}"
-        return "provenance: FAILED\n" + "\n".join(self.violations)
+        # `violations` holds Violation objects, not strings. Joining them directly
+        # raised TypeError, so every rejected module came back to the model as a
+        # Python traceback instead of a usable message -- which is why a run against
+        # the bracket spent its budget writing probe scripts to discover the rule by
+        # experiment.
+        lines = [self.render_violation(v) for v in self.violations]
+        header = f"provenance: FAILED ({len(lines)} violation{'s' if len(lines) != 1 else ''})"
+        rewrite = (
+            "\nA literal in build() has to reach the shape through the parameter dict: "
+            "write Box(p['x'], p['y'], p['z']), not Box(11, 20, 30). A literal in "
+            "derive() is legal when the value is in facts.json or the brief."
+            if any(v.rule == "provenance" and "build()" in v.message for v in self.violations)
+            else ""
+        )
+        return header + "\n" + "\n".join(lines) + rewrite
+
+    def render_violation(self, violation: Violation) -> str:
+        source_lines = self.source.splitlines()
+        return violation.render(source_lines)
 
 
 def _literal_value(node: ast.AST) -> float | None:
@@ -116,7 +136,7 @@ def _matches_ground_truth(value: float, known: set[float]) -> bool:
 
 def check(gt: GroundTruth, source: str) -> ProvenanceReport:
     """Validate one generated module against the provenance rules."""
-    report = ProvenanceReport(ok=True)
+    report = ProvenanceReport(ok=True, source=source)
     try:
         tree = ast.parse(source)
     except SyntaxError as error:
@@ -176,12 +196,17 @@ def check(gt: GroundTruth, source: str) -> ProvenanceReport:
             if allow_grounded and _matches_ground_truth(value, known):
                 continue
             where = "derive()" if allow_grounded else "build()"
-            hint = (
-                "not present in facts.json/description.md; take it from `facts` or write it as a formula"
-                if allow_grounded
-                else "build() may only use structural literals; pass the dimension through `derive()`"
-            )
-            report.violations.append(Violation("provenance", f"{value:g} in {where} is {hint}", node.lineno))
+            if allow_grounded:
+                message = (
+                    f"{value:g} in {where} is not in facts.json or the brief; take it from "
+                    f"`facts`, or write it as a formula over values that are"
+                )
+            else:
+                message = (
+                    f"{value:g} in {where} is not structural; build() may only use "
+                    f"0/1/2/3/-1/90/180/270, so pass this through `derive()` instead"
+                )
+            report.violations.append(Violation("provenance", message, node.lineno))
 
     if report.has_derive:
         scan(functions["derive"], allow_grounded=True)
