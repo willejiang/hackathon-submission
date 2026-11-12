@@ -467,19 +467,42 @@ def test_measurer_cannot_read_the_case_directory():
             assert not violations, f"refused a clean measurer ({why}): {violations}"
 
 
-def test_structure_check_catches_a_dropped_family():
+def test_structure_check_reports_families_not_values():
+    """Structure means the document has the families; it does not police values.
+
+    The first version recursed into every key and reported
+    `face_types.BSPLINE missing from the measured document` on a part that simply had
+    no BSPLINE faces, while the comparator was already reporting
+    `face_types[BSPLINE] expected 222 actual 0`. Same gap, twice, in the wrong
+    vocabulary. So: a missing family or a feature family the measurer skipped is
+    structure; an emptied radius dictionary is a value.
+    """
     from agentic_cad import measuredoc
 
-    reference = {"volume_mm3": 1.0, "face_types": {"CYLINDER": 2},
-                 "fillets_from_tori_minor_radii": {"15.25": 1}}
-    complete = {"volume_mm3": 1.0, "face_types": {"CYLINDER": 2},
-                "fillets_from_tori_minor_radii": {"15.25": 1}}
-    dropped = {"volume_mm3": 1.0, "face_types": {"CYLINDER": 2},
-               "fillets_from_tori_minor_radii": {}}
+    reference = {
+        "volume_mm3": 1.0,
+        "face_types": {"CYLINDER": 2, "TORUS": 65},
+        "partial_cylinders_arcs": [{"diameter": 2.0, "type": "concave", "faces": 1}],
+        "fillets_from_tori_minor_radii": {"15.25": 1},
+    }
 
+    complete = {
+        "volume_mm3": 4.0,
+        "face_types": {"CYLINDER": 2},
+        "partial_cylinders_arcs": [{"diameter": 2.0, "type": "concave", "faces": 1}],
+        "fillets_from_tori_minor_radii": {},
+    }
+    # A different value and an emptied radius dict are NOT structure problems.
     assert measuredoc.check_structure(reference, complete) == []
-    problems = measuredoc.check_structure(reference, dropped)
+
+    missing_family = {"volume_mm3": 1.0, "face_types": {"CYLINDER": 2},
+                      "partial_cylinders_arcs": []}
+    problems = measuredoc.check_structure(reference, missing_family)
     assert any("fillets_from_tori_minor_radii" in p for p in problems), problems
+    assert any("did not attempt this family" in p for p in problems), problems
+
+    extra = dict(complete, unknown_family=1)
+    assert any("unknown_family" in p for p in measuredoc.check_structure(reference, extra))
 
 
 def test_measure_result_round_trip_on_the_reference_part():

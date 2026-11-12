@@ -98,16 +98,32 @@ def measure(shape):
     groups = _cylinders(shape)
     box = shape.bounding_box()
 
+    # A family is identified by the fields facts.json uses to identify it, and the arc
+    # and round families carry no axis. So partial features are aggregated by
+    # (diameter or radius, type) with face counts summed. One entry per
+    # (diameter, axis, curvature) group instead leaves duplicate identities, and the
+    # comparison then pairs them arbitrarily and reports nonsense like "faces 4 vs 1".
+    arc_totals = {}
+    for group in groups:
+        if group["full"]:
+            continue
+        kind = "convex" if group["kind"] == "shaft" else "concave"
+        arc_totals[(group["diameter"], kind)] = arc_totals.get((group["diameter"], kind), 0) + group["faces"]
     arcs = [
-        {"diameter": g["diameter"], "type": "convex" if g["kind"] == "shaft" else "concave",
-         "faces": g["faces"]}
-        for g in groups
-        if not g["full"]
+        {"diameter": diameter, "type": kind, "faces": faces}
+        for (diameter, kind), faces in sorted(arc_totals.items(), key=lambda item: -item[0][0])
     ]
+
+    round_totals = {}
+    for group in groups:
+        if group["full"]:
+            continue
+        kind = "convex round" if group["kind"] == "shaft" else "concave fillet"
+        key = (round(group["diameter"] / 2.0, 3), kind)
+        round_totals[key] = round_totals.get(key, 0) + group["faces"]
     rounds = [
-        {"radius": round(g["diameter"] / 2.0, 3), "type": "convex round", "faces": g["faces"]}
-        for g in groups
-        if not g["full"] and g["kind"] == "shaft"
+        {"radius": radius, "type": kind, "faces": faces}
+        for (radius, kind), faces in sorted(round_totals.items(), key=lambda item: item[0][0])
     ]
 
     return {

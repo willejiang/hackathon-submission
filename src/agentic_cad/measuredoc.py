@@ -87,45 +87,62 @@ def _walk_numbers(value: Any) -> list[Any]:
 # --------------------------------------------------------------------------- #
 
 
-def check_structure(reference: Any, produced: Any, path: str = "") -> list[str]:
-    """Report where the produced document does not have the reference's shape.
+def check_structure(reference: Any, produced: Any, path: str = "", depth: int = 0) -> list[str]:
+    """Report where the produced document does not have the reference's *family* shape.
 
-    Only shape: keys, nesting, container kinds, and whether a list is empty on one
-    side and populated on the other. Values are `factscompare`'s business.
+    Structure means: the document has the same top-level families, and each family is
+    the same kind of container. It deliberately stops there.
+
+    Everything below a family is a value, and values belong to `factscompare`. The
+    first version recursed all the way down and reported
+    `face_types.BSPLINE missing from the measured document` for a part whose
+    `face_types` simply had no BSPLINE faces -- while the comparator was, correctly,
+    reporting `face_types[BSPLINE] expected 222 actual 0` on the same run. One gap
+    reported twice, in the wrong vocabulary, is noise that buries the real finding.
+
+    What *is* structure, and is reported:
+
+      * a top-level family that is absent
+      * a family of the wrong container kind (a list where the facts have an object)
+      * a feature family the measurer did not attempt at all, i.e. facts declare
+        entries and the measured list is empty -- that is a gap in the adapter rather
+        than a disagreement about geometry
     """
     problems: list[str] = []
     where = path or "<root>"
 
-    if isinstance(reference, dict):
+    if depth == 0:
+        if not isinstance(reference, dict):
+            return []
         if not isinstance(produced, dict):
             return [f"{where}: expected an object, got {type(produced).__name__}"]
         for key, value in reference.items():
             if key.startswith("_"):
                 continue
-            here = f"{path}.{key}" if path else key
             if key not in produced:
-                problems.append(f"{here}: missing from the measured document")
+                problems.append(f"{key}: family missing from the measured document")
                 continue
-            problems.extend(check_structure(value, produced[key], here))
+            problems.extend(check_structure(value, produced[key], key, depth + 1))
+        for key in produced:
+            if key not in reference:
+                problems.append(f"{key}: family in the measured document that facts.json does not have")
         return problems
 
-    if isinstance(reference, list):
-        if not isinstance(produced, list):
-            return [f"{where}: expected a list, got {type(produced).__name__}"]
-        if bool(reference) != bool(produced) and (reference or produced):
-            problems.append(
-                f"{where}: facts declare {len(reference)} entr"
-                f"{'y' if len(reference) == 1 else 'ies'}, measured {len(produced)}"
-            )
-        if reference and produced:
-            problems.extend(check_structure(reference[0], produced[0], f"{where}[0]"))
-        return problems
+    kind_mismatch = (
+        (isinstance(reference, dict) and not isinstance(produced, dict))
+        or (isinstance(reference, list) and not isinstance(produced, list))
+        or (isinstance(reference, (int, float)) and not isinstance(reference, bool)
+            and (not isinstance(produced, (int, float)) or isinstance(produced, bool)))
+    )
+    if kind_mismatch:
+        return [f"{where}: expected {type(reference).__name__}, got {type(produced).__name__}"]
 
-    if isinstance(reference, (int, float)) and not isinstance(reference, bool):
-        if not isinstance(produced, (int, float)) or isinstance(produced, bool):
-            problems.append(f"{where}: expected a number, got {type(produced).__name__}")
-        return problems
-
+    if isinstance(reference, list) and reference and not produced:
+        problems.append(
+            f"{where}: facts declare {len(reference)} entr"
+            f"{'y' if len(reference) == 1 else 'ies'} and the measured document has none "
+            f"-- the measurer did not attempt this family"
+        )
     return problems
 
 
