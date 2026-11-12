@@ -102,7 +102,50 @@ def _build(source: str):
         return gt, built, None, None
     measured = factsgen.measure(built.shape)
     comparison = factsgen.compare(gt, measured)
+    _snapshot(built.shape, measured)
     return gt, built, measured, comparison
+
+
+def _snapshot(shape, measured: dict) -> None:
+    """Keep every solid that built, so a run that hits its deadline can ship the best
+    one instead of the last file on disk or an envelope box. Never raises."""
+    directory = os.environ.get("AGENTIC_CAD_SNAPSHOT_DIR", "").strip()
+    if not directory:
+        return
+    try:
+        from build123d import export_step
+
+        root = Path(directory)
+        root.mkdir(parents=True, exist_ok=True)
+        index = root / "index.jsonl"
+        number = sum(1 for _ in index.open()) if index.is_file() else 0
+        name = f"{number:04d}.stp"
+        export_step(shape, str(root / name))
+        row = {
+            "file": name,
+            "volume_mm3": measured.get("volume_mm3"),
+            "bounding_box_mm": measured.get("bounding_box_mm"),
+            "solids": measured.get("solids"),
+            "through_holes_genus": measured.get("through_holes_genus"),
+        }
+        with index.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(row) + "\n")
+    except Exception:
+        pass
+
+
+def tool_snapshot(args: dict) -> dict:
+    """Build a module WITHOUT the provenance check and record it as a snapshot.
+
+    Only the runner calls this, after the agent has stopped: provenance is a
+    discipline for the agent while it works, not a reason to ship a box when a
+    module builds a real solid.
+    """
+    source = read_source(args)
+    _gt, built, measured, _comparison = _build(source)
+    if not built.ok:
+        return {"ok": False, "stage": built.stage, "error": built.error}
+    return {"ok": True, "volume_mm3": measured["volume_mm3"], "solids": measured["solids"]}
 
 
 def tool_build(args: dict) -> dict:
@@ -311,6 +354,7 @@ TOOLS = {
     "verify": tool_verify,
     "render": tool_render,
     "submit": tool_submit,
+    "snapshot": tool_snapshot,
     "facts_scaffold": tool_facts_scaffold,
     "measure_result": tool_measure_result,
 }
