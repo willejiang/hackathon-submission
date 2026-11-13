@@ -1,0 +1,63 @@
+{
+  "name": "dimple_taper_blind_sleeves_raw",
+  "valid": true,
+  "solids": 1,
+  "shells": 1,
+  "volume": 4254592.97392264,
+  "V": 1.0019239189166638,
+  "area": 351737.4080946337,
+  "A": 1.0073508690581245,
+  "genus_mesh": null,
+  "genus_brep": 15,
+  "face_types": {
+    "PLANE": 72,
+    "BSPLINE": 15,
+    "CYLINDER": 67,
+    "CONE": 34
+  },
+  "mesh_min": [
+    0.0,
+    -3.110602869834e-15,
+    0.0
+  ],
+  "mesh_max": [
+    508.0,
+    85.73000000000002,
+    165.1
+  ],
+  "mesh_extent": [
+    508.0,
+    85.73000000000002,
+    165.1
+  ],
+  "vertex_min": [
+    0.0,
+    -3.110602869834e-15,
+    0.0
+  ],
+  "vertex_max": [
+    508.0,
+    85.73,
+    165.1
+  ],
+  "bbox_loose": {
+    "x": 508.0,
+    "y": 85.73,
+    "z": 172.6852
+  },
+  "OCC_AddOptimal_no_triangulation": [
+    [
+      -1e-07,
+      -3.110602869834e-15,
+      -7.58516120398463
+    ],
+    [
+      508.0000001,
+      85.7300001,
+      165.1000001
+    ]
+  ],
+  "iou": 0.9871112933601736,
+  "views": "mean IoU all=0.987 ortho=0.985 iso=0.994\nview_0_front                     IoU=0.993 over=+0.000 under=+0.007 aspect 3.075/3.062 (+0.4%)\nview_1_back                      IoU=0.993 over=+0.000 under=+0.007 aspect 3.075/3.062 (+0.4%)\nview_2_left                      IoU=0.978 over=+0.022 under=+0.001 aspect 0.520/0.521 (-0.3%)\nview_3_right                     IoU=0.978 over=+0.022 under=+0.001 aspect 0.520/0.521 (-0.3%)\nview_4_top                       IoU=0.983 over=+0.002 under=+0.015 aspect 5.910/5.869 (+0.7%)\nview_5_bottom                    IoU=0.983 over=+0.002 under=+0.015 aspect 5.910/5.869 (+0.7%)\nview_6_iso_front_right_top       IoU=0.994 over=+0.002 under=+0.003 aspect 1.146/1.146 (+0.0%)\nview_7_iso_back_left_bottom      IoU=0.994 over=+0.002 under=+0.004 aspect 1.146/1.146 (+0.0%)",
+  "seconds": 10.700091123580933
+}
