@@ -111,11 +111,16 @@ def build(p):
     w = p["wall"]
     te = p["endt"]
 
-    outer = _extrude_face(_cross_outline(p), 0.0, L)
+    prof = _rounded_profile(p)
+    outer = extrude(Plane.YZ * prof, amount=L)
+    end_edges = [e for e in outer.edges()
+                 if e.bounding_box().size.X < 1e-5
+                 and (abs(e.center().X)<1e-4 or abs(e.center().X-L)<1e-4)]
+    outer = fillet(end_edges, p["r_big"])
 
-    # hollow the interior leaving wall w and end plates te
-    inner_pts = _erode(_cross_outline(p), w)
-    cavity = _extrude_face(inner_pts, te, L - te)
+    # Hollow with a true constant-thickness profile rather than a scale copy.
+    inner = offset(prof, amount=-w, kind=Kind.INTERSECTION)
+    cavity = Pos(te,0,0) * extrude(Plane.YZ * inner, amount=L-2*te)
     part = outer - cavity
 
     # six bore bosses (solid, outer radius r_apex) filling the deck walls inwards
@@ -199,3 +204,23 @@ def _erode(pts, w):
         py = (a1 * c2 - a2 * c1) / det
         out.append((px, py))
     return out
+
+
+def _rounded_profile(p):
+    zm = p["Zmax"] / 2
+    umid = (p["Ay"] + p["Az"]-zm) / SQ2
+    uout = umid + p["half"]
+    yt = SQ2*uout-zm
+    vh = (zm-yt)/SQ2
+    zh = 2*vh
+    yf = zh-SQ2*vh
+    ya = SQ2*vh
+    ytip = (uout+vh)/SQ2
+    ztip = zm-(ytip-yt)
+    pts=[(0,zm-zh),(yf,zm-zh),(yt,0),(ytip,zm-ztip),
+         (ya,zm),(ytip,zm+ztip),(yt,p["Zmax"]),(yf,zm+zh),(0,zm+zh)]
+    prof=Polygon(*pts,align=None)
+    for y,z,r in [(ya,zm,p["r_apex"]),(yf,zm+zh,p["r_concave"]),(yf,zm-zh,p["r_concave"])]:
+        v=min(prof.vertices(),key=lambda q:(q.X-y)**2+(q.Y-z)**2)
+        prof=fillet([v],r)
+    return prof
