@@ -148,7 +148,8 @@ function toolDefinitions(config) {
       description:
         "Rasterise your solid from the same eight camera directions as the reference renders and report " +
         "silhouette overlap per view (IoU, overfill, underfill, aspect). Use it to test whether your " +
-        "shape matches the pictures, after the numbers already agree.",
+        "coarse baseline matches the pictures, even if numeric diagnostics still disagree. " +
+        "Re-read the reference view showing a mismatch before repairing the geometry.",
       parameters: {
         path: { type: "string", required: true, description: "File holding the module, e.g. solution.py" },
       },
@@ -158,8 +159,9 @@ function toolDefinitions(config) {
     {
       name: "cad_submit",
       description:
-        "Export your module's solid as this case's STEP file. Call it once, when the gates pass. " +
-        "It re-checks provenance and re-builds, so submitting a module that does not build fails here.",
+        "Export your module's solid as this case's STEP file. Save the first valid single-solid " +
+        "baseline even when diagnostic gates fail; submit again after a geometric improvement. " +
+        "It re-checks provenance and re-builds, so a module that does not build fails here.",
       parameters: {
         path: { type: "string", required: true, description: "File holding the module, e.g. solution.py" },
       },

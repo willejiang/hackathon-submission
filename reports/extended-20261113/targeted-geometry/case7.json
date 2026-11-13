@@ -1,0 +1,18 @@
+{
+  "name": "accepted745-upper-bowl-v2",
+  "valid": true,
+  "solids": 1,
+  "shells": 1,
+  "volume": 323476.8860820212,
+  "V": 0.9882096366398143,
+  "area": 100615.63813851863,
+  "A": 1.0399463171210845,
+  "genus": 14,
+  "iou": 0.8933001923915477,
+  "views": "mean IoU all=0.893 ortho=0.893 iso=0.896\nview_0_front                     IoU=0.860 over=+0.061 under=+0.088 aspect 1.062/1.060 (+0.2%)\nview_1_back                      IoU=0.860 over=+0.061 under=+0.088 aspect 1.062/1.060 (+0.2%)\nview_2_left                      IoU=0.909 over=+0.011 under=+0.082 aspect 0.623/0.625 (-0.3%)\nview_3_right                     IoU=0.909 over=+0.011 under=+0.082 aspect 0.623/0.625 (-0.3%)\nview_4_top                       IoU=0.909 over=+0.041 under=+0.053 aspect 1.705/1.700 (+0.3%)\nview_5_bottom                    IoU=0.909 over=+0.041 under=+0.053 aspect 1.705/1.700 (+0.3%)\nview_6_iso_front_right_top       IoU=0.896 over=+0.031 under=+0.077 aspect 0.696/0.739 (-5.8%)\nview_7_iso_back_left_bottom      IoU=0.896 over=+0.031 under=+0.077 aspect 0.696/0.739 (-5.8%)",
+  "bbox": {
+    "x": 162.25,
+    "y": 95.15,
+    "z": 152.74
+  }
+}
