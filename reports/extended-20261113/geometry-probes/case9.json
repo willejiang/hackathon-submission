@@ -1,0 +1,2355 @@
+{
+  "valid": true,
+  "solids": 1,
+  "volume": 14812228.498686502,
+  "volume_ratio": 1.0030044027358698,
+  "area": 1765368.3437672262,
+  "area_ratio": 1.011187149368679,
+  "bbox": {
+    "x": 508.0,
+    "y": 255.94,
+    "z": 511.87
+  },
+  "genus": 6,
+  "faces": 404,
+  "iou_all": 0.9910246491453814,
+  "iou_ortho": 0.9957648689980046,
+  "seconds": 7.156441926956177,
+  "measurements": {
+    "bounding_box_mm": {
+      "x": 508.0,
+      "y": 255.94,
+      "z": 511.87
+    },
+    "bbox_min": [
+      -0.0,
+      -0.0,
+      0.0
+    ],
+    "volume_mm3": 14812228.4987,
+    "surface_area_mm2": 1765368.3438,
+    "solids": 1,
+    "faces": 404,
+    "edges": 1016,
+    "vertices": 668,
+    "through_holes_genus": 6,
+    "face_types": {
+      "CYLINDER": 144,
+      "PLANE": 252,
+      "TORUS": 8
+    },
+    "cylinders": [
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "kind": "shaft",
+        "area": 721.5418832936789,
+        "axial_extent": 27.3144
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "kind": "shaft",
+        "area": 721.5418832934965,
+        "axial_extent": 27.3144
+      },
+      {
+        "diameter": 101.6,
+        "radius": 50.8,
+        "axis": "X",
+        "axis_vector": [
+          1.0,
+          -0.0,
+          -0.0
+        ],
+        "kind": "bore",
+        "area": 18241.469247499503,
+        "axial_extent": 457.2
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Z",
+        "axis_vector": [
+          -0.0,
+          -0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 3206.1950903948145,
+        "axial_extent": 106.9056
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Z",
+        "axis_vector": [
+          -0.0,
+          -0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 3206.195482718735,
+        "axial_extent": 106.9056
+      },
+      {
+        "diameter": 127.0,
+        "radius": 63.5,
+        "axis": "X",
+        "axis_vector": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "kind": "bore",
+        "area": 3524.8460496448174,
+        "axial_extent": 19.05
+      },
+      {
+        "diameter": 127.0,
+        "radius": 63.5,
+        "axis": "X",
+        "axis_vector": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "kind": "bore",
+        "area": 3524.8460498102872,
+        "axial_extent": 19.05
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Z",
+        "axis_vector": [
+          -0.0,
+          -0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 3205.7960753416687,
+        "axial_extent": 106.8956
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          1.0,
+          -0.0
+        ],
+        "kind": "shaft",
+        "area": 721.5418832936915,
+        "axial_extent": 27.3144
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 3917.5735477991975,
+        "axial_extent": 107.419
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 4498.608166208553,
+        "axial_extent": 165.1064
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 3344.542404035612,
+        "axial_extent": 93.0567
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 2989.5831158843566,
+        "axial_extent": 74.9302
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 3344.542404036111,
+        "axial_extent": 93.0567
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 5850.941719499536,
+        "axial_extent": 165.1064
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 3917.5735477962,
+        "axial_extent": 107.419
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Z",
+        "axis_vector": [
+          -0.0,
+          -0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 3205.7965088828414,
+        "axial_extent": 106.8956
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          1.0,
+          -0.0
+        ],
+        "kind": "shaft",
+        "area": 721.5418832941035,
+        "axial_extent": 27.3144
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 3917.5735477994267,
+        "axial_extent": 107.419
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 5850.941719499564,
+        "axial_extent": 165.1064
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 3344.5424040363805,
+        "axial_extent": 93.0567
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 2989.5831158843557,
+        "axial_extent": 74.9302
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 3344.5424040355238,
+        "axial_extent": 93.0567
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 4498.651822482633,
+        "axial_extent": 165.1064
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 3917.573547796312,
+        "axial_extent": 107.419
+      },
+      {
+        "diameter": 127.0,
+        "radius": 63.5,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "bore",
+        "area": 62298.36320842789,
+        "axial_extent": 156.1432
+      },
+      {
+        "diameter": 127.0,
+        "radius": 63.5,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "bore",
+        "area": 62298.36320842789,
+        "axial_extent": 156.1432
+      },
+      {
+        "diameter": 127.0,
+        "radius": 63.5,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "bore",
+        "area": 62298.36320842789,
+        "axial_extent": 156.1432
+      },
+      {
+        "diameter": 101.6,
+        "radius": 50.8,
+        "axis": "X",
+        "axis_vector": [
+          1.0,
+          -0.0,
+          -0.0
+        ],
+        "kind": "bore",
+        "area": 18241.469247522728,
+        "axial_extent": 457.2
+      },
+      {
+        "diameter": 9.52,
+        "radius": 4.76,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "bore",
+        "area": 2261.75776304282,
+        "axial_extent": 75.9944
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2297.1795099258943,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2297.1795150229414,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 9.52,
+        "radius": 4.76,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "bore",
+        "area": 2261.757763041969,
+        "axial_extent": 75.9944
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 655.8706897557424,
+        "axial_extent": 81.6358
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 655.8706708523991,
+        "axial_extent": 81.6358
+      },
+      {
+        "diameter": 101.6,
+        "radius": 50.8,
+        "axis": "X",
+        "axis_vector": [
+          1.0,
+          -0.0,
+          -0.0
+        ],
+        "kind": "bore",
+        "area": 18241.469247499506,
+        "axial_extent": 457.2
+      },
+      {
+        "diameter": 101.6,
+        "radius": 50.8,
+        "axis": "X",
+        "axis_vector": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "kind": "bore",
+        "area": 18241.469247499503,
+        "axial_extent": 457.2
+      },
+      {
+        "diameter": 9.52,
+        "radius": 4.76,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "bore",
+        "area": 2261.969403975124,
+        "axial_extent": 76.0014
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2297.37826861672,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2297.3782737164424,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 9.52,
+        "radius": 4.76,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "bore",
+        "area": 2261.757922747981,
+        "axial_extent": 75.9944
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 655.9283871970691,
+        "axial_extent": 81.6428
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 655.9283673151348,
+        "axial_extent": 81.6428
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 14756.403327781825,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 261.98041047764895,
+        "axial_extent": 60.9071
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.323861261242,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2640.9161107758528,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2640.91611077591,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.323861261261,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.323861261242,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2640.9161107758523,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 9.52,
+        "radius": 4.76,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "bore",
+        "area": 2273.0483910736257,
+        "axial_extent": 76.0014
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 4588.70627364686,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 4588.706273646659,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2757.196947564403,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2642.337128135324,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.3238612612986,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 4587.462832344989,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2757.1969475643564,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 4587.462832345089,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2642.337128135174,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.323861261299,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 9.52,
+        "radius": 4.76,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "bore",
+        "area": 2272.836909845579,
+        "axial_extent": 75.9944
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2642.3371281449963,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.3238612612986,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2640.91611077591,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.323861261261,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 9.52,
+        "radius": 4.76,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "bore",
+        "area": 2273.0483910736257,
+        "axial_extent": 76.0014
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.323861261242,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2640.9161107758528,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 4588.706273646885,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 4588.70627364666,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2757.1969475644037,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2640.91611077591,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.323861261261,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 671.9699534370662,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 9.52,
+        "radius": 4.76,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "bore",
+        "area": 2273.0483910736257,
+        "axial_extent": 76.0014
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2314.843039740202,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 14783.14369132384,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2314.843039740161,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2642.337128135174,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.3238612612988,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 4587.462832344989,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2757.1969475643564,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 4587.462832335408,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 9.52,
+        "radius": 4.76,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "bore",
+        "area": 2272.836909845579,
+        "axial_extent": 75.9944
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2642.337128135323,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.3238612612988,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 2642.337128135174,
+        "axial_extent": 127.0032
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.323861260253,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 9.52,
+        "radius": 4.76,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "bore",
+        "area": 2272.836909845579,
+        "axial_extent": 75.9944
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 671.969953436055,
+        "axial_extent": 82.3532
+      },
+      {
+        "diameter": 127.0,
+        "radius": 63.5,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "bore",
+        "area": 62295.54197776441,
+        "axial_extent": 156.1361
+      },
+      {
+        "diameter": 127.0,
+        "radius": 63.5,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "bore",
+        "area": 62295.54197776441,
+        "axial_extent": 156.1361
+      },
+      {
+        "diameter": 127.0,
+        "radius": 63.5,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "bore",
+        "area": 62295.54197776441,
+        "axial_extent": 156.1361
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 14756.823548839382,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 50.8,
+        "radius": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071,
+          -0.7071
+        ],
+        "kind": "shaft",
+        "area": 261.9805338096074,
+        "axial_extent": 60.9071
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 671.9122562767149,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 9.52,
+        "radius": 4.76,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "bore",
+        "area": 2272.8369098460466,
+        "axial_extent": 75.9944
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2640.7690743340345,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.2281823961707,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2314.644281046512,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2314.64428104651,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 14783.56399263958,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2640.7690743338894,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.2281823961705,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 9.52,
+        "radius": 4.76,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "bore",
+        "area": 2272.8369098460466,
+        "axial_extent": 75.9944
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 4588.450791452556,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2756.9602071659665,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 4588.4507914622345,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2640.769074334034,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.228182396171,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 9.52,
+        "radius": 4.76,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "bore",
+        "area": 2272.8369098460475,
+        "axial_extent": 75.9944
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 671.9122562766802,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2640.7690743339604,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.2281823961046,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 4588.450791452558,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 4588.4507914524,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2756.9602071659665,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.228182396133,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2640.769074334004,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 9.52,
+        "radius": 4.76,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "bore",
+        "area": 2272.8369098460475,
+        "axial_extent": 75.9944
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2640.7690743339604,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.2281823961046,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2640.7690743338894,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.2281823961703,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 9.52,
+        "radius": 4.76,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "bore",
+        "area": 2272.8369098460466,
+        "axial_extent": 75.9944
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2640.7690743340345,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.2281823961707,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 4588.450791452554,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2756.960207165967,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 4588.4507914622345,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2640.7690743338894,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.2281823961703,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 4588.450791452558,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 4588.4507914524,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2756.9602071659665,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 9.52,
+        "radius": 4.76,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "bore",
+        "area": 2272.8369098460475,
+        "axial_extent": 75.9944
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.228182396133,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2640.769074334004,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2640.769074333813,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.2281823961046,
+        "axial_extent": 82.3461
+      },
+      {
+        "diameter": 152.4,
+        "radius": 76.2,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 2640.769074334004,
+        "axial_extent": 126.9961
+      },
+      {
+        "diameter": 25.4,
+        "radius": 12.7,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071,
+          0.7071
+        ],
+        "kind": "shaft",
+        "area": 1114.2281823961325,
+        "axial_extent": 82.3461
+      }
+    ],
+    "cylinder_groups": [
+      {
+        "diameter": 152.4,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071067811865476,
+          -0.7071067811865476
+        ],
+        "kind": "shaft",
+        "faces": 22,
+        "area": 97943.74287653965,
+        "axial_extent": 127.0032,
+        "full": true,
+        "span_fraction": 1.611
+      },
+      {
+        "diameter": 152.4,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071067811865476,
+          0.7071067811865476
+        ],
+        "kind": "shaft",
+        "faces": 22,
+        "area": 97937.222765126,
+        "axial_extent": 126.9961,
+        "full": true,
+        "span_fraction": 1.611
+      },
+      {
+        "diameter": 127.0,
+        "axis": "X",
+        "axis_vector": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "kind": "bore",
+        "faces": 2,
+        "area": 7049.692099455105,
+        "axial_extent": 19.05,
+        "full": true,
+        "span_fraction": 0.928
+      },
+      {
+        "diameter": 127.0,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071067811865476,
+          -0.7071067811865476
+        ],
+        "kind": "bore",
+        "faces": 3,
+        "area": 186895.08962528367,
+        "axial_extent": 156.1432,
+        "full": true,
+        "span_fraction": 2.0
+      },
+      {
+        "diameter": 127.0,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071067811865476,
+          0.7071067811865476
+        ],
+        "kind": "bore",
+        "faces": 3,
+        "area": 186886.62593329325,
+        "axial_extent": 156.1361,
+        "full": true,
+        "span_fraction": 2.0
+      },
+      {
+        "diameter": 101.6,
+        "axis": "X",
+        "axis_vector": [
+          1.0,
+          -0.0,
+          -0.0
+        ],
+        "kind": "bore",
+        "faces": 4,
+        "area": 72965.87699002124,
+        "axial_extent": 457.2,
+        "full": false,
+        "span_fraction": 0.5
+      },
+      {
+        "diameter": 50.8,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "kind": "shaft",
+        "faces": 4,
+        "area": 2886.1675331749707,
+        "axial_extent": 27.3144,
+        "full": false,
+        "span_fraction": 0.662
+      },
+      {
+        "diameter": 50.8,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071067811865476,
+          0.7071067811865476
+        ],
+        "kind": "shaft",
+        "faces": 7,
+        "area": 25135.80585613043,
+        "axial_extent": 165.1064,
+        "full": true,
+        "span_fraction": 0.954
+      },
+      {
+        "diameter": 50.8,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071067811865476,
+          -0.7071067811865476
+        ],
+        "kind": "shaft",
+        "faces": 7,
+        "area": 25135.762323181876,
+        "axial_extent": 165.1064,
+        "full": true,
+        "span_fraction": 0.954
+      },
+      {
+        "diameter": 50.8,
+        "axis": "Z",
+        "axis_vector": [
+          -0.0,
+          -0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "faces": 6,
+        "area": 18803.149389106773,
+        "axial_extent": 106.9056,
+        "full": true,
+        "span_fraction": 1.102
+      },
+      {
+        "diameter": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071067811865476,
+          0.7071067811865476
+        ],
+        "kind": "shaft",
+        "faces": 24,
+        "area": 36277.792477621,
+        "axial_extent": 82.3461,
+        "full": true,
+        "span_fraction": 2.0
+      },
+      {
+        "diameter": 25.4,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071067811865476,
+          -0.7071067811865476
+        ],
+        "kind": "shaft",
+        "faces": 24,
+        "area": 36280.913408590626,
+        "axial_extent": 82.3532,
+        "full": true,
+        "span_fraction": 2.0
+      },
+      {
+        "diameter": 9.52,
+        "axis": "Y",
+        "axis_vector": [
+          0.0,
+          0.7071067811865476,
+          0.7071067811865476
+        ],
+        "kind": "bore",
+        "faces": 8,
+        "area": 18160.53698516107,
+        "axial_extent": 75.9944,
+        "full": true,
+        "span_fraction": 2.0
+      },
+      {
+        "diameter": 9.52,
+        "axis": "Y",
+        "axis_vector": [
+          -0.0,
+          0.7071067811865476,
+          -0.7071067811865476
+        ],
+        "kind": "bore",
+        "faces": 8,
+        "area": 18161.383229480718,
+        "axial_extent": 76.0014,
+        "full": true,
+        "span_fraction": 2.0
+      }
+    ],
+    "partial_cylinders": [
+      {
+        "diameter": 101.6,
+        "axis": "X",
+        "kind": "bore",
+        "faces": 4,
+        "axial_extent": 457.2,
+        "span_fraction": 0.5
+      },
+      {
+        "diameter": 50.8,
+        "axis": "Y",
+        "kind": "shaft",
+        "faces": 4,
+        "axial_extent": 27.3144,
+        "span_fraction": 0.662
+      }
+    ],
+    "tori": 8,
+    "_note": "independently measured from the produced B-rep, not copied from the inputs",
+    "as_facts": {
+      "bounding_box_mm": {
+        "x": 508.0,
+        "y": 255.94,
+        "z": 511.87
+      },
+      "volume_mm3": 14812228.4987,
+      "surface_area_mm2": 1765368.3438,
+      "solids": 1,
+      "faces": 404,
+      "edges": 1016,
+      "face_types": {
+        "CYLINDER": 144,
+        "PLANE": 252,
+        "TORUS": 8
+      },
+      "cylindrical_holes_and_bores": [
+        {
+          "diameter": 127.0,
+          "axis": "X",
+          "axis_vector": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "count": 2,
+          "lengths": [
+            19.05
+          ]
+        },
+        {
+          "diameter": 127.0,
+          "axis": "Y",
+          "axis_vector": [
+            -0.0,
+            0.7071067811865476,
+            -0.7071067811865476
+          ],
+          "count": 3,
+          "lengths": [
+            156.143
+          ]
+        },
+        {
+          "diameter": 127.0,
+          "axis": "Y",
+          "axis_vector": [
+            0.0,
+            0.7071067811865476,
+            0.7071067811865476
+          ],
+          "count": 3,
+          "lengths": [
+            156.136
+          ]
+        },
+        {
+          "diameter": 9.52,
+          "axis": "Y",
+          "axis_vector": [
+            0.0,
+            0.7071067811865476,
+            0.7071067811865476
+          ],
+          "count": 8,
+          "lengths": [
+            75.994
+          ]
+        },
+        {
+          "diameter": 9.52,
+          "axis": "Y",
+          "axis_vector": [
+            -0.0,
+            0.7071067811865476,
+            -0.7071067811865476
+          ],
+          "count": 8,
+          "lengths": [
+            76.001
+          ]
+        }
+      ],
+      "cylindrical_shafts_and_bosses": [
+        {
+          "diameter": 152.4,
+          "axis": "Y",
+          "axis_vector": [
+            -0.0,
+            0.7071067811865476,
+            -0.7071067811865476
+          ],
+          "count": 22,
+          "lengths": [
+            127.003
+          ]
+        },
+        {
+          "diameter": 152.4,
+          "axis": "Y",
+          "axis_vector": [
+            0.0,
+            0.7071067811865476,
+            0.7071067811865476
+          ],
+          "count": 22,
+          "lengths": [
+            126.996
+          ]
+        },
+        {
+          "diameter": 50.8,
+          "axis": "Y",
+          "axis_vector": [
+            -0.0,
+            0.7071067811865476,
+            0.7071067811865476
+          ],
+          "count": 7,
+          "lengths": [
+            165.106
+          ]
+        },
+        {
+          "diameter": 50.8,
+          "axis": "Y",
+          "axis_vector": [
+            -0.0,
+            0.7071067811865476,
+            -0.7071067811865476
+          ],
+          "count": 7,
+          "lengths": [
+            165.106
+          ]
+        },
+        {
+          "diameter": 50.8,
+          "axis": "Z",
+          "axis_vector": [
+            -0.0,
+            -0.0,
+            1.0
+          ],
+          "count": 6,
+          "lengths": [
+            106.906
+          ]
+        },
+        {
+          "diameter": 25.4,
+          "axis": "Y",
+          "axis_vector": [
+            0.0,
+            0.7071067811865476,
+            0.7071067811865476
+          ],
+          "count": 24,
+          "lengths": [
+            82.346
+          ]
+        },
+        {
+          "diameter": 25.4,
+          "axis": "Y",
+          "axis_vector": [
+            -0.0,
+            0.7071067811865476,
+            -0.7071067811865476
+          ],
+          "count": 24,
+          "lengths": [
+            82.353
+          ]
+        }
+      ],
+      "partial_cylinders_arcs": [
+        {
+          "diameter": 101.6,
+          "type": "concave",
+          "faces": 4
+        },
+        {
+          "diameter": 50.8,
+          "type": "convex",
+          "faces": 4
+        }
+      ],
+      "fillets_rounds_from_cylinders": [
+        {
+          "radius": 50.8,
+          "type": "concave fillet",
+          "faces": 4
+        },
+        {
+          "radius": 25.4,
+          "type": "convex round",
+          "faces": 4
+        }
+      ],
+      "fillets_from_tori_minor_radii": {
+        "25.4": 8
+      },
+      "cones_half_angle_deg": {},
+      "through_holes_genus": 6
+    },
+    "_unmeasured": []
+  }
+}

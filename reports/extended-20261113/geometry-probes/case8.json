@@ -1,0 +1,18 @@
+{
+  "name": "ears-bolt-blind-oil-deeppockets-v14",
+  "valid": true,
+  "solids": 1,
+  "shells": 1,
+  "volume": 120829.54094805567,
+  "V": 0.994821613539239,
+  "area": 40172.56446189002,
+  "A": 1.0326845375038243,
+  "genus": null,
+  "iou": 0.9871445337196326,
+  "views": "mean IoU all=0.987 ortho=0.986 iso=0.990\nview_0_front                     IoU=0.999 over=+0.000 under=+0.001 aspect 1.986/1.980 (+0.3%)\nview_1_back                      IoU=0.999 over=+0.000 under=+0.001 aspect 1.986/1.980 (+0.3%)\nview_2_left                      IoU=0.988 over=+0.000 under=+0.012 aspect 3.174/3.160 (+0.4%)\nview_3_right                     IoU=0.988 over=+0.000 under=+0.012 aspect 3.174/3.160 (+0.4%)\nview_4_top                       IoU=0.972 over=+0.009 under=+0.019 aspect 0.625/0.627 (-0.3%)\nview_5_bottom                    IoU=0.972 over=+0.009 under=+0.019 aspect 0.625/0.627 (-0.3%)\nview_6_iso_front_right_top       IoU=0.989 over=+0.003 under=+0.008 aspect 1.202/1.202 (-0.0%)\nview_7_iso_back_left_bottom      IoU=0.990 over=+0.003 under=+0.008 aspect 1.202/1.202 (-0.0%)",
+  "bbox": {
+    "x": 80.0,
+    "y": 128.0,
+    "z": 40.2
+  }
+}
