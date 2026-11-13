@@ -1,0 +1,21 @@
+{
+  "valid": true,
+  "solids": 1,
+  "volume": 3482784.502350428,
+  "area": 263267.1069561353,
+  "bbox": {
+    "x": 211.5888,
+    "y": 196.8532,
+    "z": 564.88
+  },
+  "genus": 0,
+  "face_types": {
+    "BSPLINE": 36,
+    "CYLINDER": 91,
+    "EXTRUSION": 24,
+    "PLANE": 26,
+    "TORUS": 36
+  },
+  "iou": 0.9789218838776225,
+  "views": "mean IoU all=0.979 ortho=0.979 iso=0.977\nview_0_front                     IoU=0.971 over=+0.008 under=+0.021 aspect 0.376/0.377 (-0.4%)\nview_1_back                      IoU=0.971 over=+0.008 under=+0.021 aspect 0.376/0.377 (-0.4%)\nview_2_left                      IoU=0.980 over=+0.011 under=+0.010 aspect 0.350/0.350 (-0.1%)\nview_3_right                     IoU=0.980 over=+0.011 under=+0.010 aspect 0.350/0.350 (-0.1%)\nview_4_top                       IoU=0.987 over=+0.000 under=+0.013 aspect 1.074/1.074 (-0.0%)\nview_5_bottom                    IoU=0.987 over=+0.000 under=+0.013 aspect 1.074/1.074 (-0.0%)\nview_6_iso_front_right_top       IoU=0.978 over=+0.011 under=+0.012 aspect 0.412/0.414 (-0.5%)\nview_7_iso_back_left_bottom      IoU=0.977 over=+0.011 under=+0.012 aspect 0.412/0.414 (-0.5%)"
+}
