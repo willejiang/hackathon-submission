@@ -290,12 +290,13 @@ def _fmt(value: Any) -> str:
 
 
 def _scalar_check(name: str, expected: Any, actual: Any) -> Check:
-    gating = name.split(".")[0].split("[")[0] in GATING_KEYS
+    family = name.split(".")[0].split("[")[0]
+    gating = family in GATING_KEYS
     if actual is None:
         return Check(name, _fmt(expected), "not measured", "unverified",
                      gating=gating, note="the measured side could not supply this family")
     if isinstance(expected, (int, float)) and isinstance(actual, (int, float)):
-        ok = _close(float(actual), float(expected), name.split(".")[0])
+        ok = _close(float(actual), float(expected), family)
         delta = ""
         if isinstance(expected, (int, float)) and expected:
             delta = f"{abs(actual - expected) / abs(expected) * 100:.1f}% off"
@@ -340,8 +341,7 @@ def _dict_check(key: str, expected: dict, actual: dict | None) -> list[Check]:
                                 note="this species is absent from the geometry"))
             continue
         used.add(match)
-        checks.append(Check(f"{key}[{name}]", _fmt(value), _fmt(actual[match]),
-                            "pass" if actual[match] == value else "fail", gating=gating))
+        checks.append(_scalar_check(f"{key}[{name}]", value, actual[match]))
     for candidate in measured_keys:
         if candidate not in used and actual[candidate]:
             checks.append(Check(f"{key}[{candidate}]", "0", _fmt(actual[candidate]), "fail",
