@@ -1,0 +1,849 @@
+{
+  "valid": true,
+  "volume": 4306741.692217217,
+  "area": 343042.2471196913,
+  "bbox": {
+    "x": 508.0,
+    "y": 85.73,
+    "z": 165.1
+  },
+  "genus": null,
+  "solids": 1,
+  "iou_all": 0.9867526166193217,
+  "iou_ortho": 0.984626054327023,
+  "seconds": 8.099267482757568,
+  "cylinders": [
+    {
+      "diameter": 127.0,
+      "radius": 63.5,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 1013.4149581950037,
+      "axial_extent": 2.54
+    },
+    {
+      "diameter": 12.7,
+      "radius": 6.35,
+      "axis": "Y",
+      "axis_vector": [
+        0.0,
+        0.908,
+        0.4191
+      ],
+      "kind": "bore",
+      "area": 315.6623105100835,
+      "axial_extent": 7.9117
+    },
+    {
+      "diameter": 6.35,
+      "radius": 3.175,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 374.730794876395,
+      "axial_extent": 18.7843
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 600.6665697565215,
+      "axial_extent": 76.2
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 456.45294678567956,
+      "axial_extent": 58.2189
+    },
+    {
+      "diameter": 50.8,
+      "radius": 25.4,
+      "axis": "Y",
+      "axis_vector": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "shaft",
+      "area": 2533.537395487489,
+      "axial_extent": 63.5
+    },
+    {
+      "diameter": 50.8,
+      "radius": 25.4,
+      "axis": "Y",
+      "axis_vector": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "shaft",
+      "area": 2533.537395487489,
+      "axial_extent": 63.5
+    },
+    {
+      "diameter": 50.8,
+      "radius": 25.4,
+      "axis": "Y",
+      "axis_vector": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "shaft",
+      "area": 2533.537395487489,
+      "axial_extent": 63.5
+    },
+    {
+      "diameter": 50.8,
+      "radius": 25.4,
+      "axis": "Y",
+      "axis_vector": [
+        0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "shaft",
+      "area": 2533.537395487489,
+      "axial_extent": 63.5
+    },
+    {
+      "diameter": 127.0,
+      "radius": 63.5,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 1013.4149581950037,
+      "axial_extent": 2.54
+    },
+    {
+      "diameter": 127.0,
+      "radius": 63.5,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 1013.4149581950037,
+      "axial_extent": 2.54
+    },
+    {
+      "diameter": 6.35,
+      "radius": 3.175,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 374.730794876395,
+      "axial_extent": 18.7843
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 489.88271737664974,
+      "axial_extent": 63.7217
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 489.8827013325719,
+      "axial_extent": 63.7217
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 608.0489749169975,
+      "axial_extent": 76.2
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 608.0489749169975,
+      "axial_extent": 76.2
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 608.0489749169975,
+      "axial_extent": 76.2
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 600.6665697565169,
+      "axial_extent": 76.2
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 608.0489749169975,
+      "axial_extent": 76.2
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 456.45294678567717,
+      "axial_extent": 58.2189
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 608.0489749169975,
+      "axial_extent": 76.2
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 608.0489749169975,
+      "axial_extent": 76.2
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 456.4529467856807,
+      "axial_extent": 58.2189
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 600.6665697565248,
+      "axial_extent": 76.2
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 608.0489749169975,
+      "axial_extent": 76.2
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 608.0489749169975,
+      "axial_extent": 76.2
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 608.0489749169975,
+      "axial_extent": 76.2
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 489.88270133256896,
+      "axial_extent": 63.7217
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 608.0489749169975,
+      "axial_extent": 76.2
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 489.8827173766482,
+      "axial_extent": 63.7217
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 608.0489749169975,
+      "axial_extent": 76.2
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 608.0489749169975,
+      "axial_extent": 76.2
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 489.88271737664974,
+      "axial_extent": 63.7217
+    },
+    {
+      "diameter": 10.16,
+      "radius": 5.08,
+      "axis": "Z",
+      "axis_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "kind": "bore",
+      "area": 489.882701332571,
+      "axial_extent": 63.7217
+    },
+    {
+      "diameter": 28.0,
+      "radius": 14.0,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 558.575173808265,
+      "axial_extent": 6.35
+    },
+    {
+      "diameter": 5.11,
+      "radius": 2.555,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 183.49194459601517,
+      "axial_extent": 11.43
+    },
+    {
+      "diameter": 5.11,
+      "radius": 2.555,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 183.49194459601517,
+      "axial_extent": 11.43
+    },
+    {
+      "diameter": 5.11,
+      "radius": 2.555,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 183.49194459601517,
+      "axial_extent": 11.43
+    },
+    {
+      "diameter": 12.7,
+      "radius": 6.35,
+      "axis": "Y",
+      "axis_vector": [
+        0.0,
+        0.908,
+        0.4191
+      ],
+      "kind": "bore",
+      "area": 315.66231051018184,
+      "axial_extent": 7.9117
+    },
+    {
+      "diameter": 12.7,
+      "radius": 6.35,
+      "axis": "Y",
+      "axis_vector": [
+        0.0,
+        0.908,
+        0.4191
+      ],
+      "kind": "bore",
+      "area": 315.66231051018184,
+      "axial_extent": 7.9117
+    },
+    {
+      "diameter": 28.0,
+      "radius": 14.0,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 558.575173808265,
+      "axial_extent": 6.35
+    },
+    {
+      "diameter": 28.0,
+      "radius": 14.0,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 558.575173808265,
+      "axial_extent": 6.35
+    },
+    {
+      "diameter": 5.11,
+      "radius": 2.555,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 244.65592612802013,
+      "axial_extent": 15.24
+    },
+    {
+      "diameter": 5.11,
+      "radius": 2.555,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 244.65592612802013,
+      "axial_extent": 15.24
+    },
+    {
+      "diameter": 28.0,
+      "radius": 14.0,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 558.575173808265,
+      "axial_extent": 6.35
+    },
+    {
+      "diameter": 28.0,
+      "radius": 14.0,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 558.575173808265,
+      "axial_extent": 6.35
+    },
+    {
+      "diameter": 28.0,
+      "radius": 14.0,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 558.575173808265,
+      "axial_extent": 6.35
+    },
+    {
+      "diameter": 5.11,
+      "radius": 2.555,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 244.65592612802013,
+      "axial_extent": 15.24
+    },
+    {
+      "diameter": 25.4,
+      "radius": 12.7,
+      "axis": "X",
+      "axis_vector": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "kind": "bore",
+      "area": 784.1996458001031,
+      "axial_extent": 19.655
+    },
+    {
+      "diameter": 25.4,
+      "radius": 12.7,
+      "axis": "X",
+      "axis_vector": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "kind": "bore",
+      "area": 810.7319665559962,
+      "axial_extent": 20.32
+    },
+    {
+      "diameter": 25.4,
+      "radius": 12.7,
+      "axis": "X",
+      "axis_vector": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "kind": "bore",
+      "area": 810.7319665559962,
+      "axial_extent": 20.32
+    },
+    {
+      "diameter": 25.4,
+      "radius": 12.7,
+      "axis": "X",
+      "axis_vector": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "kind": "bore",
+      "area": 784.5986280671083,
+      "axial_extent": 19.665
+    },
+    {
+      "diameter": 6.35,
+      "radius": 3.175,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 374.730794876395,
+      "axial_extent": 18.7843
+    },
+    {
+      "diameter": 6.35,
+      "radius": 3.175,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 374.730794876395,
+      "axial_extent": 18.7843
+    },
+    {
+      "diameter": 6.35,
+      "radius": 3.175,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 374.730794876395,
+      "axial_extent": 18.7843
+    },
+    {
+      "diameter": 6.35,
+      "radius": 3.175,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 374.730794876395,
+      "axial_extent": 18.7843
+    },
+    {
+      "diameter": 5.11,
+      "radius": 2.555,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 244.65592612802018,
+      "axial_extent": 15.24
+    },
+    {
+      "diameter": 5.11,
+      "radius": 2.555,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 244.65592612802018,
+      "axial_extent": 15.24
+    },
+    {
+      "diameter": 5.11,
+      "radius": 2.555,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 244.65592612802018,
+      "axial_extent": 15.24
+    },
+    {
+      "diameter": 5.11,
+      "radius": 2.555,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 244.65592612802018,
+      "axial_extent": 15.24
+    },
+    {
+      "diameter": 5.11,
+      "radius": 2.555,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 244.65592612802018,
+      "axial_extent": 15.24
+    },
+    {
+      "diameter": 5.11,
+      "radius": 2.555,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 244.65592612802018,
+      "axial_extent": 15.24
+    },
+    {
+      "diameter": 5.11,
+      "radius": 2.555,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 244.65592612802018,
+      "axial_extent": 15.24
+    },
+    {
+      "diameter": 5.11,
+      "radius": 2.555,
+      "axis": "Y",
+      "axis_vector": [
+        -0.0,
+        1.0,
+        -0.0
+      ],
+      "kind": "bore",
+      "area": 244.65592612802018,
+      "axial_extent": 15.24
+    }
+  ]
+}

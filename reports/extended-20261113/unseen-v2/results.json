@@ -1,0 +1,178 @@
+[
+  {
+    "case": "test_case_10",
+    "part": "engine_a__camshaft",
+    "exists": true,
+    "valid": true,
+    "solids": 1,
+    "volume_ratio": 1.000064009602747,
+    "area_ratio": 1.000026770341017,
+    "genus": 0,
+    "bbox": {
+      "x": 34.697,
+      "y": 38.1,
+      "z": 463.09
+    },
+    "iou": 0.9872433620632853
+  },
+  {
+    "case": "test_case_11",
+    "part": "engine_a__camshaft_bushing",
+    "exists": true,
+    "valid": true,
+    "solids": 1,
+    "volume_ratio": 0.9999976666674482,
+    "area_ratio": 0.9999946222040046,
+    "genus": 1,
+    "bbox": {
+      "x": 19.05,
+      "y": 25.4,
+      "z": 25.4
+    },
+    "iou": 0.9957947506150532
+  },
+  {
+    "case": "test_case_12",
+    "part": "engine_a__engine_belt_wheel",
+    "exists": true,
+    "valid": true,
+    "solids": 1,
+    "volume_ratio": 1.000095329985513,
+    "area_ratio": 0.9961750849531014,
+    "genus": 3,
+    "bbox": {
+      "x": 60.29,
+      "y": 60.29,
+      "z": 40.59
+    },
+    "iou": 0.9932775225251332
+  },
+  {
+    "case": "test_case_13",
+    "part": "engine_a__engine_belt_wheel_pt2",
+    "exists": true,
+    "valid": true,
+    "solids": 1,
+    "volume_ratio": 1.0000631533056905,
+    "area_ratio": 1.3364426306959971,
+    "genus": 3,
+    "bbox": {
+      "x": 166.06,
+      "y": 166.06,
+      "z": 45.59
+    },
+    "iou": 0.9909679541946471
+  },
+  {
+    "case": "test_case_14",
+    "part": "engine_a__engine_intake_manifold",
+    "exists": true,
+    "valid": true,
+    "solids": 1,
+    "volume_ratio": 0.9940898360410046,
+    "area_ratio": 1.1719292872278098,
+    "genus": null,
+    "bbox": {
+      "x": 994.8583,
+      "y": 280.6411,
+      "z": 409.75
+    },
+    "iou": 0.5920084858126329
+  },
+  {
+    "case": "test_case_15",
+    "part": "engine_a__engine_oil_pan",
+    "exists": true,
+    "valid": true,
+    "solids": 1,
+    "volume_ratio": 0.9973851963082901,
+    "area_ratio": 1.1614929948175037,
+    "genus": 12,
+    "bbox": {
+      "x": 508.0,
+      "y": 127.0,
+      "z": 330.2
+    },
+    "iou": 0.9766481431645463
+  },
+  {
+    "case": "test_case_16",
+    "part": "engine_a__engine_side_cover",
+    "exists": true,
+    "valid": true,
+    "solids": 1,
+    "volume_ratio": 1.0018604117407761,
+    "area_ratio": 1.156405072534926,
+    "genus": 2,
+    "bbox": {
+      "x": 477.76,
+      "y": 318.9,
+      "z": 52.15
+    },
+    "iou": 0.9201007423805789
+  },
+  {
+    "case": "test_case_17",
+    "part": "engine_a__engine_valve_cover",
+    "exists": true,
+    "valid": true,
+    "solids": 1,
+    "volume_ratio": 1.0000772501079436,
+    "area_ratio": 1.3919744383362334,
+    "genus": 8,
+    "bbox": {
+      "x": 63.5,
+      "y": 165.1,
+      "z": 508.0
+    },
+    "iou": 0.9757522710812717
+  },
+  {
+    "case": "test_case_18",
+    "part": "engine_a__rocking_arm_spring",
+    "exists": true,
+    "valid": true,
+    "solids": 1,
+    "volume_ratio": 0.9998270135965528,
+    "area_ratio": 1.0031938635349427,
+    "genus": 1,
+    "bbox": {
+      "x": 27.25,
+      "y": 30.3,
+      "z": 27.25
+    },
+    "iou": 0.9502784713986678
+  },
+  {
+    "case": "test_case_19",
+    "part": "engine_a__turbo_shell",
+    "exists": true,
+    "valid": true,
+    "solids": 1,
+    "volume_ratio": 1.01260098961125,
+    "area_ratio": 0.6042677326398216,
+    "genus": 2,
+    "bbox": {
+      "x": 82.14,
+      "y": 156.3559,
+      "z": 175.0307
+    },
+    "iou": 0.9414785667473103
+  },
+  {
+    "case": "test_case_20",
+    "part": "tubing_spider",
+    "exists": true,
+    "valid": true,
+    "solids": 1,
+    "volume_ratio": 1.2931883485652702,
+    "area_ratio": 1.1869102713906061,
+    "genus": 4,
+    "bbox": {
+      "x": 328.0,
+      "y": 169.5,
+      "z": 333.23
+    },
+    "iou": 0.7869330415787388
+  }
+]

@@ -110,13 +110,14 @@ def prepare_home(name: str) -> Path:
     return home
 
 
-def _solid_count(path: Path) -> int:
-    """Number of solids in a STEP file, or -1 if it cannot be read."""
+def _solid_count(path: Path, timeout: float = 10) -> int:
+    """Number of solids in a valid STEP, within the remaining time budget."""
     code = ("import sys\nfrom build123d import import_step\n"
-            "print('SOLIDS', len(import_step(sys.argv[1]).solids()))")
+            "s = import_step(sys.argv[1])\n"
+            "print('SOLIDS', len(s.solids()) if s.is_valid else -1)")
     try:
         proc = subprocess.run([sys.executable, "-c", code, str(path)],
-                              capture_output=True, text=True, timeout=90)
+                              capture_output=True, text=True, timeout=max(.1, timeout))
         for line in (proc.stdout or "").splitlines():
             if line.startswith("SOLIDS "):
                 return int(line.split()[1])
@@ -125,20 +126,28 @@ def _solid_count(path: Path) -> int:
     return -1
 
 
-def ensure_single_solid(case_dir: Path, target: Path) -> str:
+def ensure_single_solid(case_dir: Path, target: Path, deadline: float) -> str:
     """Last gate before a case ends: the file must hold exactly one solid.
 
     A STEP with shells but no solid, or with several solids, scores zero. Seen in a
     Docker run on an unseen part: the agent submitted a compound of 13 shells. Fall
     back to the newest snapshot that is one solid, then to the envelope box.
     """
+    # A slow STEP reader must not turn six fallback attempts into nine minutes.
+    deadline = min(deadline, time.time() + 20)
+    def valid(path: Path) -> bool:
+        remaining = deadline - time.time() - 1
+        return remaining > .1 and _solid_count(path, min(10, remaining)) == 1
+
     try:
-        if target.is_file() and _solid_count(target) == 1:
+        if target.is_file() and valid(target):
             return ""
         snap_dir = SCRATCH / "snapshots" / case_dir.name
         steps = sorted(snap_dir.glob("*.stp"), key=lambda p: p.stat().st_mtime, reverse=True) if snap_dir.is_dir() else []
         for step in steps[:6]:
-            if _solid_count(step) == 1:
+            if time.time() >= deadline - 1:
+                break
+            if valid(step):
                 shutil.copyfile(step, target)
                 return f"output was not one solid; replaced by snapshot {step.name}"
         write_box(case_dir, target)
@@ -305,9 +314,9 @@ def run_case(case_dir: Path, out: Path, deadline: float, reserve: float) -> dict
     submitted = _signature(target) != box_sig and target.is_file()
     export = ""
     if not submitted or (SCRATCH / "snapshots" / name / "index.jsonl").is_file():
-        export = best_snapshot(case_dir, workspace, home, out, deadline, preserve_existing=submitted)
+        export = best_snapshot(case_dir, workspace, home, out, deadline - 20, preserve_existing=submitted)
         submitted = _signature(target) != box_sig
-    repaired = ensure_single_solid(case_dir, target)
+    repaired = ensure_single_solid(case_dir, target, deadline)
     if repaired:
         export = f"{export}; {repaired}" if export else repaired
         submitted = "snapshot" in repaired
