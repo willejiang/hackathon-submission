@@ -7,4 +7,8 @@
 # Pipeline scratch must never enter the image
 .agentic_cad_work
 .work
+.runs
+.tmp
+# Experiment recipes are audit records, not inputs to the agent.
+reports
 tests/specs

@@ -28,7 +28,7 @@ import collections
 import math
 from typing import Any
 
-from .factsgen import Check, Comparison
+from .factsgen import Check, Comparison, _axis_matches, _unit_axis
 
 # Fact families whose disagreement fails the submission. Everything else is still
 # reported, but as evidence rather than as a gate. Counts stay advisory because the
@@ -242,12 +242,14 @@ def _group_cylinders(cylinders: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """
     groups: dict[tuple, dict[str, Any]] = {}
     for face in cylinders:
-        key = (face["diameter"], face["axis"], face["kind"])
+        vector = _unit_axis(face.get("axis_vector")) or _unit_axis(face["axis"])
+        direction_key = tuple(round(component, 4) for component in vector) if vector else face["axis"]
+        key = (face["diameter"], direction_key, face["kind"])
         group = groups.setdefault(
             key,
             {"diameter": face["diameter"], "axis": face["axis"], "kind": face["kind"],
              "faces": 0, "area": 0.0, "axial_extent": 0.0,
-             "axis_vector": face["axis_vector"]},
+             "axis_vector": vector},
         )
         group["faces"] += 1
         group["area"] += face["area"]
@@ -355,7 +357,7 @@ def _entry_matches(reference: dict, measured: dict, key: str) -> bool:
         expected = reference.get(field)
         actual = measured.get(field)
         if field == "axis":
-            if not _axis_parallel(reference.get("axis_vector"), expected, actual):
+            if not _axis_parallel(measured.get("axis_vector"), expected, actual):
                 return False
         elif isinstance(expected, (int, float)) and isinstance(actual, (int, float)):
             if not _close(float(actual), float(expected), key):
@@ -366,17 +368,7 @@ def _entry_matches(reference: dict, measured: dict, key: str) -> bool:
 
 
 def _axis_parallel(measured_vector, expected, actual_label) -> bool:
-    if isinstance(expected, str):
-        return str(expected).strip().upper() == str(actual_label).strip().upper()
-    if not measured_vector:
-        return False
-    try:
-        expected_vector = [float(v) for v in expected]
-    except (TypeError, ValueError):
-        return True
-    norm = math.sqrt(sum(v * v for v in expected_vector)) or 1.0
-    dot = sum(a * b for a, b in zip(measured_vector, expected_vector))
-    return abs(dot / norm) > 0.985
+    return _axis_matches(measured_vector if measured_vector is not None else actual_label, expected)
 
 
 def _list_check(key: str, expected: list, actual: list | None) -> list[Check]:

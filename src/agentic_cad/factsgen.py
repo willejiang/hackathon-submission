@@ -94,6 +94,33 @@ def _axis_vector(direction: Any) -> tuple[float, float, float]:
     return tuple(round(sign * v / norm, 4) for v in values)
 
 
+def _unit_axis(value: Any) -> tuple[float, float, float] | None:
+    """Read a fact axis as a letter, numeric vector, or serialized vector.
+
+    Direction is irrelevant for a cylinder axis, so normalize its sign as well.
+    In particular, the two 45-degree V banks must remain separate even though
+    both have Y as their largest component.
+    """
+    if isinstance(value, str):
+        label = value.strip().upper()
+        named = {"X": (1.0, 0.0, 0.0), "Y": (0.0, 1.0, 0.0), "Z": (0.0, 0.0, 1.0)}
+        value = named.get(label)
+        if value is None:
+            value = label.strip("()[]").split(",")
+    try:
+        values = tuple(float(component) for component in value)
+    except (TypeError, ValueError):
+        return None
+    if len(values) != 3 or not all(math.isfinite(component) for component in values):
+        return None
+    norm = math.sqrt(sum(component * component for component in values))
+    if norm < 1e-12:
+        return None
+    dominant = max(range(3), key=lambda index: abs(values[index]))
+    sign = -1.0 if values[dominant] < 0 else 1.0
+    return tuple(sign * component / norm for component in values)
+
+
 def _cylinders(shape: Any) -> list[dict[str, Any]]:
     """Classify every cylindrical face as a bore (concave) or a shaft (convex).
 
@@ -163,12 +190,15 @@ def cylinder_groups(cylinders: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """
     groups: dict[tuple, dict[str, Any]] = {}
     for face in cylinders:
-        key = (face["diameter"], face["axis"], face["kind"])
+        vector = _unit_axis(face.get("axis_vector")) or _unit_axis(face["axis"])
+        direction_key = tuple(round(component, 4) for component in vector) if vector else face["axis"]
+        key = (face["diameter"], direction_key, face["kind"])
         group = groups.setdefault(
             key,
             {
                 "diameter": face["diameter"],
                 "axis": face["axis"],
+                "axis_vector": vector,
                 "kind": face["kind"],
                 "faces": 0,
                 "area": 0.0,
@@ -283,25 +313,11 @@ def _axis_matches(measured_vector, expected_axis) -> bool:
     cylinder head. Parallelism is the actual question, so treat both forms as
     vectors and accept either direction.
     """
-    if isinstance(expected_axis, str):
-        names = {"X": (1.0, 0.0, 0.0), "Y": (0.0, 1.0, 0.0), "Z": (0.0, 0.0, 1.0)}
-        expected = names.get(expected_axis.strip().upper())
-        if expected is None:
-            return True  # unknown letter: do not fail on our own parse limit
-    else:
-        try:
-            expected = tuple(float(v) for v in expected_axis)
-        except (TypeError, ValueError):
-            return True
-    if not measured_vector:
+    measured = _unit_axis(measured_vector)
+    expected = _unit_axis(expected_axis)
+    if measured is None or expected is None:
         return False
-    dot = sum(a * b for a, b in zip(measured_vector, expected))
-    length = math.sqrt(sum(b * b for b in expected)) * math.sqrt(
-        sum(a * a for a in measured_vector)
-    )
-    if length < 1e-12:
-        return False
-    return abs(dot / length) > 0.985  # within about 10 degrees
+    return abs(sum(a * b for a, b in zip(measured, expected))) > 0.985
 
 
 def _compare_holes(gt: GroundTruth, measured_groups: list[dict[str, Any]]) -> list[Check]:
