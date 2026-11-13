@@ -1,0 +1,27 @@
+{
+  "added_volume": 1219.699780533958,
+  "removed_volume": 733.954583694931,
+  "added_outside_old_void": 0,
+  "outer_rear_y": 77.55,
+  "front_transition": "R1 round, Y32.55 R29 disk to Y33.55 R30 cylinder",
+  "rear_transition": "R1 material mouth, R32.5 cylinder to Y76.55; opening at Y77.55",
+  "axis_inside_material": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ]
+}

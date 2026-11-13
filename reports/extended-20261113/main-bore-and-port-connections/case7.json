@@ -1,0 +1,18 @@
+{
+  "name": "accepted745-main-bore-stations-v5",
+  "valid": true,
+  "solids": 1,
+  "shells": 1,
+  "volume": 333153.33657093765,
+  "V": 1.0177708264281649,
+  "area": 100406.22253536808,
+  "A": 1.0377818326604853,
+  "genus": 10,
+  "iou": 0.8795107603999529,
+  "views": "mean IoU all=0.880 ortho=0.874 iso=0.895\nview_0_front                     IoU=0.831 over=+0.061 under=+0.119 aspect 1.062/1.060 (+0.2%)\nview_1_back                      IoU=0.831 over=+0.061 under=+0.119 aspect 1.062/1.060 (+0.2%)\nview_2_left                      IoU=0.883 over=+0.007 under=+0.111 aspect 0.623/0.625 (-0.3%)\nview_3_right                     IoU=0.883 over=+0.007 under=+0.111 aspect 0.623/0.625 (-0.3%)\nview_4_top                       IoU=0.909 over=+0.041 under=+0.053 aspect 1.705/1.700 (+0.3%)\nview_5_bottom                    IoU=0.909 over=+0.041 under=+0.053 aspect 1.705/1.700 (+0.3%)\nview_6_iso_front_right_top       IoU=0.895 over=+0.031 under=+0.077 aspect 0.696/0.739 (-5.8%)\nview_7_iso_back_left_bottom      IoU=0.895 over=+0.031 under=+0.077 aspect 0.696/0.739 (-5.8%)",
+  "bbox": {
+    "x": 162.25,
+    "y": 95.15,
+    "z": 152.74
+  }
+}
