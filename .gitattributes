@@ -11,3 +11,7 @@
 # Reference renders and anything the pipeline rasterises.
 *.png binary
 *.jpg binary
+
+# The harness carries skills up to a byte budget; CRLF costs one unit per line, so
+# these must stay LF in every checkout, not only in this one.
+dsh-plugin/skills/**/*.md text eol=lf

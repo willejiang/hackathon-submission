@@ -21,8 +21,8 @@ bounding-box minimum corner.
   low, and the renders plus the measured volume both disagree with it. Resolve
   conflicts with arithmetic, and say so in `NOTES`.
 - Missing dimensions may be estimated from a render, with a same-line
-  `# estimated: view name and evidence` comment on the parameter in `derive()`.
-  Keep known dimensions fixed. Never invent a hidden cavity to match volume alone.
+  `# estimated: view name and evidence` comment in `derive()`. Keep known dimensions
+  fixed. Never invent a hidden cavity to match volume alone.
 - `facts.json` is optional. If absent, the case tool recovers explicit envelope,
   volume and passage constraints from the brief; undeclared properties stay unknown.
 
@@ -37,6 +37,8 @@ bounding-box minimum corner.
 5. `cad_build` — does it build, and what is it?
 6. `cad_verify` — numbers against facts. Rows marked `*` are gating.
 7. `cad_submit` — save the first valid single solid even if diagnostic rows fail.
+   **Gating rows green is not the part being right**: underfill above ~8% means geometry
+   is missing no matter what volume says.
 8. `cad_facts_scaffold` → `write measure_result.py` → `cad_measure_result` — measure
    the submitted file into the brief's own structure and compare every entry.
 9. `cad_render` — silhouettes against pictures, once the numbers are close.
@@ -47,14 +49,14 @@ bounding-box minimum corner.
 ## Looking at the renders
 
 Read them again **before every edit**, not only at step 2: a repair round driven by
-numbers reproduces numbers only. On the practice V6 block the box, volume and all 23 bores were
+numbers reproduces numbers. On the practice V6 block the box, volume and all 23 bores were
 right while both head plates, the webs, the spotfaces, the rib and every rebate were
 absent: visible in the renders, absent from `facts.json`.
 
 - **Crop, zoom, then `read_image` the crop.** Fine detail needs magnification.
 - **Pixel arithmetic is not looking.** Masks and profiles give outline and proportion,
   never identity.
-- **Your vision is adequate.** Counting bores and bolt holes matched `facts` exactly.
+- **Your vision is adequate.** Counting bores and bolt holes matched `facts`.
 - **Blind versus through is not in the picture** -- the mouths look identical.
 
 ## The module
@@ -127,9 +129,8 @@ Conventions: axis labels `X`/`Y`/`Z` or `[x, y, z]`; surface names are
 | **genus too high** | **a blind hole or pocket was cut through** |
 | genus too low | a blind hole missed, or a through bore plugged |
 | **`hole_depths` fails** | **blind and through are not interchangeable** |
+| **underfill above ~8%** | **gating-level, not cosmetic: material is missing where the brief has it. The bracket accepted 10.8% because volume and bores were green; that band was the whole remaining error.** |
 | **area 5%+ low, volume close** | **a whole feature family is missing** — read the face-type row |
-| a species at 0 | that family is absent: `TORUS` rounds, `BSPLINE` fillets, `CONE` chamfers, `SPHERE` ball ends |
-| a bore reported missing but you built it | check the axis: angled bores are direction vectors, and the wrong axis is a different bore |
 
 `cad_render` gives IoU plus `overfill` and `underfill` per view. Both high with a bad
 aspect ratio means a feature is in the wrong place, not the wrong size.

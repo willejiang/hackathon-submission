@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import re
 import shutil
@@ -88,6 +89,11 @@ def child_env(home: Path, case: Path | None, out: Path) -> dict[str, str]:
     )
     if case is not None:
         env["AGENTIC_CAD_CASE_DIR"] = str(case)
+        # Every solid the agent builds is recorded. The deadline export then picks the
+        # best of them rather than whatever solution.py happened to say last -- on the
+        # bracket the last edit had volume 21.8% high while an earlier build was within
+        # 0.11%, and the export shipped the regression.
+        env["AGENTIC_CAD_SNAPSHOT_DIR"] = str(WORKSPACES / case.name / ".snapshots")
     # The package is not pip-installed in a development checkout, so every child that
     # runs `python -m agentic_cad.cli` needs src on the import path.
     existing = env.get("PYTHONPATH", "")
@@ -251,6 +257,63 @@ def run_case(case: str, home: Path, out: Path, timeout: float, model: str | None
     }
 
 
+def _proxy_error(row: dict, facts: dict) -> float | None:
+    """Distance of a built solid from facts.json: envelope, volume, through passages.
+
+    Used only to ORDER candidates, never as a target to optimise against. That
+    distinction is the one that matters: an ordering only needs to be roughly monotone,
+    while optimising a proxy is what made a run chase volume to 0.9998 and break genus
+    from 0 to 17.
+    """
+    try:
+        if row.get("solids") != 1:
+            return None
+        error = 0.0
+        target_box = facts.get("bounding_box_mm") or {}
+        box = row.get("bounding_box_mm") or {}
+        for axis in ("x", "y", "z"):
+            if axis in target_box and axis in box:
+                error += abs(float(box[axis]) - float(target_box[axis])) / max(float(target_box[axis]), 1e-6)
+        if facts.get("volume_mm3") and row.get("volume_mm3"):
+            error += abs(math.log(float(row["volume_mm3"]) / float(facts["volume_mm3"])))
+        target_genus, genus = facts.get("through_holes_genus"), row.get("through_holes_genus")
+        if target_genus is not None and genus is not None:
+            error += 0.02 * min(abs(int(genus) - int(target_genus)), 10)
+        return error
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def _best_snapshot(snapshots: Path, case_dir: Path) -> Path | None:
+    """Snapshot closest to facts.json, or the newest if nothing can be ranked."""
+    index = snapshots / "index.jsonl"
+    if not index.is_file():
+        return None
+    try:
+        facts = json.loads((case_dir / "facts.json").read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        facts = {}
+    ranked: list[tuple[float, str]] = []
+    newest: str | None = None
+    for line in index.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        newest = row.get("file", newest)
+        error = _proxy_error(row, facts)
+        if error is not None and (snapshots / row["file"]).is_file():
+            ranked.append((error, row["file"]))
+    if ranked:
+        return snapshots / min(ranked)[1]
+    if newest and (snapshots / newest).is_file():
+        return snapshots / newest
+    return None
+
+
 def export_candidate(case: str, candidate: Path, home: Path, out: Path) -> dict:
     """Build and export a candidate module after the agent has stopped.
 
@@ -271,7 +334,6 @@ def export_candidate(case: str, candidate: Path, home: Path, out: Path) -> dict:
     env = child_env(home, INPUTS / case, out)
     snapshots = candidate.parent / ".snapshots"
     env["AGENTIC_CAD_SNAPSHOT_DIR"] = str(snapshots)
-    shutil.rmtree(snapshots, ignore_errors=True)
     try:
         proc = subprocess.run(
             [sys.executable, "-m", "agentic_cad.cli", "snapshot", json.dumps({"path": str(candidate)})],
@@ -295,25 +357,17 @@ def export_candidate(case: str, candidate: Path, home: Path, out: Path) -> dict:
     if not payload and (proc.stderr or "").strip():
         error = (proc.stderr or "").strip()[-800:]
 
-    # `snapshot` records the solid in the snapshot directory rather than writing the
-    # submission path; promote the newest one.
+    # `snapshot` records the solid rather than writing the submission path, so promote
+    # the candidate closest to facts.json -- not the newest. Newest is wrong: the last
+    # edit before a deadline is often a regression, and on the bracket it was volume
+    # 21.8% high against an earlier build within 0.11%.
     size = 0
     if payload.get("ok"):
-        index = snapshots / "index.jsonl"
-        newest = None
-        if index.is_file():
-            for line in index.read_text(encoding="utf-8").splitlines():
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    newest = json.loads(line)["file"]
-                except (json.JSONDecodeError, KeyError):
-                    continue
-        if newest is not None and (snapshots / newest).is_file():
+        chosen = _best_snapshot(snapshots, INPUTS / case)
+        if chosen is not None:
             target = out / f"{case}.stp"
             target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(snapshots / newest, target)
+            shutil.copyfile(chosen, target)
             size = target.stat().st_size
         else:
             payload["ok"] = False
