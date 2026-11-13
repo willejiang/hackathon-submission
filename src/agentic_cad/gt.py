@@ -198,6 +198,8 @@ def load_case(case_dir: Path) -> GroundTruth:
         except json.JSONDecodeError:
             facts = {}
     description = description_path.read_text(encoding="utf-8") if description_path.is_file() else ""
+    if not facts:
+        facts = facts_from_description(description)
     images = case_dir / "images"
     views = sorted(images.glob("view_*.png")) if images.is_dir() else []
     context = case_dir / "context.png"
@@ -208,3 +210,33 @@ def load_case(case_dir: Path) -> GroundTruth:
         views=views,
         context=context if context.is_file() else None,
     )
+
+
+def facts_from_description(description: str) -> dict[str, Any]:
+    """Recover only explicitly stated scalar constraints when facts.json is absent.
+
+    The extended practice README describes hidden inputs without the debugging
+    fact sheet. Do not invent a hole inventory, surface area, or any other
+    measurements: the model still receives the complete design brief and views.
+    Nothing is written back into the input directory.
+    """
+    number = r"(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?"
+    text = description.replace("\u00a0", " ")
+    facts: dict[str, Any] = {"_input_source": "description.md"}
+    envelope = re.search(
+        rf"\bEnvelope\s*:\s*\**\s*({number})\s*[xX×]\s*({number})\s*[xX×]\s*({number})\s*mm\b",
+        text, re.IGNORECASE,
+    )
+    if envelope:
+        values = [float(value.replace(",", "")) for value in envelope.groups()]
+        if all(value > 0 for value in values):
+            facts["bounding_box_mm"] = dict(zip("xyz", values))
+    volume = re.search(rf"\bvolume\s*[:=]?\s*({number})\s*(mm|cm)\s*(?:\^\s*3|³|3)\b", text, re.IGNORECASE)
+    if volume:
+        value = float(volume.group(1).replace(",", ""))
+        if value > 0:
+            facts["volume_mm3"] = value * (1000 if volume.group(2).lower() == "cm" else 1)
+    passages = re.search(r"\b(\d+)\s+through[\s\-‑–]+passages\b", text, re.IGNORECASE)
+    if passages:
+        facts["through_holes_genus"] = int(passages.group(1))
+    return facts

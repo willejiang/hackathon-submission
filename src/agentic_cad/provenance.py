@@ -19,6 +19,7 @@ offending code instead of restating the whole rule.
 from __future__ import annotations
 
 import ast
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -146,6 +147,10 @@ def check(gt: GroundTruth, source: str) -> ProvenanceReport:
 
     source_lines = source.splitlines()
     known = gt.known_numbers()
+    estimated_lines = {
+        index for index, line in enumerate(source_lines, start=1)
+        if re.search(r"#\s*(?:estimated|assumed)\s*:\s*\S", line, re.IGNORECASE)
+    }
 
     # Statement-level scans ---------------------------------------------------
     for node in ast.walk(tree):
@@ -194,6 +199,8 @@ def check(gt: GroundTruth, source: str) -> ProvenanceReport:
             if _is_structural(value):
                 continue
             if allow_grounded and _matches_ground_truth(value, known):
+                continue
+            if allow_grounded and node.lineno in estimated_lines:
                 continue
             where = "derive()" if allow_grounded else "build()"
             if allow_grounded:

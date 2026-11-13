@@ -113,7 +113,9 @@ def prepare_home(name: str) -> Path:
 def write_box(case_dir: Path, target: Path) -> bool:
     """Envelope box from facts.json, so a case never ends without a file."""
     try:
-        facts = json.loads((case_dir / "facts.json").read_text())
+        from agentic_cad.gt import load_case
+
+        facts = load_case(case_dir).facts
         bb = facts["bounding_box_mm"]
         from build123d import Align, Box, export_step
 
@@ -152,7 +154,8 @@ def _proxy_error(row: dict, facts: dict) -> float | None:
         return None
 
 
-def best_snapshot(case_dir: Path, workspace: Path, home: Path, out: Path, deadline: float) -> str:
+def best_snapshot(case_dir: Path, workspace: Path, home: Path, out: Path, deadline: float,
+                  preserve_existing: bool = False) -> str:
     """After the agent stopped without submitting: ship the best solid it ever built.
 
     Modules still on disk are built once more without the provenance check, so a
@@ -165,20 +168,22 @@ def best_snapshot(case_dir: Path, workspace: Path, home: Path, out: Path, deadli
     modules = sorted((p for p in workspace.glob("*.py") if p.stat().st_size > 0 and not p.name.startswith("measure")),
                      key=lambda p: p.stat().st_mtime, reverse=True)
     for module in modules[:3]:
-        remaining = deadline - time.time() - 20
+        remaining = deadline - time.time() - 60
         if remaining < 15:
             break
         try:
             subprocess.run(
                 [sys.executable, "-m", "agentic_cad.cli", "snapshot", json.dumps({"path": str(module)})],
                 cwd=str(workspace), env=child_env(home, case_dir, out),
-                capture_output=True, text=True, timeout=min(remaining, 120),
+                capture_output=True, text=True, timeout=min(remaining, 20),
             )
         except subprocess.TimeoutExpired:
             pass
 
     try:
-        facts = json.loads((case_dir / "facts.json").read_text())
+        from agentic_cad.gt import load_case
+
+        facts = load_case(case_dir).facts
     except Exception:
         facts = {}
     rows = []
@@ -194,6 +199,26 @@ def best_snapshot(case_dir: Path, workspace: Path, home: Path, out: Path, deadli
                 rows.append((err, row["file"]))
     if not rows:
         return "no built solid to ship"
+    remaining = deadline - time.time() - 10
+    if remaining > 5:
+        try:
+            subprocess.run(
+                [sys.executable, "-m", "agentic_cad.candidate_rank", "--case-dir", str(case_dir),
+                 "--snapshot-dir", str(snap_dir), "--output", str(target),
+                 "--deadline", str(time.time() + remaining - 1)],
+                env=child_env(home, case_dir, out), capture_output=True, text=True, timeout=remaining,
+            )
+        except subprocess.TimeoutExpired:
+            pass
+        finally:
+            target.with_suffix(".candidate").unlink(missing_ok=True)
+        ranking = snap_dir / "ranking.json"
+        if ranking.is_file():
+            result = json.loads(ranking.read_text())
+            if result.get("selected"):
+                return f"geometry-ranked {result['evaluated']} candidates; kept {result['selected']} (loss {result['quality']:.3f})"
+    if preserve_existing:
+        return "kept the agent's submitted solid; geometric ranking unavailable"
     err, file = min(rows)
     bb = facts.get("bounding_box_mm") or {}
     box_err = None
@@ -225,7 +250,7 @@ def run_case(case_dir: Path, out: Path, deadline: float, reserve: float) -> dict
         with log_path.open("w") as handle:
             proc = subprocess.Popen(
                 # --add-dir: let the session's sandbox write the output directory too
-                ["dsh", "--profile", PROFILE, "--add-dir", str(out), run_agent.task_prompt(name)],
+                ["dsh", "--profile", PROFILE, "--add-dir", str(out), run_agent.task_prompt(name, agent_time)],
                 cwd=str(workspace), env=child_env(home, case_dir, out),
                 stdout=handle, stderr=subprocess.STDOUT, start_new_session=True,
             )
@@ -242,8 +267,8 @@ def run_case(case_dir: Path, out: Path, deadline: float, reserve: float) -> dict
 
     submitted = _signature(target) != box_sig and target.is_file()
     export = ""
-    if not submitted:
-        export = best_snapshot(case_dir, workspace, home, out, deadline)
+    if not submitted or (SCRATCH / "snapshots" / name / "index.jsonl").is_file():
+        export = best_snapshot(case_dir, workspace, home, out, deadline, preserve_existing=submitted)
         submitted = _signature(target) != box_sig
     log_file = SCRATCH / "logs" / f"{name}.log"
     if log_file.is_file() and "skipping profile bundle" in log_file.read_text(errors="ignore")[:4000]:

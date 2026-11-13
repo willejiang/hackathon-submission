@@ -1,0 +1,78 @@
+[
+  {
+    "pipeline": "baseline",
+    "case": "test_case_10",
+    "exists": true,
+    "valid": true,
+    "solids": 1,
+    "volume_ratio": 0.9999976666674478,
+    "area_ratio": 0.9999946222040046,
+    "genus": 1,
+    "iou": 0.9957947506150532
+  },
+  {
+    "pipeline": "baseline",
+    "case": "test_case_11",
+    "exists": false
+  },
+  {
+    "pipeline": "baseline",
+    "case": "test_case_12",
+    "exists": true,
+    "valid": true,
+    "solids": 1,
+    "volume_ratio": 0.7314116105601642,
+    "area_ratio": 0.2172393215141787,
+    "genus": 0,
+    "iou": 0.3017030016788014
+  },
+  {
+    "pipeline": "baseline",
+    "case": "test_case_13",
+    "exists": false
+  },
+  {
+    "pipeline": "updated",
+    "case": "test_case_10",
+    "exists": true,
+    "valid": true,
+    "solids": 1,
+    "volume_ratio": 0.9999976666674478,
+    "area_ratio": 0.9999946222040046,
+    "genus": 1,
+    "iou": 0.9957947506150532
+  },
+  {
+    "pipeline": "updated",
+    "case": "test_case_11",
+    "exists": true,
+    "valid": true,
+    "solids": 1,
+    "volume_ratio": 0.9971558403668339,
+    "area_ratio": 0.9495611990131256,
+    "genus": 12,
+    "iou": 0.9102204949304767
+  },
+  {
+    "pipeline": "updated",
+    "case": "test_case_12",
+    "exists": true,
+    "valid": true,
+    "solids": 1,
+    "volume_ratio": 4.571308806368526,
+    "area_ratio": 0.994877549436919,
+    "genus": null,
+    "iou": 0.9373656696931026
+  },
+  {
+    "pipeline": "updated",
+    "case": "test_case_13",
+    "exists": true,
+    "valid": true,
+    "solids": 1,
+    "volume_ratio": 1.551777513237442,
+    "area_ratio": 1.0124704787654322,
+    "genus": 12,
+    "iou": 0.9093732685959908
+  }
+]

@@ -141,9 +141,15 @@ def setup(home: Path, out: Path) -> None:
     print("setup done\n")
 
 
-def task_prompt(case: str) -> str:
+def task_prompt(case: str, budget_s: float | None = None) -> str:
+    budget_note = (
+        f"You have at most {int(budget_s)} seconds. Save a first valid baseline within "
+        f"{max(20, min(120, int(budget_s / 4)))} seconds; leave time to export.\n"
+        if budget_s is not None else ""
+    )
     return f"""\
 Reconstruct the mechanical part for test case `{case}`.
+{budget_note}
 
 First call `cad_case_info` for this case, then load the `cad-reconstruction` skill
 and follow it exactly. `cad_case_info` returns the authoritative facts.json, the
@@ -151,12 +157,16 @@ design brief, and the absolute paths of the eight rendered views; read those PNG
 with `read_image` and reason about their silhouettes.
 
 Write your module to `solution.py` in the current workspace, then use `cad_build`,
-`cad_verify` and `cad_render` to check it, and `cad_submit` once the gating facts
-pass.
+`cad_verify` and `cad_render` to check it. As soon as a module builds one valid
+solid, call `cad_submit` to save a baseline EVEN IF some diagnostic gates fail.
+Diagnostic mismatches guide improvement; they are not a reason to submit nothing.
 
 Rules:
 - facts.json and the design brief are authoritative. Do not modify or reinterpret them.
-- every dimension must come from facts.json, the brief, or a formula over them.
+- use dimensions from facts.json (when present), the brief, or formulas over them.
+  A missing dimension may be estimated from a stated view: assign it in derive()
+  with a same-line `# estimated: view name and evidence` comment. Keep build()
+  parameterized. Never present estimates as authoritative measurements.
 - exactly one connected solid, millimetres, bounding-box minimum at the origin.
 - do NOT use subagent, subagent_fork, workflow, send_message or list_agents.
   Do the work yourself in this session.
@@ -165,7 +175,12 @@ Rules:
   in your own workspace. Do not search the repository for reference solutions,
   fixtures or examples: if you find one, do not use it.
 
-Stop after `cad_submit` succeeds, or after you have submitted your best candidate.
+After the baseline, do at most TWO targeted improvement cycles, checking geometry
+and views each time. Stop early when the key facts and projections agree, when a
+cycle makes no measurable improvement, or when the remaining time is short.
+Do not invent an unseen cavity just to match volume: preserve cylindrical walls,
+blind-hole bottoms, and the material distribution visible in the views.
+The runner retains all built snapshots and selects the best evaluated candidate.
 """
 
 

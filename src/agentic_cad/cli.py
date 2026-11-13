@@ -102,11 +102,11 @@ def _build(source: str):
         return gt, built, None, None
     measured = factsgen.measure(built.shape)
     comparison = factsgen.compare(gt, measured)
-    _snapshot(built.shape, measured)
+    _snapshot(built.shape, measured, source)
     return gt, built, measured, comparison
 
 
-def _snapshot(shape, measured: dict) -> None:
+def _snapshot(shape, measured: dict, source: str = "") -> None:
     """Keep every solid that built, so a run that hits its deadline can ship the best
     one instead of the last file on disk or an envelope box. Never raises."""
     directory = os.environ.get("AGENTIC_CAD_SNAPSHOT_DIR", "").strip()
@@ -121,9 +121,12 @@ def _snapshot(shape, measured: dict) -> None:
         number = sum(1 for _ in index.open()) if index.is_file() else 0
         name = f"{number:04d}.stp"
         export_step(shape, str(root / name))
+        if source:
+            (root / f"{number:04d}.py").write_text(source, encoding="utf-8")
         row = {
             "file": name,
             "volume_mm3": measured.get("volume_mm3"),
+            "surface_area_mm2": measured.get("surface_area_mm2"),
             "bounding_box_mm": measured.get("bounding_box_mm"),
             "solids": measured.get("solids"),
             "through_holes_genus": measured.get("through_holes_genus"),

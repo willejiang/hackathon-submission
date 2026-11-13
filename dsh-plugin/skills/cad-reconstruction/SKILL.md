@@ -20,8 +20,11 @@ bounding-box minimum corner.
   bracket brief puts a recess at `Y = 7.0`; built there the volume comes out a third
   low, and the renders plus the measured volume both disagree with it. Resolve
   conflicts with arithmetic, and say so in `NOTES`.
-- Never take a dimension from a render. Never invent a hidden cavity from a
-  silhouette.
+- Missing dimensions may be estimated from a render, with a same-line
+  `# estimated: view name and evidence` comment on the parameter in `derive()`.
+  Keep known dimensions fixed. Never invent a hidden cavity to match volume alone.
+- `facts.json` is optional. If absent, the case tool recovers explicit envelope,
+  volume and passage constraints from the brief; undeclared properties stay unknown.
 
 ## The loop
 
@@ -33,11 +36,12 @@ bounding-box minimum corner.
 4. `write solution.py`.
 5. `cad_build` — does it build, and what is it?
 6. `cad_verify` — numbers against facts. Rows marked `*` are gating.
-7. `cad_submit` — as soon as the gating rows agree. Then keep improving.
+7. `cad_submit` — save the first valid single solid even if diagnostic rows fail.
 8. `cad_facts_scaffold` → `write measure_result.py` → `cad_measure_result` — measure
    the submitted file into the brief's own structure and compare every entry.
 9. `cad_render` — silhouettes against pictures, once the numbers are close.
-10. Fix what the comparison names, back to 4.
+10. Fix what the comparison names, back to 4, for at most two improvement cycles.
+    Stop early if there is no measured gain or the useful facts and views agree.
 
 ## Trust ranking
 
@@ -68,8 +72,9 @@ def build(p):               # the dict from derive() -> one build123d solid
 
 Enforced by `cad_build` before it builds:
 
-- `derive()` may contain a literal **only** if that value is in facts.json or the
-  brief, or is structural: `0 1 2 3 -1 90 180 270`.
+- `derive()` may contain a literal if that value is in facts.json or the brief,
+  is structural (`0 1 2 3 -1 90 180 270`), or its line explicitly documents
+  `# estimated: view and evidence` / `# assumed: reason`.
 - `build()` may contain **only** structural literals. `Box(19, 14, 50.8)` fails;
   `Box(p["x"], p["y"], p["z"])` passes.
 - No `open`, `eval`, `export_step`; imports limited to `build123d`, `math`,
@@ -78,6 +83,13 @@ Enforced by `cad_build` before it builds:
 Millimetres, no scaling; one connected solid (fuse what you build in pieces);
 bbox minimum at the origin; `Cylinder`/`Cone` are Z-up, so a bore along Y is
 `Rot(90, 0, 0) * Cylinder(...)`, along X `Rot(0, 90, 0) * Cylinder(...)`.
+
+Sketch coordinates are local XY, not world XZ. For an outline expressed as
+`(x, z)` points and thickness `t` along Y, use
+`Pos(0, t, 0) * extrude(Plane.XZ * profile, amount=t)` (XZ's normal is -Y).
+For `(y, z)` points extruded along X, use `extrude(Plane.YZ * profile, amount=t)`.
+Check the first coarse body's bounding-box axes before adding detailed features;
+swapped height and thickness mean a wrong sketch plane, not a scaling problem.
 
 Express relationships, do not restate numbers:
 `d["centre"] = d["module"] * (d["z1"] + d["z2"]) / 2`.
@@ -132,8 +144,10 @@ have a different topology. A species at 0 is different — you never built that 
 
 ## Submit first, then improve
 
-A missing file scores zero. Get a module that builds with the gating rows agreeing,
-`cad_submit` it, then keep going and submit again after each real gain. One practice
+A missing file scores zero. Get a valid single solid and `cad_submit` it without
+waiting for all diagnostic gates. Then make at most two targeted improvement cycles,
+submitting after a measured gain. Never replace a good internal structure with
+an arbitrary volume-matching void. One practice
 run iterated to the deadline and submitted nothing; another submitted early and
 finished with 15 of 16 bore families.
 
