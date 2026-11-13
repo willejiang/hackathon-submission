@@ -110,6 +110,43 @@ def prepare_home(name: str) -> Path:
     return home
 
 
+def _solid_count(path: Path) -> int:
+    """Number of solids in a STEP file, or -1 if it cannot be read."""
+    code = ("import sys\nfrom build123d import import_step\n"
+            "print('SOLIDS', len(import_step(sys.argv[1]).solids()))")
+    try:
+        proc = subprocess.run([sys.executable, "-c", code, str(path)],
+                              capture_output=True, text=True, timeout=90)
+        for line in (proc.stdout or "").splitlines():
+            if line.startswith("SOLIDS "):
+                return int(line.split()[1])
+    except Exception:
+        pass
+    return -1
+
+
+def ensure_single_solid(case_dir: Path, target: Path) -> str:
+    """Last gate before a case ends: the file must hold exactly one solid.
+
+    A STEP with shells but no solid, or with several solids, scores zero. Seen in a
+    Docker run on an unseen part: the agent submitted a compound of 13 shells. Fall
+    back to the newest snapshot that is one solid, then to the envelope box.
+    """
+    try:
+        if target.is_file() and _solid_count(target) == 1:
+            return ""
+        snap_dir = SCRATCH / "snapshots" / case_dir.name
+        steps = sorted(snap_dir.glob("*.stp"), key=lambda p: p.stat().st_mtime, reverse=True) if snap_dir.is_dir() else []
+        for step in steps[:6]:
+            if _solid_count(step) == 1:
+                shutil.copyfile(step, target)
+                return f"output was not one solid; replaced by snapshot {step.name}"
+        write_box(case_dir, target)
+        return "output was not one solid; replaced by the envelope box"
+    except Exception as exc:
+        return f"single-solid check failed: {type(exc).__name__}: {exc}"
+
+
 def write_box(case_dir: Path, target: Path) -> bool:
     """Envelope box from facts.json, so a case never ends without a file."""
     try:
@@ -270,6 +307,10 @@ def run_case(case_dir: Path, out: Path, deadline: float, reserve: float) -> dict
     if not submitted or (SCRATCH / "snapshots" / name / "index.jsonl").is_file():
         export = best_snapshot(case_dir, workspace, home, out, deadline, preserve_existing=submitted)
         submitted = _signature(target) != box_sig
+    repaired = ensure_single_solid(case_dir, target)
+    if repaired:
+        export = f"{export}; {repaired}" if export else repaired
+        submitted = "snapshot" in repaired
     log_file = SCRATCH / "logs" / f"{name}.log"
     if log_file.is_file() and "skipping profile bundle" in log_file.read_text(errors="ignore")[:4000]:
         status += " (WARNING: cad tools plugin did not load)"
