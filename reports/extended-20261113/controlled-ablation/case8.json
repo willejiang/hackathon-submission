@@ -1,0 +1,18 @@
+{
+  "name": "ears-bolt-through-oil-deeppockets-v15",
+  "valid": true,
+  "solids": 1,
+  "shells": 1,
+  "volume": 117976.96556792792,
+  "V": 0.9713356049014925,
+  "area": 40877.77558681812,
+  "A": 1.0508128455703853,
+  "genus": 23,
+  "iou": 0.9674432544054937,
+  "views": "mean IoU all=0.967 ortho=0.960 iso=0.990\nview_0_front                     IoU=0.999 over=+0.000 under=+0.001 aspect 1.986/1.980 (+0.3%)\nview_1_back                      IoU=0.999 over=+0.000 under=+0.001 aspect 1.986/1.980 (+0.3%)\nview_2_left                      IoU=0.988 over=+0.000 under=+0.012 aspect 3.174/3.160 (+0.4%)\nview_3_right                     IoU=0.988 over=+0.000 under=+0.012 aspect 3.174/3.160 (+0.4%)\nview_4_top                       IoU=0.893 over=+0.009 under=+0.098 aspect 0.625/0.627 (-0.3%)\nview_5_bottom                    IoU=0.893 over=+0.009 under=+0.098 aspect 0.625/0.627 (-0.3%)\nview_6_iso_front_right_top       IoU=0.989 over=+0.003 under=+0.008 aspect 1.202/1.202 (-0.0%)\nview_7_iso_back_left_bottom      IoU=0.990 over=+0.003 under=+0.008 aspect 1.202/1.202 (-0.0%)",
+  "bbox": {
+    "x": 80.0,
+    "y": 128.0,
+    "z": 40.2
+  }
+}

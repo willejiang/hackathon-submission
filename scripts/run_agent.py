@@ -167,6 +167,9 @@ Rules:
   A missing dimension may be estimated from a stated view: assign it in derive()
   with a same-line `# estimated: view name and evidence` comment. Keep build()
   parameterized. Never present estimates as authoritative measurements.
+  Keep explicitly stated diameters, depths, radii and angles fixed. Aggregate
+  volume disagreement is a reason to inspect missing features, orientation and
+  unknown wall profiles; it does not justify changing a stated bore depth.
 - exactly one connected solid, millimetres, bounding-box minimum at the origin.
 - do NOT use subagent, subagent_fork, workflow, send_message or list_agents.
   Do the work yourself in this session.
