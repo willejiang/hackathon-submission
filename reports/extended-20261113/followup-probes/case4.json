@@ -1,0 +1,513 @@
+{
+  "name": "original_r254",
+  "valid": true,
+  "solids": 1,
+  "genus": 0,
+  "volume": 3412699.4342927826,
+  "volume_ratio": 0.9829102940602947,
+  "area": 256207.92994087143,
+  "area_ratio": 0.9917067315173435,
+  "faces": 105,
+  "bbox": {
+    "x": 211.5888,
+    "y": 196.8532,
+    "z": 564.88
+  },
+  "bbox_min": [
+    -0.0,
+    -0.0,
+    0.0
+  ],
+  "iou_all": 0.9753724261062003,
+  "iou_ortho": 0.9752649029252467,
+  "views": [
+    {
+      "stem": "view_0_front",
+      "iou": 0.9646620239728687,
+      "overfill": 0.0026996859019287178,
+      "underfill": 0.0327336915608857,
+      "shift": [
+        0,
+        0
+      ],
+      "aspect_ref": 0.3772819472616633,
+      "aspect_render": 0.375886524822695
+    },
+    {
+      "stem": "view_1_back",
+      "iou": 0.9646370508439474,
+      "overfill": 0.0026996158239019834,
+      "underfill": 0.03275879970927214,
+      "shift": [
+        1,
+        0
+      ],
+      "aspect_ref": 0.3772819472616633,
+      "aspect_render": 0.375886524822695
+    },
+    {
+      "stem": "view_2_left",
+      "iou": 0.9740155022629142,
+      "overfill": 0.005650013078733978,
+      "underfill": 0.020481297410410673,
+      "shift": [
+        0,
+        0
+      ],
+      "aspect_ref": 0.34989858012170383,
+      "aspect_render": 0.3495440729483283
+    },
+    {
+      "stem": "view_3_right",
+      "iou": 0.9740415127711596,
+      "overfill": 0.0056237085088017575,
+      "underfill": 0.020480761685543147,
+      "shift": [
+        0,
+        0
+      ],
+      "aspect_ref": 0.34989858012170383,
+      "aspect_render": 0.3495440729483283
+    },
+    {
+      "stem": "view_4_top",
+      "iou": 0.9871167082775839,
+      "overfill": 0.0,
+      "underfill": 0.0128832917224161,
+      "shift": [
+        0,
+        0
+      ],
+      "aspect_ref": 1.0740740740740742,
+      "aspect_render": 1.073993471164309
+    },
+    {
+      "stem": "view_5_bottom",
+      "iou": 0.9871166194230067,
+      "overfill": 6.89693224453763e-06,
+      "underfill": 0.012876572500551754,
+      "shift": [
+        0,
+        0
+      ],
+      "aspect_ref": 1.0740740740740742,
+      "aspect_render": 1.073993471164309
+    },
+    {
+      "stem": "view_6_iso_front_right_top",
+      "iou": 0.9759408675924401,
+      "overfill": 0.010949782669009525,
+      "underfill": 0.013372792009618053,
+      "shift": [
+        0,
+        0
+      ],
+      "aspect_ref": 0.41435768261964734,
+      "aspect_render": 0.41236068895643363
+    },
+    {
+      "stem": "view_7_iso_back_left_bottom",
+      "iou": 0.9754491237056822,
+      "overfill": 0.011341560435900757,
+      "underfill": 0.01348776110566338,
+      "shift": [
+        1,
+        0
+      ],
+      "aspect_ref": 0.41435768261964734,
+      "aspect_render": 0.41236068895643363
+    }
+  ],
+  "measurements": {
+    "bounding_box_mm": {
+      "x": 211.5888,
+      "y": 196.8532,
+      "z": 564.88
+    },
+    "bbox_min": [
+      -0.0,
+      -0.0,
+      0.0
+    ],
+    "volume_mm3": 3412699.4343,
+    "surface_area_mm2": 256207.9299,
+    "solids": 1,
+    "faces": 105,
+    "edges": 213,
+    "vertices": 122,
+    "through_holes_genus": 0,
+    "face_types": {
+      "BSPLINE": 36,
+      "CYLINDER": 19,
+      "PLANE": 14,
+      "TORUS": 36
+    },
+    "cylinders": [
+      {
+        "diameter": 76.2,
+        "radius": 38.1,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 21585.738609553406,
+        "axial_extent": 90.17
+      },
+      {
+        "diameter": 101.6,
+        "radius": 50.8,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 2099.9741933482937,
+        "axial_extent": 11.38
+      },
+      {
+        "diameter": 88.9,
+        "radius": 44.45,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 1636.9810795087085,
+        "axial_extent": 11.38
+      },
+      {
+        "diameter": 76.2,
+        "radius": 38.1,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 11859.348904484266,
+        "axial_extent": 49.54
+      },
+      {
+        "diameter": 101.6,
+        "radius": 50.8,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 2099.974193348296,
+        "axial_extent": 11.38
+      },
+      {
+        "diameter": 88.9,
+        "radius": 44.45,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 1636.9810795087105,
+        "axial_extent": 11.38
+      },
+      {
+        "diameter": 76.2,
+        "radius": 38.1,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 12769.028473257786,
+        "axial_extent": 53.34
+      },
+      {
+        "diameter": 101.6,
+        "radius": 50.8,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 2099.9741933482956,
+        "axial_extent": 11.38
+      },
+      {
+        "diameter": 88.9,
+        "radius": 44.45,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 1636.981079508711,
+        "axial_extent": 11.38
+      },
+      {
+        "diameter": 76.2,
+        "radius": 38.1,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 11859.348904484255,
+        "axial_extent": 49.54
+      },
+      {
+        "diameter": 101.6,
+        "radius": 50.8,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 2099.9741933482965,
+        "axial_extent": 11.38
+      },
+      {
+        "diameter": 88.9,
+        "radius": 44.45,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 1636.9810795087114,
+        "axial_extent": 11.38
+      },
+      {
+        "diameter": 76.2,
+        "radius": 38.1,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 12769.028473257778,
+        "axial_extent": 53.34
+      },
+      {
+        "diameter": 101.6,
+        "radius": 50.8,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 2099.9741933482974,
+        "axial_extent": 11.38
+      },
+      {
+        "diameter": 88.9,
+        "radius": 44.45,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 1636.981079508711,
+        "axial_extent": 11.38
+      },
+      {
+        "diameter": 76.2,
+        "radius": 38.1,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 11859.34890448427,
+        "axial_extent": 49.54
+      },
+      {
+        "diameter": 101.6,
+        "radius": 50.8,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 2099.974193348288,
+        "axial_extent": 11.38
+      },
+      {
+        "diameter": 88.9,
+        "radius": 44.45,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 1636.981079508704,
+        "axial_extent": 11.38
+      },
+      {
+        "diameter": 76.2,
+        "radius": 38.1,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "area": 21585.73860955341,
+        "axial_extent": 90.17
+      }
+    ],
+    "cylinder_groups": [
+      {
+        "diameter": 101.6,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "faces": 6,
+        "area": 12599.845160089768,
+        "axial_extent": 11.38,
+        "full": true,
+        "span_fraction": 2.0
+      },
+      {
+        "diameter": 88.9,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "faces": 6,
+        "area": 9821.886477052256,
+        "axial_extent": 11.38,
+        "full": true,
+        "span_fraction": 2.0
+      },
+      {
+        "diameter": 76.2,
+        "axis": "Z",
+        "axis_vector": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "kind": "shaft",
+        "faces": 7,
+        "area": 104287.58087907516,
+        "axial_extent": 90.17,
+        "full": true,
+        "span_fraction": 2.0
+      }
+    ],
+    "partial_cylinders": [],
+    "tori": 36,
+    "_note": "independently measured from the produced B-rep, not copied from the inputs",
+    "as_facts": {
+      "bounding_box_mm": {
+        "x": 211.5888,
+        "y": 196.8532,
+        "z": 564.88
+      },
+      "volume_mm3": 3412699.4343,
+      "surface_area_mm2": 256207.9299,
+      "solids": 1,
+      "faces": 105,
+      "edges": 213,
+      "face_types": {
+        "BSPLINE": 36,
+        "CYLINDER": 19,
+        "PLANE": 14,
+        "TORUS": 36
+      },
+      "cylindrical_holes_and_bores": [],
+      "cylindrical_shafts_and_bosses": [
+        {
+          "diameter": 101.6,
+          "axis": "Z",
+          "axis_vector": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "count": 6,
+          "lengths": [
+            11.38
+          ]
+        },
+        {
+          "diameter": 88.9,
+          "axis": "Z",
+          "axis_vector": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "count": 6,
+          "lengths": [
+            11.38
+          ]
+        },
+        {
+          "diameter": 76.2,
+          "axis": "Z",
+          "axis_vector": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "count": 7,
+          "lengths": [
+            90.17
+          ]
+        }
+      ],
+      "partial_cylinders_arcs": [],
+      "fillets_rounds_from_cylinders": [],
+      "fillets_from_tori_minor_radii": {
+        "2.54": 36
+      },
+      "cones_half_angle_deg": {},
+      "through_holes_genus": 0
+    },
+    "_unmeasured": []
+  }
+}
