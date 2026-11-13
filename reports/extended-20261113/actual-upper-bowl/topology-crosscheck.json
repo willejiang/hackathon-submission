@@ -1,0 +1,47 @@
+[
+  {
+    "case": 1,
+    "mesh_genus": 2,
+    "brep_genus": 2
+  },
+  {
+    "case": 2,
+    "mesh_genus": 0,
+    "brep_genus": 0
+  },
+  {
+    "case": 3,
+    "mesh_genus": 1,
+    "brep_genus": 1
+  },
+  {
+    "case": 4,
+    "mesh_genus": 0,
+    "brep_genus": 0
+  },
+  {
+    "case": 5,
+    "mesh_genus": null,
+    "brep_genus": 15
+  },
+  {
+    "case": 6,
+    "mesh_genus": 0,
+    "brep_genus": 0
+  },
+  {
+    "case": 7,
+    "mesh_genus": 10,
+    "brep_genus": 10
+  },
+  {
+    "case": 8,
+    "mesh_genus": null,
+    "brep_genus": 9
+  },
+  {
+    "case": 9,
+    "mesh_genus": 6,
+    "brep_genus": 6
+  }
+]

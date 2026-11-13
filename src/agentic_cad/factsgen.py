@@ -230,19 +230,40 @@ def cylinder_groups(cylinders: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return sorted(out, key=lambda g: (-g["diameter"], g["axis"], g["kind"]))
 
 
-def _genus(shape: Any) -> int | None:
-    """Euler characteristic of the surface, converted to genus.
+def _brep_genus(shape: Any) -> int | None:
+    """Euler characteristic of one valid closed B-rep shell.
 
-    Done on a tessellation rather than the B-rep face list: periodic faces carry
-    seam edges that make a naive V-E+F count on the B-rep wrong.
+    Inner face wires subtract cells from V-E+F. Periodic seam edges are already
+    represented in the face charts; degenerate pole edges carry no 1-cell.
+    Restrict this fallback to one shell so enclosed cavities are not mistaken
+    for negative through-passage counts.
     """
+    try:
+        from OCP.BRep import BRep_Tool
+
+        if not shape.is_valid or len(shape.solids()) != 1 or len(shape.shells()) != 1:
+            return None
+        edges = [e for e in shape.edges() if not BRep_Tool.Degenerated_s(e.wrapped)]
+        faces = list(shape.faces())
+        inner_wires = sum(max(0, len(face.wires()) - 1) for face in faces)
+        chi = len(shape.vertices()) - len(edges) + len(faces) - inner_wires
+        return (2 - chi) // 2 if chi <= 2 and chi % 2 == 0 else None
+    except Exception:  # noqa: BLE001
+        return None
+
+
+def _genus(shape: Any) -> int | None:
+    """Use the closed mesh, or the B-rep when tessellation leaves seam cracks."""
     try:
         from .meshutil import genus, triangulate
 
         vertices, faces = triangulate(shape)
-        return genus(vertices, faces)
+        result = genus(vertices, faces)
+        if result is not None and result >= 0:
+            return result
     except Exception:  # noqa: BLE001
-        return None
+        pass
+    return _brep_genus(shape)
 
 
 def measure(shape: Any) -> dict[str, Any]:

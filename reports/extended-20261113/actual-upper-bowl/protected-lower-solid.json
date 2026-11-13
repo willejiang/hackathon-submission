@@ -1,0 +1,45 @@
+{
+  "protected_z_max": 110,
+  "old_lower_volume": 174123.03990972773,
+  "new_lower_volume": 174123.03990972697,
+  "old_minus_new": 0,
+  "new_minus_old": 0,
+  "actual_old_pocket": {
+    "x": [
+      30,
+      135
+    ],
+    "y": [
+      26,
+      66
+    ],
+    "floor_z": 137.74
+  },
+  "restored_flange_z": [
+    136.49,
+    152.74
+  ],
+  "outer_envelope": {
+    "radius": 65,
+    "axis_xz": [
+      84.95,
+      175.74
+    ],
+    "y": [
+      18,
+      78
+    ],
+    "clipped_to": "exact largest actual top-face outer wire"
+  },
+  "inner_estimate": {
+    "radius": 61,
+    "axis_xz": [
+      84.95,
+      175.74
+    ],
+    "y": [
+      24.75,
+      64.75
+    ]
+  }
+}
