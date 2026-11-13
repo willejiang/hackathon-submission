@@ -32,7 +32,9 @@ workflow. The updated run finished in 362 seconds. See `benchmark.json`.
 
 This is one matched smoke test, not an official score or evidence of 0.98 accuracy.
 The side cover still has excessive volume and the spider needs further geometric
-work. A complete nine-case run under the 20-minute limit is also being checked.
+work. A complete nine-case run without fact files finished in **769 seconds**,
+with nine generated parts, zero boxes and zero missing outputs. Quality is still
+being independently measured; completion alone does not establish a 0.98 score.
 
 ## Case 8 controlled probe
 
@@ -42,7 +44,25 @@ an explicitly uncertain interpretation because the prose describes through holes
 It is being checked by official evaluation; a lower score must not replace the
 previous best part when assembling the retained submission.
 
+Official evaluation of commit **7253ad9** confirmed case 8 increased from
+**0.849 to 0.916**, and the team mean increased from **0.911 to 0.918**. The
+other eight parts were unchanged.
+
 Independent re-import checks: valid single solid; volume ratio 1.00191 (previous
 0.99735); area ratio 1.08533 (previous 1.09320); genus 13 (previous 21, target 11).
 Local eight-view IoU is about 0.95193, versus 0.94932. These are diagnostics, not
 the organisers' 3D surface/volume score.
+
+## Case 5 valve-port hypothesis
+
+The rear reference view contains six separate flared valve bowls, with the small
+pilot holes visible at their centres. The earlier output instead subtracted one
+large rectangular internal cavity. The new candidate keeps a solid casting with
+six independently lofted valve chambers and deeper top/bottom ports connecting
+to those chambers. These unspecified internal profiles remain hypotheses to be
+checked by official scoring, rather than invented ground-truth dimensions.
+
+Re-import-independent diagnostics: valid single solid; volume 4,307,671 mm3
+(+1.44%); area 343,752 mm2 (-1.55%); eight-view IoU 0.98675. The prior output's
+area was 322,933 mm2 (-7.5%). Tessellated genus is unavailable, so it is not
+claimed to match. `case5-valve-ports.py` and its JSON preserve the experiment.
