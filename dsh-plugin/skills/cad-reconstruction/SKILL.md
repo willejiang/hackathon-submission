@@ -40,19 +40,22 @@ bounding-box minimum corner.
 8. `cad_facts_scaffold` → `write measure_result.py` → `cad_measure_result` — measure
    the submitted file into the brief's own structure and compare every entry.
 9. `cad_render` — silhouettes against pictures, once the numbers are close.
-10. Fix what the comparison names, back to 4, for at most two improvement cycles.
-    Stop early if there is no measured gain or the useful facts and views agree.
+10. **Re-read the view that shows the disagreement, then fix what the comparison names**,
+    back to 4, for at most two improvement cycles. Stop early if there is no measured
+    gain or the useful facts and views agree.
 
-## Trust ranking
+## Looking at the renders
 
-1. `facts.json` and the brief
-2. the six orthographic views
-3. the two isometric views — sanity only
+Read them again **before every edit**, not only at step 2: a repair round driven by
+numbers reproduces numbers only. On the practice V6 block the box, volume and all 23 bores were
+right while both head plates, the webs, the spotfaces, the rib and every rebate were
+absent: visible in the renders, absent from `facts.json`.
 
-You are weak at images: shading and highlights will attract your attention. A blind
-pocket and a through hole look identical in one view — `genus` counts the through
-ones, the brief says which is which. If the brief says "no fillets" and a render looks
-rounded, that is shading.
+- **Crop, zoom, then `read_image` the crop.** Fine detail needs magnification.
+- **Pixel arithmetic is not looking.** Masks and profiles give outline and proportion,
+  never identity.
+- **Your vision is adequate.** Counting bores and bolt holes matched `facts` exactly.
+- **Blind versus through is not in the picture** -- the mouths look identical.
 
 ## The module
 
@@ -121,9 +124,6 @@ Conventions: axis labels `X`/`Y`/`Z` or `[x, y, z]`; surface names are
 
 | symptom | likely cause |
 |---|---|
-| volume and area both low | a described feature was never cut |
-| volume and area both high | material the brief does not describe |
-| volume off, area close | right footprint, wrong depth or wrong place |
 | **genus too high** | **a blind hole or pocket was cut through** |
 | genus too low | a blind hole missed, or a through bore plugged |
 | **`hole_depths` fails** | **blind and through are not interchangeable** |
