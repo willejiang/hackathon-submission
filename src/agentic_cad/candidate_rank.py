@@ -30,8 +30,11 @@ def quality(measured: dict, facts: dict, iou: float | None) -> float:
             loss += weight * abs(math.log(actual / expected))
     expected = facts.get("through_holes_genus")
     actual = measured.get("through_holes_genus")
-    if expected is not None and actual is not None:
-        loss += 0.03 * min(abs(actual - expected), 12)
+    if expected is not None:
+        # An unverified count must not beat a measured mismatch for free.
+        # This occurred in the manifold replay: an enclosed-cavity candidate
+        # escaped the handle penalty and displaced a better-shaped solid.
+        loss += 0.03 * (12 if actual is None else min(abs(actual - expected), 12))
     if iou is not None:
         loss += 2 * (1 - iou)
     return loss if math.isfinite(loss) else math.inf

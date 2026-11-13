@@ -54,3 +54,15 @@ def test_expired_ranking_preserves_existing_output(tmp_path):
     result = rank_snapshots(case, tmp_path / "snapshots", output, time.time() - 1)
     assert result["evaluated"] == 0
     assert output.read_bytes() == b"existing"
+
+
+def test_unverified_topology_does_not_win_by_omitting_a_constraint():
+    # The eleven-part replay exposed this: a worse manifold with an enclosed
+    # cavity had no measurable handle count and received a free topology pass.
+    facts = {'volume_mm3': 1, 'surface_area_mm2': 1, 'through_holes_genus': 9}
+    verified = {'solids': 1, 'volume_mm3': 1, 'surface_area_mm2': 1,
+                'through_holes_genus': 2}
+    unknown = {**verified, 'through_holes_genus': None}
+    assert quality(verified, facts, .9) < quality(unknown, facts, .9)
+    wrong_without_data = {**unknown, 'volume_mm3': 1.1667, 'surface_area_mm2': 1.1935}
+    assert quality(verified, facts, .592) < quality(wrong_without_data, facts, .584)

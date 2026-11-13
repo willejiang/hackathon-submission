@@ -1,0 +1,79 @@
+{
+  "test_case_10": {
+    "selected": "test_case_10.stp",
+    "quality": 0.02559973120484149,
+    "evaluated": 8,
+    "errors": [],
+    "iou": 0.9872433620632853
+  },
+  "test_case_11": {
+    "selected": "test_case_11.stp",
+    "quality": 0.009142481989632871,
+    "evaluated": 6,
+    "errors": [],
+    "iou": 0.9957947506150532
+  },
+  "test_case_12": {
+    "selected": "test_case_12.stp",
+    "quality": 0.013498957481311103,
+    "evaluated": 13,
+    "errors": [],
+    "iou": 0.9932775225251332
+  },
+  "test_case_13": {
+    "selected": "test_case_13.stp",
+    "quality": 0.018064091610705768,
+    "evaluated": 16,
+    "errors": [],
+    "iou": 0.9909679541946471
+  },
+  "test_case_14": {
+    "selected": "0000.stp",
+    "quality": 1.041554610978237,
+    "evaluated": 11,
+    "errors": [],
+    "iou": 0.5836737470577087
+  },
+  "test_case_15": {
+    "selected": "test_case_15.stp",
+    "quality": 0.04932070867597367,
+    "evaluated": 10,
+    "errors": [],
+    "iou": 0.9766481431645463
+  },
+  "test_case_16": {
+    "selected": "test_case_16.stp",
+    "quality": 0.16168740001804757,
+    "evaluated": 18,
+    "errors": [],
+    "iou": 0.9201007423805789
+  },
+  "test_case_17": {
+    "selected": "test_case_17.stp",
+    "quality": 0.04855263785577756,
+    "evaluated": 16,
+    "errors": [],
+    "iou": 0.9757522710812717
+  },
+  "test_case_18": {
+    "selected": "test_case_18.stp",
+    "quality": 0.09961605522653957,
+    "evaluated": 11,
+    "errors": [],
+    "iou": 0.9502784713986678
+  },
+  "test_case_19": {
+    "selected": "test_case_19.stp",
+    "quality": 0.1303787135016257,
+    "evaluated": 12,
+    "errors": [],
+    "iou": 0.9414785667473103
+  },
+  "test_case_20": {
+    "selected": "test_case_20.stp",
+    "quality": 1.0432452589621741,
+    "evaluated": 7,
+    "errors": [],
+    "iou": 0.7869330415787388
+  }
+}

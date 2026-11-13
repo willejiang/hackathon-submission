@@ -1,0 +1,42 @@
+{
+  "official_submission": "94f6bdfef0f1dd0a7da52bf562e0e2504db80f6e",
+  "official_score": 0.955,
+  "parts": {
+    "1": {
+      "official_score": 0.986,
+      "sha256": "81f9e14e3406f29dd0fa87d03553e23c395e758ee96c057d7d49dedb0dcb4624"
+    },
+    "2": {
+      "official_score": 1.0,
+      "sha256": "2c79ab5ddc944d4d3191e09e964fd6dc8ea27ed58170e4c1679ae21c648f2a5f"
+    },
+    "3": {
+      "official_score": 0.999,
+      "sha256": "a5e8ceeffe6d7a4f6392906bf046cd814853e5d66c7389b7a90e8c3a89b8a5c0"
+    },
+    "4": {
+      "official_score": 0.967,
+      "sha256": "b40cdf85feac94f754216a135dc8d127df5df582e2ac31f096d01dfd93c6b6c2"
+    },
+    "5": {
+      "official_score": 0.95,
+      "sha256": "b4b36c53b879b21df1adcc4dd5a2d21857a79faccd5987d0ccba2fe4a1c59ffc"
+    },
+    "6": {
+      "official_score": 0.997,
+      "sha256": "ba0f738c27f2f5f196bc33022ada66e5a354f725a7b476c4378e54c5da208a84"
+    },
+    "7": {
+      "official_score": 0.777,
+      "sha256": "771f81c8b7f078323d468c3dd5096855c751397f2f7e5a4ad6ad1e24ea3272a3"
+    },
+    "8": {
+      "official_score": 0.973,
+      "sha256": "103137f21199d4c1810d9e7e16bc51213dc13f11b478120e76227dbbfae0e5d6"
+    },
+    "9": {
+      "official_score": 0.95,
+      "sha256": "f5608407eb040ba7a5394cf36d0705c2e84ef74d7cd1089eac76151f91f448aa"
+    }
+  }
+}
